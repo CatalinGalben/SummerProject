@@ -1,0 +1,4 @@
+rootProject.name = 'SummerProject'
+include 'core'
+include 'web'
+
