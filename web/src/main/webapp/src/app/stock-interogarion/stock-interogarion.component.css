@@ -1,0 +1,29 @@
+.wrapper{
+  /* background: linear-gradient(white , rgb(200, 200, 243)); */
+  text-align:center;
+}
+#green{
+  color: rgb(6, 206, 6)
+}
+#red{
+  color: red;
+}
+input{
+  width: 200px;
+  margin: 0px auto;
+}
+h1, table{
+  margin-top: 20px;
+}
+h1 {
+  text-shadow: 2px 2px 3px rgb(1, 1, 63);
+}
+.alert{
+  width: 30%;
+  margin: 20px auto;
+}
+label{
+  font-size: 20px;
+  color: rgb(16, 16, 150);
+  text-shadow: 0.5px 0.5px rgb(1, 1, 63);
+}
