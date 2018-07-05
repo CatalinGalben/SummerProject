@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {AngularFireDatabase, AngularFireList} from "angularfire2/database";
+import {FirebaseListObservable} from "angularfire2/database-deprecated";
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+  courses: any[];
+  constructor(db: AngularFireDatabase) {
+    db.list('/courses')
+      .valueChanges()
+      .subscribe(co => {
+        this.courses = co;
+        console.log(this.courses);
+      })
+
+  }
+
+
+
 }
