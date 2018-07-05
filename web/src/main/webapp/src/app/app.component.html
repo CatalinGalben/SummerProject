@@ -4,6 +4,7 @@
       <a class="navbar-brand" href="http://siemens.com">Siemens</a>
     </div>
 
+
     <div *ngIf="isLoggedIn">
       <p class="navbar-text navbar-right">
         Logged in: {{user_displayName}} {{user_email}}
@@ -12,6 +13,7 @@
     <div *ngIf="!isLoggedIn">
       <p class="navbar-text navbar-right">Logged Out</p>
     </div>
+
   </nav>
   <router-outlet></router-outlet>
 </div>
