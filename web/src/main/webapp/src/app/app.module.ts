@@ -1,38 +1,37 @@
-import {BrowserModule} from "@angular/platform-browser";
-
+import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {AngularFireModule } from 'angularfire2';
 import {AngularFireDatabaseModule } from 'angularfire2/database';
+import { AuthService} from "./providers/auth.service";
 
 import { AppComponent } from './app.component';
 import {environment} from "../environments/environment";
-import {FormsModule} from "@angular/forms";
-import {MainService} from "./stock-interogarion/main.service";
-import {HttpModule} from "@angular/http";
-import { StockInterogarionComponent } from './stock-interogarion/stock-interogarion.component';
-import {RouterModule, Routes} from "@angular/router";
+import { LoginPageComponent } from './login-page/login-page.component';
+import { HomePageComponent } from './home-page/home-page.component';
+
+import {RouterModule, Routes} from '@angular/router';
+import {AngularFireAuth} from "angularfire2/auth";
+
+const routes: Routes=[
+  {path: '', component: HomePageComponent},
+  {path: 'login', component: LoginPageComponent}
+];
 
 
-
-  const routes: Routes = [
-    {path:'interogate', component:StockInterogarionComponent}
-  ];
-  @NgModule({
+@NgModule({
   declarations: [
     AppComponent,
-    StockInterogarionComponent,
-
+    LoginPageComponent,
+    HomePageComponent
   ],
   imports: [
-    [RouterModule.forRoot(routes)],
     BrowserModule,
-
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
-    FormsModule,
-    HttpModule
+    RouterModule.forRoot(routes)
   ],
-  providers: [MainService],
+  providers: [AuthService, AngularFireAuth],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
