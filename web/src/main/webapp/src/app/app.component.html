@@ -7,7 +7,7 @@
 
     <div *ngIf="isLoggedIn">
       <p class="navbar-text navbar-right">
-        Logged in: {{user_displayName}} {{user_email}}
+        Logged in: <b>{{user_displayName}}</b><br> {{user_email}}
       </p>
     </div>
     <div *ngIf="!isLoggedIn">
