@@ -18,7 +18,7 @@ import {HttpModule} from "@angular/http";
 
 const routes: Routes=[
   {path: '', component: HomePageComponent},
-  {path: 'login', component: LoginPageComponent},
+  {path: 'loginGoogle', component: LoginPageComponent},
   {path: 'interrogate', component: StockInterogarionComponent}
 ];
 

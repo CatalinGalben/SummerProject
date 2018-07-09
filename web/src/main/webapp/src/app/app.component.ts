@@ -28,7 +28,7 @@ export class AppComponent {
       (auth)=> {
         if (auth == null) {
           this.isLoggedIn = false;
-          router.navigate(['login']);
+          router.navigate(['loginGoogle']);
           this.user_displayName = '';
           this.user_email = '';
         }

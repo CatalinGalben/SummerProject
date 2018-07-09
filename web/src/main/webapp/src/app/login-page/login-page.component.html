@@ -1,4 +1,13 @@
 <div class="container" >
   <h1>Login to your Account</h1>
-  <button class="btn btn-default" (click)="login()">Login with Google</button>
+  <button class="btn btn-default" (click)="loginGoogle()">Login with Google</button>
+    <br><br>
+  <label>Email:</label>
+  <input #email>
+    <br>
+  <label>Password:</label>
+  <input #pass>
+    <br>
+  <button class="btn btn-default" (click)="loginEmail(email.value, pass.value)">Login with email</button>
+
 </div>

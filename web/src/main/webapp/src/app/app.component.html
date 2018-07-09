@@ -4,10 +4,9 @@
       <a class="navbar-brand" href="http://siemens.com">Siemens</a>
     </div>
 
-
     <div *ngIf="isLoggedIn">
       <p class="navbar-text navbar-right">
-        Logged in: <b>{{user_displayName}}</b><br> {{user_email}}
+        Logged in: <b>{{user_displayName==null?user_email:user_displayName}}</b><br> {{user_displayName==null?null:user_email}}
       </p>
     </div>
     <div *ngIf="!isLoggedIn">

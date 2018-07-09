@@ -16,10 +16,15 @@ export class LoginPageComponent implements OnInit {
   ngOnInit() {
   }
 
-  login() {
+  loginGoogle() {
     this.authService.loginWithGoogle().then((data) => {
       this.router.navigate([''])
     })
   }
 
+  loginEmail(user: string, pass: string) {
+    this.authService.loginWithEmail(user, pass).then((data) => {
+      this.router.navigate([''])
+    })
+  }
 }
