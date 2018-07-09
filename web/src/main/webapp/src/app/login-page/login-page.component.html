@@ -6,8 +6,21 @@
   <input #email>
     <br>
   <label>Password:</label>
-  <input #pass>
+  <input type="password" #pass>
     <br>
   <button class="btn btn-default" (click)="loginEmail(email.value, pass.value)">Login with email</button>
+  <button class="btn" (click)="registerClicked()"> Register</button>
+  <div *ngIf="showRegister">
+    <br>
+    <br>
+    <label>Email:</label>
+    <input #regEmail><br>
+    <label>Password:</label>
+    <input type="password" #regPassword><br>
+    <label>Confirm password:</label>
+    <input type="password" #confirmPassword><br>
+    <button class="button" (click)="saveDetails(regEmail.value, regPassword.value, confirmPassword.value)">Create Account</button>
+  </div>
+
 
 </div>
