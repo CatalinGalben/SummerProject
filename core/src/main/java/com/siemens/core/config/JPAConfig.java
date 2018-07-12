@@ -1,10 +1,9 @@
 package com.siemens.core.config;
 
-
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import javafx.application.Platform;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -19,11 +18,15 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-import java.sql.Driver;
+
+/**
+ * Created by radu.
+ */
 
 @Configuration
 @EnableJpaRepositories({"com.siemens.core.repository"})
 @EnableTransactionManagement
+@EnableCaching
 public class JPAConfig {
 
     @Value("${db.jdbcUrl}")
@@ -38,52 +41,55 @@ public class JPAConfig {
     @Value("${db.generateDDL}")
     private Boolean generateDDL;
 
-
+    /**
+     * http://www.baeldung.com/hikaricp
+     *
+     * @return
+     */
     @Bean
-    public DataSource dataSource()
-    {
+    public DataSource dataSource() {
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(jdbcUrl);
         config.setUsername(username);
         config.setPassword(password);
-        config.setDriverClassName(Driver.class.getName());
-        config.addDataSourceProperty("cachePrepStmt", "true");
+        config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
-        config.addDataSourceProperty("prepStmtCacheSqlLimit","2048");
-        return new HikariDataSource(config);
+        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+        HikariDataSource dataSource = new HikariDataSource(config);
+        return dataSource;
     }
 
     @Bean
-    public EntityManagerFactory entityManagerFactory()
-    {
+    public EntityManagerFactory entityManagerFactory() {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setDatabase(Database.POSTGRESQL);
         vendorAdapter.setGenerateDdl(generateDDL);
         vendorAdapter.setShowSql(true);
 
-        LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
-        factoryBean.setJpaVendorAdapter(vendorAdapter);
-        factoryBean.setPackagesToScan("com.siemens.core.model");
-        factoryBean.setDataSource(dataSource());
-        factoryBean.afterPropertiesSet();
-        return factoryBean.getObject();
+        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
+        factory.setJpaVendorAdapter(vendorAdapter);
+        factory.setPackagesToScan("com.siemens.core.model");
+        factory.setDataSource(dataSource());
+        factory.afterPropertiesSet();
+        return factory.getObject();
     }
 
     @Bean
-    public EntityManager entityManager()
-    {
+    public EntityManager entityManager() {
         return entityManagerFactory().createEntityManager();
     }
+
     @Bean
-    PlatformTransactionManager transactionManager()
-    {
+    PlatformTransactionManager transactionManager() {
         JpaTransactionManager manager = new JpaTransactionManager();
         manager.setEntityManagerFactory(entityManagerFactory());
         return manager;
     }
+
     @Bean
-    public HibernateExceptionTranslator hibernateExceptionTranslator()
-    {
+    public HibernateExceptionTranslator hibernateExceptionTranslator() {
         return new HibernateExceptionTranslator();
     }
+
+
 }

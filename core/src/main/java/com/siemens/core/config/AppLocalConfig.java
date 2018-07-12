@@ -1,6 +1,5 @@
-package com.siemens.web.config;
+package com.siemens.core.config;
 
-import com.siemens.core.config.JPAConfig;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 

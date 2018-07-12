@@ -36,6 +36,11 @@ dependencies {
 
     compile group: 'org.springframework', name: 'spring-context', version: "$springVersion"
 
+    compile group: 'org.springframework', name: 'spring-jdbc', version: "$springVersion"
+//        compile group: 'org.postgresql', name: 'postgresql', version: "$postgresqlVersion"
+    compile group: 'org.apache.commons', name: 'commons-dbcp2', version: "$dbcpVersion"
+
+
     //logging
     compile group: 'org.slf4j', name: 'slf4j-api', version: "$slf4jVersion"
     testCompile group: 'org.slf4j', name: 'slf4j-simple', version: "$slf4jVersion"
