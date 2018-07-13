@@ -52,7 +52,8 @@ public class JPAConfig {
         config.addDataSourceProperty("cachePrepStmt", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit","2048");
-        return new HikariDataSource(config);
+        HikariDataSource dataSource = new HikariDataSource(config);
+        return dataSource;
     }
 
     @Bean

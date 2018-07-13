@@ -1,8 +1,6 @@
 package com.siemens.core.ui;
 
 
-import com.siemens.core.model.Student;
-import com.siemens.core.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

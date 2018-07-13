@@ -6,6 +6,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 
 @Configuration
+@ComponentScan({"com.siemens.core"})
 @Import({JPAConfig.class})
 @PropertySources({@PropertySource(value = "classpath:local/db.properties")})
 public class AppLocalConfig {
