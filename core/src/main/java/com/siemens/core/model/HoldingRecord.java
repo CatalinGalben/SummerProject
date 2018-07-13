@@ -15,7 +15,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class HoldingRecord {
+public class HoldingRecord extends BaseEntity<Long>{
 
     @Id
     @Column(name="hid")
@@ -24,7 +24,7 @@ public class HoldingRecord {
 
     @ManyToOne
     @JoinColumn(name="pid", nullable=false)
-    private Portofolio portofolio;
+    private Portfolio portfolio;
 
     @ManyToOne
     @JoinColumn(name="bid", nullable=false)

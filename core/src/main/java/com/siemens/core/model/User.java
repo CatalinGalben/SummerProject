@@ -14,7 +14,7 @@ import org.joda.time.DateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class User extends BaseEntity<Long>{
     @Id
     @Column(name="uid")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +40,7 @@ public class User {
     }
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, optional = false)
-    private Portofolio portofolio;
+    private Portfolio portfolio;
 
     @PreUpdate
     private void onUpdate() {

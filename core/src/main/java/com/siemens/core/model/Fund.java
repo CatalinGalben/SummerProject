@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class Fund {
+public abstract class Fund extends BaseEntity<Long>{
 
     @Column(name="nav")
     private String nav;

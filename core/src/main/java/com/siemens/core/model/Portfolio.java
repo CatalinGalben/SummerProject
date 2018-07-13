@@ -9,12 +9,12 @@ import lombok.Setter;
 import java.util.Set;
 
 @Entity
-@Table(name="portofolio")
+@Table(name="portfolio")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Portofolio {
+public class Portfolio extends BaseEntity<Long>{
 
     @Id
     @Column(name="pid")
@@ -25,7 +25,7 @@ public class Portofolio {
     @JoinColumn(name = "uid")
     private User user;
 
-    @OneToMany(mappedBy="portofolio")
+    @OneToMany(mappedBy="portfolio")
     private Set<HoldingRecord> holdingRecords;
 
 }

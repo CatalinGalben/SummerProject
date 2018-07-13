@@ -2,7 +2,7 @@ package com.siemens.core.model;
 
 import javax.persistence.*;
 
-public class Share {
+public class Share extends BaseEntity<Long>{
 
     @Id
     @Column(name = "sid")
