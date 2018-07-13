@@ -7,6 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a2dea699-8bf9-4d6a-bca5-48050f15d5cc" name="Default" comment="">
+<<<<<<< HEAD
       <change afterPath="$PROJECT_DIR$/core/src/main/java/com/siemens/core/model/Broker.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/core/src/main/java/com/siemens/core/model/Company.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/core/src/main/java/com/siemens/core/model/Etf.java" afterDir="false" />
@@ -29,6 +30,13 @@
       <change beforePath="$PROJECT_DIR$/core/src/main/java/com/siemens/core/service/StudentService.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/com/siemens/core/service/StudentServiceImpl.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/com/siemens/core/ui/Console.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/siemens/core/ui/Console.java" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/siemens/core/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/siemens/core/config/AppLocalConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/siemens/core/config/CatalogConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/siemens/core/config/JPAConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/siemens/core/config/JPAConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/siemens/core/ui/Console.java" beforeDir="false" />
+>>>>>>> cec30a57a53b07936aa8a2c57a11a3bc7cc53f6a
       <change beforePath="$PROJECT_DIR$/web/src/main/java/com/siemens/web/config/AppLocalConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/siemens/web/config/AppLocalConfig.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -74,8 +82,13 @@
       <file leaf-file-name="BaseEntity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/main/java/com/siemens/core/model/BaseEntity.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="297">
               <caret line="20" column="5" lean-forward="true" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
+=======
+            <state relative-caret-position="189">
+              <caret line="9" column="67" selection-start-line="9" selection-start-column="67" selection-end-line="9" selection-end-column="67" />
+>>>>>>> cec30a57a53b07936aa8a2c57a11a3bc7cc53f6a
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -83,6 +96,7 @@
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="User.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/main/java/com/siemens/core/model/User.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -91,37 +105,72 @@
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+=======
+      <file leaf-file-name="StudentServiceImpl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/main/java/com/siemens/core/service/StudentServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="168">
+              <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+>>>>>>> cec30a57a53b07936aa8a2c57a11a3bc7cc53f6a
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="Portofolio.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/main/java/com/siemens/core/model/Portofolio.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="272">
               <caret line="22" selection-start-line="22" selection-end-line="22" />
+=======
+      <file leaf-file-name="StudentService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/main/java/com/siemens/core/service/StudentService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="147">
+              <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+>>>>>>> cec30a57a53b07936aa8a2c57a11a3bc7cc53f6a
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="HoldingRecord.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/main/java/com/siemens/core/model/HoldingRecord.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="170">
               <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+=======
+      <file leaf-file-name="WebConfig.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/src/main/java/com/siemens/web/config/WebConfig.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="186">
+              <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+>>>>>>> cec30a57a53b07936aa8a2c57a11a3bc7cc53f6a
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="Share.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/main/java/com/siemens/core/model/Share.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="68">
               <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+=======
+      <file leaf-file-name="JPAConfig.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/core/src/main/java/com/siemens/core/config/JPAConfig.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="378">
+              <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+>>>>>>> cec30a57a53b07936aa8a2c57a11a3bc7cc53f6a
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="Broker.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/core/src/main/java/com/siemens/core/model/Broker.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -130,10 +179,18 @@
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+=======
+      <file leaf-file-name="CacheConfig.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/main/java/com/siemens/core/config/CacheConfig.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-132">
+              <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+>>>>>>> cec30a57a53b07936aa8a2c57a11a3bc7cc53f6a
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="Fund.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/main/java/com/siemens/core/model/Fund.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -148,21 +205,49 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="510">
               <caret line="35" column="24" lean-forward="true" selection-start-line="35" selection-start-column="24" selection-end-line="35" selection-end-column="24" />
+=======
+      <file leaf-file-name="BaseEntity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/main/java/com/siemens/core/model/BaseEntity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="319">
+              <caret line="18" selection-start-line="18" selection-end-line="18" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+>>>>>>> cec30a57a53b07936aa8a2c57a11a3bc7cc53f6a
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="Etf.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/main/java/com/siemens/core/model/Etf.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="170">
               <caret line="15" column="16" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="16" />
+=======
+      <file leaf-file-name="Student.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/main/java/com/siemens/core/model/Student.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="21">
+              <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+>>>>>>> cec30a57a53b07936aa8a2c57a11a3bc7cc53f6a
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="Trust.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/main/java/com/siemens/core/model/Trust.java">
+=======
+      <file leaf-file-name="database.properties" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/main/resources/local/database.properties">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="Initializer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/src/main/java/com/siemens/web/config/Initializer.java">
+>>>>>>> cec30a57a53b07936aa8a2c57a11a3bc7cc53f6a
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="187">
               <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
@@ -871,6 +956,7 @@
         <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/core/build.gradle" />
         <option value="$PROJECT_DIR$/web/src/main/resources/local/database.properties" />
+        <option value="$PROJECT_DIR$/web/src/main/java/com/siemens/web/config/AppLocalConfig.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/com/siemens/core/config/JPAConfig.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/com/siemens/core/model/Student.java" />
         <option value="$PROJECT_DIR$/web/src/main/java/com/siemens/web/config/AppLocalConfig.java" />
@@ -1006,6 +1092,23 @@
             <path>
               <item name="SummerProject" type="b2602c69:ProjectViewProjectNode" />
               <item name="SummerProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="core" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SummerProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SummerProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="core" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="local" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SummerProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SummerProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -1058,6 +1161,16 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="web" type="462c0819:PsiDirectoryNode" />
               <item name="config" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SummerProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SummerProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="web" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="data_transfer_object" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="SummerProject" type="b2602c69:ProjectViewProjectNode" />
@@ -1368,7 +1481,11 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="58183000" />
+=======
+    <option name="totallyTimeSpent" value="53359000" />
+>>>>>>> cec30a57a53b07936aa8a2c57a11a3bc7cc53f6a
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1384,7 +1501,7 @@
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.3296582" />
-      <window_info anchor="bottom" id="Application Servers" order="8" weight="0.1069397" />
+      <window_info anchor="bottom" id="Application Servers" order="8" weight="0.10584344" />
       <window_info anchor="right" id="Maven Projects" order="3" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info id="Capture Tool" order="2" />
@@ -1399,29 +1516,72 @@
       <window_info id="Image Layers" order="2" />
       <window_info anchor="bottom" id="Java Enterprise" order="7" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
+<<<<<<< HEAD
+=======
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.31973538" />
+>>>>>>> cec30a57a53b07936aa8a2c57a11a3bc7cc53f6a
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.5016538" />
       <window_info anchor="bottom" id="Spring" order="9" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.33903134" />
+<<<<<<< HEAD
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23892617" />
+=======
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2359375" />
+>>>>>>> cec30a57a53b07936aa8a2c57a11a3bc7cc53f6a
       <window_info id="Web" order="2" side_tool="true" />
       <window_info anchor="right" id="Gradle" order="3" weight="0.56041664" />
       <window_info anchor="right" id="Theme Preview" order="3" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="sbt-shell-toolwindow" order="7" />
+      <window_info anchor="bottom" id="Spring" order="9" />
+      <window_info anchor="bottom" id="TypeScript" order="8" />
+      <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.33903134" />
+      <window_info id="UI Designer" order="2" />
+      <window_info anchor="bottom" id="Application Servers" order="8" weight="0.1069397" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2359375" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Gradle" order="3" weight="0.56041664" />
+      <window_info anchor="bottom" id="Build" order="7" weight="0.04189636" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32992035" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info id="Learn" order="2" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="sbt" order="4" />
+      <window_info anchor="right" id="Capture Analysis" order="3" />
+      <window_info anchor="bottom" id="sbt-shell-toolwindow" order="7" />
+      <window_info anchor="right" id="Maven Projects" order="3" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" id="CDI" order="4" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="right" id="Theme Preview" order="3" />
+      <window_info id="Image Layers" order="2" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.323043" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.3296582" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info id="Designer" order="2" />
+      <window_info anchor="bottom" id="Java Enterprise" order="7" />
       <window_info anchor="right" id="Bean Validation" order="5" />
+<<<<<<< HEAD
       <window_info anchor="bottom" id="Find" order="1" weight="0.32193732" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="TypeScript" order="8" />
       <window_info anchor="right" id="CDI" order="4" />
       <window_info anchor="bottom" id="Messages" order="8" weight="0.3296582" />
       <window_info anchor="bottom" id="Build" order="7" weight="0.04189636" />
+=======
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info id="Web" order="2" side_tool="true" />
+>>>>>>> cec30a57a53b07936aa8a2c57a11a3bc7cc53f6a
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.5016538" />
+      <window_info id="Capture Tool" order="2" />
+      <window_info anchor="bottom" id="Messages" order="8" weight="0.3296582" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1435,13 +1595,57 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+<<<<<<< HEAD
+=======
+    <entry file="file://$PROJECT_DIR$/web/src/main/webapp/src/app/home-page/home-page.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="16" column="4" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/main/webapp/src/app/home-page/home-page.component.spec.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/main/webapp/src/app/login-page/login-page.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="8" column="23" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/main/webapp/src/app/providers/auth.service.spec.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/main/webapp/src/app/stock-interogarion/main.service.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="714">
+          <caret line="35" column="53" selection-start-line="35" selection-start-column="53" selection-end-line="35" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/main/webapp/src/app/login-page/login-page.component.spec.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/main/webapp/src/app/login-page/login-page.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="798">
+          <caret line="41" column="20" selection-start-line="41" selection-start-column="9" selection-end-line="41" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/main/webapp/src/app/providers/auth.service.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="17" column="52" selection-start-line="17" selection-start-column="37" selection-end-line="17" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+>>>>>>> cec30a57a53b07936aa8a2c57a11a3bc7cc53f6a
     <entry file="file://$PROJECT_DIR$/src/main/java/ExAttila.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="588">
           <caret line="34" column="5" selection-start-line="34" selection-start-column="5" selection-end-line="34" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1516,9 +1720,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="441">
           <caret line="21" column="9" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1555,20 +1756,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="11">
           <caret line="47" column="1" selection-start-line="47" selection-start-column="1" selection-end-line="47" selection-end-column="1" />
+=======
+        <state relative-caret-position="-71">
+          <caret line="47" column="3" selection-start-line="47" selection-start-column="3" selection-end-line="47" selection-end-column="3" />
+>>>>>>> cec30a57a53b07936aa8a2c57a11a3bc7cc53f6a
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="204">
+=======
+        <state relative-caret-position="252">
+>>>>>>> cec30a57a53b07936aa8a2c57a11a3bc7cc53f6a
           <caret line="12" column="1" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="289">
           <caret line="17" column="6" selection-start-line="17" selection-start-column="6" selection-end-line="17" selection-end-column="6" />
         </state>
@@ -1580,10 +1791,21 @@
     <entry file="file://$PROJECT_DIR$/web/src/main/resources/local/database.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
+=======
+        <state relative-caret-position="210">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/main/resources/local/database.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+>>>>>>> cec30a57a53b07936aa8a2c57a11a3bc7cc53f6a
           <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/web/src/main/resources/local/db.properties">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1605,6 +1827,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="55" selection-start-column="55" selection-end-column="55" />
+=======
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/siemens/core/config/CacheConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-132">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+>>>>>>> cec30a57a53b07936aa8a2c57a11a3bc7cc53f6a
         </state>
       </provider>
     </entry>
@@ -1636,16 +1864,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/src/main/java/com/siemens/web/config/AppLocalConfig.java">
+    <entry file="file://$PROJECT_DIR$/web/src/main/java/com/siemens/web/config/WebConfig.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="1" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
+        <state relative-caret-position="186">
+          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/main/java/com/siemens/web/config/AppLocalConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state relative-caret-position="255">
+          <caret line="17" column="1" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
+=======
+        <state relative-caret-position="189">
+          <caret line="9" column="67" selection-start-line="9" selection-start-column="67" selection-end-line="9" selection-end-column="67" />
+>>>>>>> cec30a57a53b07936aa8a2c57a11a3bc7cc53f6a
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/core/src/main/java/com/siemens/core/model/Trust.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -1722,6 +1966,60 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+=======
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/siemens/core/service/StudentService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/siemens/core/service/StudentServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/siemens/core/model/BaseEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="319">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/siemens/core/repository/CatalogRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="14" column="17" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/siemens/core/model/Student.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="21">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/siemens/core/repository/StudentRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/resources/local/database.properties">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/com/siemens/core/config/JPAConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+>>>>>>> cec30a57a53b07936aa8a2c57a11a3bc7cc53f6a
         </state>
       </provider>
     </entry>
