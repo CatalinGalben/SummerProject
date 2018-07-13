@@ -5,6 +5,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import javafx.application.Platform;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -24,6 +25,7 @@ import java.sql.Driver;
 @Configuration
 @EnableJpaRepositories({"com.siemens.core.repository"})
 @EnableTransactionManagement
+@EnableCaching
 public class JPAConfig {
 
     @Value("${db.jdbcUrl}")
@@ -46,7 +48,7 @@ public class JPAConfig {
         config.setJdbcUrl(jdbcUrl);
         config.setUsername(username);
         config.setPassword(password);
-        config.setDriverClassName(Driver.class.getName());
+        config.setDriverClassName("org.postgresql.Driver");
         config.addDataSourceProperty("cachePrepStmt", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit","2048");
