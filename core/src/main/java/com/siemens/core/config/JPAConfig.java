@@ -3,7 +3,6 @@ package com.siemens.core.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import javafx.application.Platform;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +24,7 @@ import java.sql.Driver;
 @Configuration
 @EnableJpaRepositories({"com.siemens.core.repository"})
 @EnableTransactionManagement
-@EnableCaching
+//@EnableCaching
 public class JPAConfig {
 
     @Value("${db.jdbcUrl}")
