@@ -28,7 +28,7 @@ class Company extends BaseEntity<Long>{
     private Set<HoldingRecord> holdingRecords;
 
     @OneToOne(mappedBy = "company")
-    private SharePrice shareprice;
+    private SharePrice sharePrice;
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CompanyGroup> companyGroups;
