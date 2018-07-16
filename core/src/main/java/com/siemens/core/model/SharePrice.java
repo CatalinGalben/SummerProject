@@ -14,6 +14,8 @@ import javax.persistence.*;
 @Builder
 public class SharePrice extends BaseEntity<Long>{
 
+
+
     @OneToOne
     @JoinColumn(name = "companyid")
     private Company company;

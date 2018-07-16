@@ -11,7 +11,7 @@ import org.joda.time.DateTime;
 import java.util.Set;
 
 @Entity
-@Table(name="user")
+@Table(name="portfolio_user")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -36,10 +36,6 @@ public class User extends BaseEntity<Long>{
     private Set<HoldingRecord> holdingRecords;
 
 
-    @PrePersist
-    private void onCreate() {
-        dob = new DateTime();
-    }
 
     @PreUpdate
     private void onUpdate() {

@@ -7,21 +7,23 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+
 @Entity
-@Inheritance
-@Table(name="fund")
+@Table(name = "fund")
 @Getter
+@Inheritance(strategy = InheritanceType.JOINED)
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class Fund extends BaseEntity<Long>{
+public class Fund extends BaseEntity<Long>{
 
     @Column(name="nav")
     private String nav;
     @Column(name="ter")
     private String ter;
 
+
     @ManyToOne
-    @JoinColumn(name="holding_recordid", nullable=false)
+    @JoinColumn(name="holdingRecordid", nullable=false)
     private HoldingRecord holdingRecord;
 }

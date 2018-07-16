@@ -2,10 +2,7 @@ package com.siemens.core.model;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
@@ -22,6 +19,6 @@ public class Currency extends BaseEntity<Long> {
     @Column(name = "symbol")
     private String symbol;
 
-    @OneToMany(mappedBy = "currency")
+    @OneToMany(mappedBy = "currency", cascade = CascadeType.ALL)
     private Set<Company> companies;
 }

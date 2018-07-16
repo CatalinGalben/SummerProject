@@ -42,6 +42,7 @@ allprojects {
         testCompile group: 'junit', name: 'junit', version: '4.12'
 
         compile group: 'org.springframework', name: 'spring-context', version: "$springVersion"
+        compile 'joda-time:joda-time:2.9.4'
 
         //jdbctemplate
         compile group: 'org.springframework', name: 'spring-jdbc', version: "$springVersion"

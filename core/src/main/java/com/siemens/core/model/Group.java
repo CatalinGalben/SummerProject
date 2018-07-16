@@ -2,13 +2,10 @@ package com.siemens.core.model;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Set;
 @Entity
-@Table(name = "group")
+@Table(name = "share_group")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

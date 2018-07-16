@@ -14,9 +14,11 @@ import javax.persistence.*;
 @Setter
 public class CompanyGroup extends BaseEntity<Long> {
 
+
     @ManyToOne
     @JoinColumn(name = "companyid")
     private Company company;
+
 
     @ManyToOne
     @JoinColumn(name = "groupid")

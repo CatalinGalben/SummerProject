@@ -13,8 +13,7 @@ import java.util.Set;
 @Builder
 class Company extends BaseEntity<Long>{
 
-    @Column(name = "sid")
-    private String sid;
+
 
     @Column(name = "name")
     private String name;
@@ -31,8 +30,9 @@ class Company extends BaseEntity<Long>{
     @OneToOne(mappedBy = "company")
     private SharePrice shareprice;
 
-    @OneToMany(mappedBy = "company")
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CompanyGroup> companyGroups;
+
 
     @ManyToOne
     @JoinColumn(name = "currencyid")

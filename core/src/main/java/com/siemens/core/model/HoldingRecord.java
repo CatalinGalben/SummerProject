@@ -20,15 +20,17 @@ public class HoldingRecord extends BaseEntity<Long>{
     @JoinColumn(name="userid", nullable=false)
     private User user;
 
+
     @ManyToOne
     @JoinColumn(name="brokerid", nullable=false)
     private Broker broker;
+
 
     @ManyToOne
     @JoinColumn(name = "companyid")
     private Company company;
 
-    @OneToMany(mappedBy="holding_record")
+    @OneToMany(mappedBy = "holdingRecord", cascade = CascadeType.ALL)
     private Set<Fund> funds;
 
     @Column(name="pricePaid")

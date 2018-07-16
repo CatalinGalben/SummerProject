@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Table(name="trust")
 @Getter
 @Setter
+@PrimaryKeyJoinColumn(name = "fundid")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

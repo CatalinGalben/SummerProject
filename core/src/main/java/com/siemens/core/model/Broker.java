@@ -20,6 +20,6 @@ public class Broker extends BaseEntity<Long>{
     @Column(name="profit")
     private double profit;
 
-    @OneToMany(mappedBy="broker")
+    @OneToMany(mappedBy="broker", cascade = CascadeType.ALL)
     private Set<HoldingRecord> holdingRecords;
 }
