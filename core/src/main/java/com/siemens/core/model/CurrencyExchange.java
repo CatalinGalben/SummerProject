@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Builder
 @Setter
 @Getter
-public class CurrencyExchange extends BaseEntity<Long> {
+public class CurrencyExchange extends BaseEntity<Integer> {
 
 
     @Column(name = "currency1")

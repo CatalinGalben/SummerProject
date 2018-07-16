@@ -13,7 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Broker extends BaseEntity<Long>{
+public class Broker extends BaseEntity<Integer>{
 
     @Column(name="name")
     private String name;

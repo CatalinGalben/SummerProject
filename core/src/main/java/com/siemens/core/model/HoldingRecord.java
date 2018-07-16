@@ -13,7 +13,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class HoldingRecord extends BaseEntity<Long>{
+public class HoldingRecord extends BaseEntity<Integer>{
 
 
     @ManyToOne

@@ -9,10 +9,11 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class FundDTO {
+public class FundDTO extends BaseDTO{
     private String nav;
     private String ter;
     private HoldingRecordDTO holdingRecord;
+
 
     @Override
     public String toString() {

@@ -14,7 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class User extends BaseEntity<Long>{
+public class User extends BaseEntity<Integer>{
 
     @Column(name="firstName")
     private String firstName;

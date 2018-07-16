@@ -10,7 +10,7 @@ import java.util.Set;
 @Builder
 @Getter
 @Setter
-public class CurrencyDTO extends BaseDTO<Long> implements Serializable {
+public class CurrencyDTO extends BaseDTO{
 
     private String name;
     private String symbol;

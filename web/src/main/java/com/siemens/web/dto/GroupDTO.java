@@ -11,7 +11,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GroupDTO extends BaseDTO<Long> implements Serializable {
+public class GroupDTO extends BaseDTO {
     private String name;
     private GroupDTO parentGroup = null;
     private Set<CompanyGroupDTO> companyGroups;

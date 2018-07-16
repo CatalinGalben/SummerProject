@@ -12,7 +12,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class HoldingRecordDTO extends BaseDTO<Long> implements Serializable {
+public class HoldingRecordDTO extends BaseDTO {
     private UserDTO user;
     private BrokerDTO broker;
     private CompanyDTO company;

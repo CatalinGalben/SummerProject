@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Fund extends BaseEntity<Long>{
+public class Fund extends BaseEntity<Integer>{
 
     @Column(name="nav")
     private String nav;

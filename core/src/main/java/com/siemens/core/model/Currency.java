@@ -12,7 +12,7 @@ import java.util.Set;
 @Builder
 @Getter
 @Setter
-public class Currency extends BaseEntity<Long> {
+public class Currency extends BaseEntity<Integer> {
     @Column(name = "name")
     private String name;
 

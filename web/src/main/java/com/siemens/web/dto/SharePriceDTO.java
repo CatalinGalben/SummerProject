@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SharePriceDTO extends BaseDTO<Long> implements Serializable {
+public class SharePriceDTO extends BaseDTO {
     private CompanyDTO company;
     private int price;
     private DateTime date;

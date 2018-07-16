@@ -13,7 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class UserDTO {
+public class UserDTO extends BaseDTO {
     private String firstName;
     private String lastName;
     private String email;

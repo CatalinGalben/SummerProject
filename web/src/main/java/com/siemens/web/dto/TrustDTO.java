@@ -11,7 +11,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class TrustDTO extends BaseDTO<Long> implements Serializable {
+public class TrustDTO extends BaseDTO{
     private int gearing;
     private int premiumDiscount;
 

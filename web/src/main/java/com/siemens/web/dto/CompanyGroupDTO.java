@@ -9,16 +9,16 @@ import java.io.Serializable;
 @Builder
 @Getter
 @Setter
-public class CompanyGroupDTO extends BaseDTO<Long> implements Serializable {
+public class CompanyGroupDTO extends BaseDTO {
 
-    private CompanyDTO company;
-    private GroupDTO group;
+    private int companyid;
+    private int groupid;
 
     @Override
     public String toString() {
         return "CompanyGroupDTO{" +
-                "company=" + company +
-                ", group=" + group +
+                "companyid=" + companyid +
+                ", groupid=" + groupid +
                 '}';
     }
 }

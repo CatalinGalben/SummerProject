@@ -11,7 +11,7 @@ import java.util.Set;
 @Builder
 @Getter
 @Setter
-public class Group extends BaseEntity<Long> {
+public class Group extends BaseEntity<Integer> {
     @Column(name = "name")
     private String name;
 

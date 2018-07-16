@@ -11,7 +11,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EtfDTO extends BaseDTO<Long> implements Serializable {
+public class EtfDTO extends BaseDTO {
 
     private int type;
 

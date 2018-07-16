@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Builder
 @Getter
 @Setter
-public class CompanyGroup extends BaseEntity<Long> {
+public class CompanyGroup extends BaseEntity<Integer> {
 
 
     @ManyToOne

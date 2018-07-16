@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Builder
-public class SharePrice extends BaseEntity<Long>{
+public class SharePrice extends BaseEntity<Integer>{
 
 
 

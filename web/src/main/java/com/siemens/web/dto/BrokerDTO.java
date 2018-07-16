@@ -1,9 +1,7 @@
 package com.siemens.web.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import java.io.Serializable;
 import java.util.Set;
 
@@ -11,7 +9,8 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class BrokerDTO extends BaseDTO<Long> implements Serializable {
+@Builder
+public class BrokerDTO extends BaseDTO {
 
     private String name;
     private double profit;
