@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.joda.time.DateTime;
 
+import java.util.Set;
+
 @Entity
 @Table(name="user")
 @Getter
@@ -15,10 +17,7 @@ import org.joda.time.DateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User extends BaseEntity<Long>{
-    @Id
-    @Column(name="uid")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int uid;
+
     @Column(name="firstName")
     private String firstName;
     @Column(name="lastName")
@@ -33,14 +32,14 @@ public class User extends BaseEntity<Long>{
     private String type;
     @Column(name="dob")
     private DateTime dob;
+    @OneToMany(mappedBy = "user")
+    private Set<HoldingRecord> holdingRecords;
+
 
     @PrePersist
     private void onCreate() {
         dob = new DateTime();
     }
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, optional = false)
-    private Portfolio portfolio;
 
     @PreUpdate
     private void onUpdate() {

@@ -22,6 +22,6 @@ public abstract class Fund extends BaseEntity<Long>{
     private String ter;
 
     @ManyToOne
-    @JoinColumn(name="hid", nullable=false)
+    @JoinColumn(name="holding_recordid", nullable=false)
     private HoldingRecord holdingRecord;
 }

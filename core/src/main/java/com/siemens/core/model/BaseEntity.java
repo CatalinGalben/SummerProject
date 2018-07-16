@@ -6,9 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
-/**
- * Created by radu.
- */
+
 @MappedSuperclass
 public class BaseEntity<ID extends Serializable> implements Serializable {
 

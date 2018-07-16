@@ -19,12 +19,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-import java.sql.Driver;
+
 
 @Configuration
 @EnableJpaRepositories({"com.siemens.core.repository"})
 @EnableTransactionManagement
-//@EnableCaching
+@EnableCaching
 public class JPAConfig {
 
     @Value("${db.jdbcUrl}")

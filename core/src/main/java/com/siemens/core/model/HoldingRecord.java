@@ -2,10 +2,7 @@ package com.siemens.core.model;
 
 import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Set;
 
@@ -13,22 +10,23 @@ import java.util.Set;
 @Table(name="holding_record")
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class HoldingRecord extends BaseEntity<Long>{
 
-    @Id
-    @Column(name="hid")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int hid;
 
     @ManyToOne
-    @JoinColumn(name="pid", nullable=false)
-    private Portfolio portfolio;
+    @JoinColumn(name="userid", nullable=false)
+    private User user;
 
     @ManyToOne
-    @JoinColumn(name="bid", nullable=false)
+    @JoinColumn(name="brokerid", nullable=false)
     private Broker broker;
+
+    @ManyToOne
+    @JoinColumn(name = "companyid")
+    private Company company;
 
     @OneToMany(mappedBy="holding_record")
     private Set<Fund> funds;

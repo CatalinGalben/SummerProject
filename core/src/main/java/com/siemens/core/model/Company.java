@@ -1,18 +1,16 @@
 package com.siemens.core.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
-
+import java.util.Set;
+@Entity
 @Getter
 @Table (name = "company")
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
+@Builder
 class Company extends BaseEntity<Long>{
 
     @Column(name = "sid")
@@ -24,16 +22,21 @@ class Company extends BaseEntity<Long>{
     @Column(name = "PE")
     private  double PE;
 
-    @Column(name = "divYield")
-    private int divYield;
+    @Column(name = "dividendYield")
+    private int dividendYield;
 
-    @OneToOne
-    @JoinColumn(name = "hid")
-    private HoldingRecord holdingRecord;
+    @OneToMany(mappedBy = "company")
+    private Set<HoldingRecord> holdingRecords;
 
-    @OneToOne
-    @JoinColumn(name = "sid")
-    private Share share;
+    @OneToOne(mappedBy = "company")
+    private SharePrice shareprice;
+
+    @OneToMany(mappedBy = "company")
+    private Set<CompanyGroup> companyGroups;
+
+    @ManyToOne
+    @JoinColumn(name = "currencyid")
+    private Currency currency;
 
 }
 
