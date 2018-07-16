@@ -11,7 +11,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-class Company extends BaseEntity<Long>{
+public class Company extends BaseEntity<Long>{
 
 
 

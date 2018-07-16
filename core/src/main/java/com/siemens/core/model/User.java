@@ -2,10 +2,7 @@ package com.siemens.core.model;
 
 import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.joda.time.DateTime;
 
 import java.util.Set;
@@ -16,6 +13,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class User extends BaseEntity<Long>{
 
     @Column(name="firstName")
