@@ -1,24 +1,24 @@
-package com.siemens.web.data_transfer_object;
+package com.siemens.web.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
 
+@Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class EtfDTO extends BaseDTO<Long> implements Serializable {
+public class BaseDTO <ID extends Serializable> implements Serializable {
 
-    private int type;
+    private ID id;
 
     @Override
     public String toString() {
-        return "EtfDTO{" +
-                "type=" + type +
+        return "BaseDTO{" +
+                "id=" + id +
                 '}';
     }
 }

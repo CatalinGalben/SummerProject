@@ -1,4 +1,4 @@
-package com.siemens.web.data_transfer_object;
+package com.siemens.web.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
