@@ -1,9 +1,6 @@
 package com.siemens.web.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -11,14 +8,8 @@ import java.io.Serializable;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class BaseDTO <ID extends Serializable> implements Serializable {
+@ToString
+public class BaseDTO implements Serializable {
 
-    private ID id;
-
-    @Override
-    public String toString() {
-        return "BaseDTO{" +
-                "id=" + id +
-                '}';
-    }
+    private Integer id;
 }
