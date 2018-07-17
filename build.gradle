@@ -43,7 +43,7 @@ allprojects {
 
         compile group: 'org.springframework', name: 'spring-context', version: "$springVersion"
         compile 'joda-time:joda-time:2.9.4'
-
+        compile group: 'com.yahoofinance-api', name: 'YahooFinanceAPI', version: '3.13.0'
         //jdbctemplate
         compile group: 'org.springframework', name: 'spring-jdbc', version: "$springVersion"
 //        compile group: 'org.postgresql', name: 'postgresql', version: "$postgresqlVersion"

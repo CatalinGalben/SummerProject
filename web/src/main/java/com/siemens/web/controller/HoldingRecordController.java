@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @RestController
 public class HoldingRecordController {
     private static final Logger log = LoggerFactory.getLogger(HoldingRecordController.class);
@@ -33,6 +37,13 @@ public class HoldingRecordController {
     @Autowired
     private HoldingRecordConverter holdingRecordConverter;
 
+    @RequestMapping(value = "/records", method = RequestMethod.GET)
+    public Set<HoldingRecordDTO> getRecords()
+    {
+        List<HoldingRecord> records = holdingRecordServiceInterface.getAllRecords();
+
+        return new HashSet<>(holdingRecordConverter.convertModelsToDtos(records));
+    }
 
     @RequestMapping(value = "/records/add", method = RequestMethod.POST)
     public HoldingRecordDTO createHoldingRecord(@RequestBody final HoldingRecordDTO holdingRecordDTO)
@@ -43,5 +54,12 @@ public class HoldingRecordController {
         HoldingRecord savedHoldingRecord = holdingRecordServiceInterface
                 .createRecord(user, broker, company, holdingRecordDTO.getPricePaid(), holdingRecordDTO.getNoShares());
         return holdingRecordConverter.convertModelToDto(savedHoldingRecord);
+    }
+
+
+    @RequestMapping(value = "/records/liquidate", method = RequestMethod.DELETE)
+    public void liquidateRecord(String symbol)
+    {
+       holdingRecordServiceInterface.liquidate(symbol);
     }
 }

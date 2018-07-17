@@ -1,14 +1,12 @@
 package com.siemens.core.service;
 
-import com.siemens.core.model.Broker;
-import com.siemens.core.model.Company;
-import com.siemens.core.model.HoldingRecord;
-import com.siemens.core.model.User;
-import com.siemens.core.repository.BrokerRepository;
-import com.siemens.core.repository.CompanyRepository;
-import com.siemens.core.repository.HoldingRecordRepository;
+import com.siemens.core.model.*;
+import com.siemens.core.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
@@ -19,6 +17,10 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
     private CompanyRepository companyRepository;
     @Autowired
     private BrokerRepository brokerRepository;
+    @Autowired
+    private SharePriceRepository sharePriceRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public HoldingRecord createRecord(User user, Broker broker, Company company, Double paidPrice, Integer noShares)
@@ -35,8 +37,35 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
     }
 
     @Override
-    public void liquidate()
+    public List<HoldingRecord> getAllRecords()
     {
-        //ToDo
+        return holdingRecordRepository.findAll();
+    }
+
+    @Override
+    public void liquidate(String symbol)
+    {
+        List<Company> listCompany = companyRepository.findAll();
+        Optional<Company> companyOptional = listCompany.stream().filter(c -> c.getName().equals(symbol.toUpperCase()))
+                .findFirst();
+        Company company;
+
+        company = companyOptional.get();
+        Optional<HoldingRecord> optionalRecord = holdingRecordRepository
+                .findAll().stream().filter(hr -> hr.getCompany().getId().equals(company.getId())).findFirst();
+
+        HoldingRecord record = optionalRecord.get();
+
+        Optional<User> optionalUser = userRepository
+                .findAll().stream().filter(u->u.getId().equals(record.getUser().getId())).findFirst();
+        User user = optionalUser.get();
+
+        SharePrice sharePrice = sharePriceRepository
+                .findAll().stream().filter(sp -> sp.getCompany().getId().equals(company.getId())).findFirst().get();
+
+        user.setBalance(
+                user.getBalance() + sharePrice.getPrice() * record.getNoShares()
+        );
+        holdingRecordRepository.delete(record);
     }
 }
