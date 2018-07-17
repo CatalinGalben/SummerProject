@@ -10,7 +10,7 @@ import lombok.*;
 public class FundDTO extends BaseDTO{
     private float nav;
     private float ter;
-    private int holdingRecordid;
+    private int companyId;
 
     public FundDTO(float nav, float ter)
     {
@@ -21,9 +21,9 @@ public class FundDTO extends BaseDTO{
     @Override
     public String toString() {
         return "FundDTO{" +
-                "nav=" + nav +
-                ", ter=" + ter +
-                ", holdingRecordid=" + holdingRecordid +
+                "nav = " + nav +
+                ", ter = " + ter +
+                ", companyId =" + companyId +
                 '}';
     }
 }

@@ -12,12 +12,12 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@Builder(builderMethodName = "fundBuilder")
 public class Fund extends BaseEntity<Integer>{
 
-    @Column(name="nav")
+    @Column(name = "nav")
     private float nav;
-    @Column(name="ter")
+    @Column(name = "ter")
     private float ter;
 
     public Fund(float nav, float ter) {
@@ -26,6 +26,6 @@ public class Fund extends BaseEntity<Integer>{
     }
 
     @ManyToOne
-    @JoinColumn(name="holdingRecordid", nullable=false)
-    private HoldingRecord holdingRecord;
+    @JoinColumn(name="holdingRecordId", nullable=false)
+    private Company company;
 }

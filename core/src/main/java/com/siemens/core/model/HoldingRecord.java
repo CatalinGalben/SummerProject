@@ -17,12 +17,12 @@ public class HoldingRecord extends BaseEntity<Integer>{
 
 
     @ManyToOne
-    @JoinColumn(name="userid", nullable=false)
+    @JoinColumn(name = "userid", nullable=false)
     private User user;
 
 
     @ManyToOne
-    @JoinColumn(name="brokerid", nullable=false)
+    @JoinColumn(name = "brokerid", nullable=false)
     private Broker broker;
 
 
@@ -30,13 +30,11 @@ public class HoldingRecord extends BaseEntity<Integer>{
     @JoinColumn(name = "companyid")
     private Company company;
 
-    @OneToMany(mappedBy = "holdingRecord", cascade = CascadeType.ALL)
-    private Set<Fund> funds;
 
-    @Column(name="pricePaid")
+    @Column(name = "pricePaid")
     private double pricePaid;
 
-    @Column(name="noShares")
+    @Column(name = "noShares")
     private int noShares;
 
 }

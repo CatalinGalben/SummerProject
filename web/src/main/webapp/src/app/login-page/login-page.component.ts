@@ -32,6 +32,7 @@ export class LoginPageComponent implements OnInit {
       return;
     }
     this.authService.createNewAccount(email, password);
+
   }
   registerClicked()
   {

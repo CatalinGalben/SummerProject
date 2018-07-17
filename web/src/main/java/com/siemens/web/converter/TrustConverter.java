@@ -9,7 +9,7 @@ public class TrustConverter extends AbstractConverterBaseEntity<Trust, TrustDTO>
 
     @Override
     public Trust convertDtoToModel(TrustDTO trustDTO){
-        Trust trust = Trust.builder()
+        Trust trust = Trust.trustBuilder()
                 .nav(trustDTO.getNav())
                 .ter(trustDTO.getTer())
                 .gearing(trustDTO.getGearing())
@@ -21,7 +21,7 @@ public class TrustConverter extends AbstractConverterBaseEntity<Trust, TrustDTO>
 
     @Override
     public TrustDTO convertModelToDto(Trust trust){
-        TrustDTO trustDTO = TrustDTO.builder()
+        TrustDTO trustDTO = TrustDTO.trustDtoBuilder()
                 .nav(trust.getNav())
                 .ter(trust.getTer())
                 .gearing(trust.getGearing())

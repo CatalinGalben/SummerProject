@@ -10,7 +10,7 @@ public class EtfConverter extends AbstractConverterBaseEntity<Etf, EtfDTO> {
 
     @Override
     public Etf convertDtoToModel(EtfDTO etfDTO) {
-        Etf etf = Etf.builder()
+        Etf etf = Etf.etfBuilder()
                 .type(etfDTO.getType())
                 .nav(etfDTO.getNav())
                 .ter(etfDTO.getTer())
@@ -22,7 +22,7 @@ public class EtfConverter extends AbstractConverterBaseEntity<Etf, EtfDTO> {
     @Override
     public EtfDTO convertModelToDto(Etf etf)
     {
-        EtfDTO etfDTO = EtfDTO.builder()
+        EtfDTO etfDTO = EtfDTO.etfDtoBuilder()
                 .type(etf.getType())
                 .nav(etf.getNav())
                 .ter(etf.getTer())

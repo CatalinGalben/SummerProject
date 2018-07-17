@@ -13,7 +13,7 @@ public class TrustDTO extends FundDTO {
     private float gearing;
     private float premiumDiscount;
 
-    @Builder
+    @Builder(builderMethodName = "trustDtoBuilder")
     public TrustDTO (float nav, float ter, float gearing, float premiumDiscount){
         super(nav, ter);
         this.gearing = gearing;

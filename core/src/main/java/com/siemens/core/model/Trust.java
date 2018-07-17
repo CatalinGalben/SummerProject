@@ -19,7 +19,7 @@ public class Trust extends Fund {
     @Column(name="premiumDiscount")
     private float premiumDiscount;
 
-    @Builder
+    @Builder(builderMethodName = "trustBuilder")
     public Trust(float nav, float ter, float gearing, float premiumDiscount){
         super(nav, ter);
         this.gearing = gearing;
