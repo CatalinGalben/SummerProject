@@ -30,6 +30,8 @@ public class User extends BaseEntity<Integer>{
     private String type;
     @Column(name="dob")
     private DateTime dob;
+    @Column(name="balance")
+    private double balance;
     @OneToMany(mappedBy = "user")
     private Set<HoldingRecord> holdingRecords;
 

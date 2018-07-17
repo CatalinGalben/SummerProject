@@ -22,7 +22,7 @@ public class Company extends BaseEntity<Integer>{
     private  double PE;
 
     @Column(name = "dividendYield")
-    private int dividendYield;
+    private float dividendYield;
 
     @OneToMany(mappedBy = "company")
     private Set<HoldingRecord> holdingRecords;

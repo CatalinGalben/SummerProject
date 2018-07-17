@@ -1,9 +1,6 @@
 package com.siemens.web.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.joda.time.DateTime;
 
 import java.util.Set;
@@ -12,7 +9,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
+@Builder
 public class UserDTO extends BaseDTO {
     private String firstName;
     private String lastName;
@@ -21,6 +18,7 @@ public class UserDTO extends BaseDTO {
     private String password;
     private String type;
     private DateTime dob;
+    private double balance;
     private Set<HoldingRecordDTO> holdingRecords;
 
     @Override
@@ -33,6 +31,7 @@ public class UserDTO extends BaseDTO {
                 ", password='" + password + '\'' +
                 ", type='" + type + '\'' +
                 ", dob=" + dob +
+                ", balance=" + balance +
                 ", holdingRecords=" + holdingRecords +
                 '}';
     }

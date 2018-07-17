@@ -1,26 +1,29 @@
 package com.siemens.web.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class FundDTO extends BaseDTO{
-    private String nav;
-    private String ter;
-    private HoldingRecordDTO holdingRecord;
+    private float nav;
+    private float ter;
+    private int holdingRecordid;
 
+    public FundDTO(float nav, float ter)
+    {
+        this.nav = nav;
+        this.ter = ter;
+    }
 
     @Override
     public String toString() {
         return "FundDTO{" +
-                "nav='" + nav + '\'' +
-                ", ter='" + ter + '\'' +
-                ", holdingRecord=" + holdingRecord +
+                "nav=" + nav +
+                ", ter=" + ter +
+                ", holdingRecordid=" + holdingRecordid +
                 '}';
     }
 }

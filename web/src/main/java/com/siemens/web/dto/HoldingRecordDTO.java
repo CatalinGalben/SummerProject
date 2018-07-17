@@ -1,9 +1,7 @@
 package com.siemens.web.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import java.io.Serializable;
 import java.util.Set;
 
@@ -12,10 +10,11 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class HoldingRecordDTO extends BaseDTO {
-    private UserDTO user;
-    private BrokerDTO broker;
-    private CompanyDTO company;
+    private int userid;
+    private int brokerid;
+    private int companyid;
     private Set<FundDTO> funds;
     private double pricePaid;
     private int noShares;
@@ -23,9 +22,9 @@ public class HoldingRecordDTO extends BaseDTO {
     @Override
     public String toString() {
         return "HoldingRecordDTO{" +
-                "user=" + user +
-                ", broker=" + broker +
-                ", company=" + company +
+                "userid=" + userid +
+                ", brokerid=" + brokerid +
+                ", companyid=" + companyid +
                 ", funds=" + funds +
                 ", pricePaid=" + pricePaid +
                 ", noShares=" + noShares +

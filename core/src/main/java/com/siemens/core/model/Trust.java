@@ -12,12 +12,18 @@ import javax.persistence.*;
 @PrimaryKeyJoinColumn(name = "fundid")
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class Trust extends Fund {
 
     @Column(name="gearing")
-    private int gearing;
+    private float gearing;
     @Column(name="premiumDiscount")
-    private int premiumDiscount;
+    private float premiumDiscount;
+
+    @Builder
+    public Trust(float nav, float ter, float gearing, float premiumDiscount){
+        super(nav, ter);
+        this.gearing = gearing;
+        this.premiumDiscount = premiumDiscount;
+    }
 
 }

@@ -13,12 +13,12 @@ import java.util.Set;
 public class CompanyDTO extends BaseDTO{
 
     private String name;
-    private  double PE;
-    private int dividendYield;
+    private double PE;
+    private float dividendYield;
     private Set<HoldingRecordDTO> holdingRecords;
-    private SharePriceDTO sharePrice;
+    private int sharePriceid;
     private Set<CompanyGroupDTO> companyGroups;
-    private CurrencyDTO currency;
+    private int currencyid;
 
     @Override
     public String toString() {
@@ -27,9 +27,9 @@ public class CompanyDTO extends BaseDTO{
                 ", PE=" + PE +
                 ", dividendYield=" + dividendYield +
                 ", holdingRecords=" + holdingRecords +
-                ", shareprice=" + sharePrice +
+                ", sharePriceid=" + sharePriceid +
                 ", companyGroups=" + companyGroups +
-                ", currency=" + currency +
+                ", currencyid=" + currencyid +
                 '}';
     }
 }

@@ -12,8 +12,8 @@ import java.io.Serializable;
 @Getter
 public class CurrencyExchangeDTO extends BaseDTO {
 
-    private Integer currencyid1;
-    private Integer currencyid2;
+    private int currencyid1;
+    private int currencyid2;
     private int factor;
     private DateTime dateOfExchange;
 

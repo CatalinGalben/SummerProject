@@ -4,6 +4,8 @@ import com.siemens.core.model.Company;
 import com.siemens.web.dto.CompanyDTO;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class CompanyConverter extends AbstractConverterBaseEntity<Company, CompanyDTO> {
 
@@ -12,7 +14,9 @@ public class CompanyConverter extends AbstractConverterBaseEntity<Company, Compa
         Company company = Company.builder()
                 .name(companyDTO.getName())
                 .PE(companyDTO.getPE())
+                .sharePrice(null)
                 .dividendYield(companyDTO.getDividendYield())
+                .currency(null)
                 .build();
         company.setId(companyDTO.getId());
         return company;
@@ -23,7 +27,9 @@ public class CompanyConverter extends AbstractConverterBaseEntity<Company, Compa
         CompanyDTO companyDTO = CompanyDTO.builder()
                 .name(company.getName())
                 .PE(company.getPE())
+                .currencyid(company.getCurrency().getId())
                 .dividendYield(company.getDividendYield())
+                .currencyid(company.getCurrency().getId())
                 .build();
         companyDTO.setId(company.getId());
         return companyDTO;

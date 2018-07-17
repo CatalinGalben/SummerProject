@@ -20,7 +20,10 @@ public class CompanyGroupConverter extends AbstractConverterBaseEntity<CompanyGr
 
     @Override
     public CompanyGroup convertDtoToModel(CompanyGroupDTO companyGroupDTO){
-        //todo
+        CompanyGroup companyGroup = CompanyGroup.builder()
+                .company(null)
+                .group(null)
+                .build();
         return null;
     }
 }

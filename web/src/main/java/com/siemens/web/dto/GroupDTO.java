@@ -1,9 +1,7 @@
 package com.siemens.web.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import java.io.Serializable;
 import java.util.Set;
 
@@ -11,16 +9,17 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class GroupDTO extends BaseDTO {
     private String name;
-    private GroupDTO parentGroup = null;
+    private int parentGroupID = 0;
     private Set<CompanyGroupDTO> companyGroups;
 
     @Override
     public String toString() {
         return "GroupDTO{" +
                 "name='" + name + '\'' +
-                ", parentGroup=" + parentGroup +
+                ", parentGroupID=" + parentGroupID +
                 ", companyGroups=" + companyGroups +
                 '}';
     }

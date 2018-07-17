@@ -1,19 +1,23 @@
 package com.siemens.web.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class EtfDTO extends BaseDTO {
+@Getter
+public class EtfDTO extends FundDTO {
 
     private int type;
+
+    @Builder
+    public EtfDTO(float nav, float ter, int type)
+    {
+        super(nav, ter);
+        this.type=type;
+    }
 
     @Override
     public String toString() {

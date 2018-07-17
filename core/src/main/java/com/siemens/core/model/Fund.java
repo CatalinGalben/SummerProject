@@ -1,9 +1,6 @@
 package com.siemens.core.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -15,13 +12,18 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Fund extends BaseEntity<Integer>{
 
     @Column(name="nav")
-    private String nav;
+    private float nav;
     @Column(name="ter")
-    private String ter;
+    private float ter;
 
+    public Fund(float nav, float ter) {
+        this.nav = nav;
+        this.ter = ter;
+    }
 
     @ManyToOne
     @JoinColumn(name="holdingRecordid", nullable=false)
