@@ -37,6 +37,6 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
     @Override
     public void liquidate()
     {
-
+        //ToDo
     }
 }
