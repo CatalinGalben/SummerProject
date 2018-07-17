@@ -12,7 +12,7 @@ public class EtfDTO extends FundDTO {
 
     private int type;
 
-    @Builder
+    @Builder(builderMethodName = "etfDtoBuilder")
     public EtfDTO(float nav, float ter, int type)
     {
         super(nav, ter);

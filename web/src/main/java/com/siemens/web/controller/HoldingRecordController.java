@@ -32,6 +32,8 @@ public class HoldingRecordController {
     private UserServiceInterface userServiceInterface;
     @Autowired
     private HoldingRecordConverter holdingRecordConverter;
+
+
     @RequestMapping(value = "/records/add", method = RequestMethod.POST)
     public HoldingRecordDTO createHoldingRecord(@RequestBody final HoldingRecordDTO holdingRecordDTO)
     {

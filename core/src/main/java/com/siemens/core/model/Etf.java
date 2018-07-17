@@ -11,16 +11,17 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Etf extends Fund{
 
     @Column(name="type")
     private int type;
 
-    @Builder
+    @Builder(builderMethodName = "etfBuilder")
     public Etf(float nav, float ter, int type)
     {
         super(nav, ter);
-        this.type=type;
+        this.type = type;
     }
 }
 

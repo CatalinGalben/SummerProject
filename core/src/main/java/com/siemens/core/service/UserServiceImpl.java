@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserServiceInterface{
                 .username( username )
                 .password( password )
                 .dob( dob )
-                .income( income )
+                .balance( income )
                 .build();
         return userRepository.save( user );
     }

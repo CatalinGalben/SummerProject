@@ -9,10 +9,9 @@ public class FundConverter extends AbstractConverterBaseEntity<Fund, FundDTO> {
 
     @Override
     public Fund convertDtoToModel(FundDTO fundDTO){
-        Fund fund = Fund.builder()
+        Fund fund = Fund.fundBuilder()
                 .nav(fundDTO.getNav())
                 .ter(fundDTO.getTer())
-                .holdingRecord(null)
                 .build();
         fund.setId(fundDTO.getId());
         return fund;
@@ -23,7 +22,6 @@ public class FundConverter extends AbstractConverterBaseEntity<Fund, FundDTO> {
         FundDTO fundDTO = FundDTO.builder()
                 .nav(fund.getNav())
                 .ter(fund.getTer())
-                .holdingRecordid(fund.getHoldingRecord().getId())
                 .build();
         fundDTO.setId(fund.getId());
         return fundDTO;
