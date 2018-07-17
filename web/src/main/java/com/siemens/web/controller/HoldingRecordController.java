@@ -8,6 +8,7 @@ import com.siemens.core.service.BrokerServiceInterface;
 import com.siemens.core.service.CompanyServiceInterface;
 import com.siemens.core.service.HoldingRecordServiceInterface;
 import com.siemens.core.service.UserServiceInterface;
+import com.siemens.web.converter.HoldingRecordConverter;
 import com.siemens.web.dto.HoldingRecordDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,14 +30,16 @@ public class HoldingRecordController {
     private HoldingRecordServiceInterface holdingRecordServiceInterface;
     @Autowired
     private UserServiceInterface userServiceInterface;
+    @Autowired
+    private HoldingRecordConverter holdingRecordConverter;
     @RequestMapping(value = "/records/add", method = RequestMethod.POST)
     public HoldingRecordDTO createHoldingRecord(@RequestBody final HoldingRecordDTO holdingRecordDTO)
     {
-        Company company = companyServiceInterface.findById(holdingRecordDTO.getCompany()); //modify to get ids
-        Broker broker = brokerServiceInterface.findById(holdingRecordDTO.getBroker());
-        User user = userServiceInterface.findById(holdingRecordDTO.getUser());
-        HoldingRecord savedholdingRecord = holdingRecordServiceInterface
+        Company company = companyServiceInterface.findById(holdingRecordDTO.getCompanyid()); //modify to get ids
+        Broker broker = brokerServiceInterface.findById(holdingRecordDTO.getBrokerid());
+        User user = userServiceInterface.findById(holdingRecordDTO.getUserid());
+        HoldingRecord savedHoldingRecord = holdingRecordServiceInterface
                 .createRecord(user, broker, company, holdingRecordDTO.getPricePaid(), holdingRecordDTO.getNoShares());
-        return
+        return holdingRecordConverter.convertModelToDto(savedHoldingRecord);
     }
 }
