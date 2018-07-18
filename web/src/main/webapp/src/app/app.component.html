@@ -1,12 +1,21 @@
-<div class="container">
+
+
+<app-menu [@slideInOut]="menuState"></app-menu>
+
+<div>
   <nav class="navbar navbar-default navbar-fixed-top">
+
+    <button (click)="toggleMenu()" class="hamburger">
+      <span>toggle menu</span>
+    </button>
     <div class="navbar-header">
       <a class="navbar-brand" href="http://siemens.com">Siemens</a>
     </div>
 
     <div *ngIf="isLoggedIn">
       <p class="navbar-text navbar-right">
-        Logged in: <b>{{user_displayName==null?user_email:user_displayName}}</b><br> {{user_displayName==null?null:user_email}}
+        Logged in: <b>{{user_displayName==null?user_email:user_displayName}} &nbsp;&nbsp;&nbsp;&nbsp;</b>{{user_displayName==null?null:user_email}}
+        <button class ="btn btn-primary button" id="btnLogOut" (click)="logout()">Log Out</button>
       </p>
     </div>
     <div *ngIf="!isLoggedIn">
@@ -14,5 +23,9 @@
     </div>
 
   </nav>
-  <router-outlet></router-outlet>
+
+  <br>
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
 </div>
