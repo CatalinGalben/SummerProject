@@ -19,6 +19,10 @@ public class Broker extends BaseEntity<Integer>{
     private String name;
     @Column(name="profit")
     private double profit;
+    @Column(name="dividendFee")
+    private float dividendFee;
+    @Column(name="shareFee")
+    private float shareFee;
 
     @OneToMany(mappedBy="broker", cascade = CascadeType.ALL)
     private Set<HoldingRecord> holdingRecords;
