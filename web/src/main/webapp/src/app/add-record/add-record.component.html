@@ -2,22 +2,35 @@
   <div class="form-group">
     <label class="col-sm-2 control-label">Name</label>
     <div class="col-sm-10">
-      <input class="form-control" type="text" placeholder="ETR.SIE" #name>
-    </div>
-
-
-    <label class="col-sm-2 control-label">Price Paid</label>
-    <div class="col-sm-10">
-      <input class="form-control" type="number" placeholder="12000" #price>
+      <input class="form-control" type="text" placeholder="Company symbol" #name>
     </div>
 
 
     <label class="col-sm-2 control-label">No. Shares</label>
     <div class="col-sm-10">
-      <input class="form-control" type="number" placeholder="200" #noShares>
+      <input class="form-control" type="number" placeholder="Number of shares you want to buy" #noShares>
     </div>
+
+    <label class="col-sm-2 control-label">Share Price</label>
+    <div class="col-sm-10">
+      <input *ngIf="existsSharePrice" class="form-control" type="number" value="{{price}}" disabled>
+      <input *ngIf="!existsSharePrice" class="form-control" type="number" placeholder="Insert your share price here (in case the share price is not found)" #price>
+    </div>
+
+    <label class="col-sm-2 control-label">Dividend Yield</label>
+    <div class="col-sm-10">
+      <input *ngIf="existsDividendYield" class="form-control" type="number" value="{{divYield}}" disabled>
+      <input *ngIf="!existsDividendYield" class="form-control" type="number" placeholder="Insert the dividend yield ration here (in case the dividend yield is not found)" #divYield>
+    </div>
+
+    <label class="col-sm-2 control-label">Price to Earning ratio</label>
+    <div class="col-sm-10">
+      <input *ngIf="existsPE" class="form-control" type="number" value="{{PE}}" disabled>
+      <input *ngIf="!existsPE" class="form-control" type="number" placeholder="Insert the PE ratio here (in case the PE ratio is not found)" #PE>
+    </div>
+
   </div>
 
 </form>
 
-<button class ="btn btn-primary" id="btnAdd" (click)="saveDetails(name.value, price.value, noShares.value)">Add</button>
+<button class ="btn btn-primary" id="btnAdd" (click)="saveDetails(name.value, price.value, noShares.value, divYield.value, PE.value)">Add</button>

@@ -15,7 +15,6 @@ public class HoldingRecordDTO extends BaseDTO {
     private int userid;
     private int brokerid;
     private int companyid;
-    private Set<FundDTO> funds;
     private double pricePaid;
     private int noShares;
 
@@ -25,7 +24,6 @@ public class HoldingRecordDTO extends BaseDTO {
                 "userid=" + userid +
                 ", brokerid=" + brokerid +
                 ", companyid=" + companyid +
-                ", funds=" + funds +
                 ", pricePaid=" + pricePaid +
                 ", noShares=" + noShares +
                 '}';
