@@ -13,10 +13,7 @@ import com.siemens.web.dto.HoldingRecordDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.List;
@@ -45,10 +42,10 @@ public class HoldingRecordController {
         return new HashSet<>(holdingRecordConverter.convertModelsToDtos(records));
     }
 
-    @RequestMapping(value = "/records/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/holdingrecords/add", method = RequestMethod.POST)
     public HoldingRecordDTO createHoldingRecord(@RequestBody final HoldingRecordDTO holdingRecordDTO)
     {
-        Company company = companyServiceInterface.findById(holdingRecordDTO.getCompanyid()); //modify to get ids
+        Company company = companyServiceInterface.findById(holdingRecordDTO.getCompanyid());
         Broker broker = brokerServiceInterface.findById(holdingRecordDTO.getBrokerid());
         User user = userServiceInterface.findById(holdingRecordDTO.getUserid());
         HoldingRecord savedHoldingRecord = holdingRecordServiceInterface
@@ -61,5 +58,16 @@ public class HoldingRecordController {
     public void liquidateRecord(String symbol)
     {
        holdingRecordServiceInterface.liquidate(symbol);
+    }
+
+    @RequestMapping(value = "/records/addshares/{userKey}/{shareKey}/{recordKey}", method = RequestMethod.PUT)
+    public Set<HoldingRecordDTO> addToRecord(
+            @PathVariable final int userKey, @PathVariable final int shareKey,
+            @PathVariable final int recordKey, @RequestBody final int noShares
+    ){
+        List<HoldingRecord> updatedRecords = holdingRecordServiceInterface.
+                addToRecord(recordKey, userKey, noShares, shareKey);
+
+        return new HashSet<>(holdingRecordConverter.convertModelsToDtos(updatedRecords));
     }
 }

@@ -45,4 +45,13 @@ public class UserServiceImpl implements UserServiceInterface{
         return userRepository.getOne(key);
     }
 
+    @Override
+    public User setAmountOfCash(Integer key, Integer value)
+    {
+        User user = userRepository.getOne(key);
+        user.setBalance(value);
+
+        return user;
+    }
+
 }

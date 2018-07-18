@@ -6,10 +6,7 @@ import com.siemens.core.service.UserServiceInterface;
 import com.siemens.web.converter.UserConverter;
 import com.siemens.web.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserController {
@@ -34,5 +31,13 @@ public class UserController {
         );
 
         return userConverter.convertModelToDto(savedUser);
+    }
+
+    @RequestMapping(value = "users/{key}", method = RequestMethod.PUT)
+    public UserDTO setCash(@PathVariable final int key, @RequestBody final int value)
+    {
+        User updatedUser = userServiceInterface.setAmountOfCash(key, value);
+
+        return userConverter.convertModelToDto(updatedUser);
     }
 }

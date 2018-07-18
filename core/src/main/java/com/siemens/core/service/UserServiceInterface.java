@@ -15,5 +15,7 @@ public interface UserServiceInterface {
             DateTime dob);
     User findById(Integer key);
 
+    User setAmountOfCash(Integer id,Integer value);
+
 
 }
