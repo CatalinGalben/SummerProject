@@ -12,7 +12,7 @@
     <input #email>
   </div>
   <div>
-    <label>Password:</label>
+    <label >Password:</label>
     <br>
     <input type="password" #pass>
   </div>
@@ -24,13 +24,22 @@
   <div *ngIf="showRegister">
     <br>
     <br>
-    <label>Email:</label>
-    <input #regEmail><br>
-    <label>Password:</label>
-    <input type="password" #regPassword><br>
-    <label>Confirm password:</label>
+
+    <label class="col-sm-2 control-label">First Name</label>
+    <input #firstName><br>
+    <label class="col-sm-2 control-label">Last Name</label>
+    <input #lastName><br>
+    <label class="col-sm-2 control-label">Email</label>
+    <input #email><br>
+    <label class="col-sm-2 control-label">Username</label>
+    <input #username><br>
+    <label class="col-sm-2 control-label">Password:</label>
+    <input type="password" #password><br>
+    <label class="col-sm-2 control-label">Confirm password:</label>
     <input type="password" #confirmPassword><br>
-    <button class="button button1" (click)="saveDetails(regEmail.value, regPassword.value, confirmPassword.value)">Create Account</button>
+    <label class="col-sm-2 control-label">Date of Birth</label>
+    <input #DOB placeholder="Format: 31/01/2018"><br>
+    <button class="button button1" (click)="saveDetails(firstName.value, lastName.value, email.value, username.value, password.value, confirmPassword.value, DOB.value)">Create Account</button>
   </div>
 
 </div>

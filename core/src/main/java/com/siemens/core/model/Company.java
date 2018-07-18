@@ -24,7 +24,6 @@ public class Company extends BaseEntity<Integer>{
     @Column(name = "dividendYield")
     private float dividendYield;
 
-
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
     private Set<Fund> funds;
 

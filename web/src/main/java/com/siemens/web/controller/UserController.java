@@ -25,7 +25,7 @@ public class UserController {
                 userDTO.getEmail(),
                 userDTO.getUsername(),
                 userDTO.getPassword(),
-                userDTO.getType(),
+                "user",
                 userDTO.getBalance(),
                 userDTO.getDob()
         );
