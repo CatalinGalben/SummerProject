@@ -15,11 +15,18 @@ import {StockInterogarionComponent} from "./stock-interogarion/stock-interogario
 import {FormsModule} from "@angular/forms";
 import {MainService} from "./stock-interogarion/main.service";
 import {HttpModule} from "@angular/http";
+import { PortfolioComponent } from './portfolio/portfolio.component';
+import { AddRecordComponent } from './add-record/add-record.component';
+import { MenuComponent } from './menu/menu.component';
+import {BrowserAnimationsModule, NoopAnimationsModule} from "@angular/platform-browser/animations";
 
 const routes: Routes=[
-  {path: '', component: HomePageComponent},
+  {path: 'homePage', component: HomePageComponent},
+  {path: '', component: PortfolioComponent},
   {path: 'loginGoogle', component: LoginPageComponent},
-  {path: 'interrogate', component: StockInterogarionComponent}
+  {path: 'interrogate', component: StockInterogarionComponent},
+  {path: 'portfolio', component: PortfolioComponent},
+  {path: 'addRecord', component: AddRecordComponent}
 ];
 
 
@@ -28,7 +35,10 @@ const routes: Routes=[
     AppComponent,
     StockInterogarionComponent,
     LoginPageComponent,
-    HomePageComponent
+    HomePageComponent,
+    PortfolioComponent,
+    AddRecordComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +46,10 @@ const routes: Routes=[
     AngularFireDatabaseModule,
     HttpModule,
     FormsModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+
+    BrowserAnimationsModule,
+    NoopAnimationsModule
   ],
   providers: [AuthService, AngularFireAuth, MainService],
   bootstrap: [AppComponent]

@@ -1,15 +1,26 @@
-<div class="container" >
+<div class="container">
   <h1>Login to your Account</h1>
-  <button class="btn btn-default" (click)="loginGoogle()">Login with Google</button>
+  <br>
+
+  <button class="btn btn-default button1 " (click)="loginGoogle()">Login with Google</button>
+
     <br><br>
-  <label>Email:</label>
-  <input #email>
+
+  <div>
+    <label>Email:</label>
     <br>
-  <label>Password:</label>
-  <input type="password" #pass>
+    <input #email>
+  </div>
+  <div>
+    <label>Password:</label>
     <br>
-  <button class="btn btn-default" (click)="loginEmail(email.value, pass.value)">Login with email</button>
-  <button class="btn" (click)="registerClicked()"> Register</button>
+    <input type="password" #pass>
+  </div>
+
+  <br>
+  <button class="btn btn-default button1" (click)="loginEmail(email.value, pass.value)">Login with email</button>
+  <button class="btn button1" (click)="registerClicked()" id="btnRegister"> Register</button>
+
   <div *ngIf="showRegister">
     <br>
     <br>
@@ -19,8 +30,8 @@
     <input type="password" #regPassword><br>
     <label>Confirm password:</label>
     <input type="password" #confirmPassword><br>
-    <button class="button" (click)="saveDetails(regEmail.value, regPassword.value, confirmPassword.value)">Create Account</button>
+    <button class="button button1" (click)="saveDetails(regEmail.value, regPassword.value, confirmPassword.value)">Create Account</button>
   </div>
 
-
 </div>
+
