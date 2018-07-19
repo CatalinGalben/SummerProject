@@ -19,6 +19,7 @@ import { PortfolioComponent } from './portfolio/portfolio.component';
 import { AddRecordComponent } from './add-record/add-record.component';
 import { MenuComponent } from './menu/menu.component';
 import {BrowserAnimationsModule, NoopAnimationsModule} from "@angular/platform-browser/animations";
+import {LoginService} from "./login-page/shared/login.service";
 
 const routes: Routes=[
   {path: 'homePage', component: HomePageComponent},
@@ -51,7 +52,7 @@ const routes: Routes=[
     BrowserAnimationsModule,
     NoopAnimationsModule
   ],
-  providers: [AuthService, AngularFireAuth, MainService],
+  providers: [AuthService, AngularFireAuth, MainService, LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

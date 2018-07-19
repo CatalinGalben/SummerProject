@@ -11,7 +11,7 @@ import {LoginService} from "./shared/login.service";
 export class LoginPageComponent implements OnInit {
 
   showRegister: boolean;
-  constructor(public authService: AuthService, private router: Router) {
+  constructor(public authService: AuthService, private router: Router, public loginService: LoginService) {
 
   }
 
@@ -32,7 +32,7 @@ export class LoginPageComponent implements OnInit {
       this.showRegister = false;
       return;
     }
-    this.authService.createUserEmail(firstName, lastName, email, username, password, DOB);
+    this.loginService.createUserEmail(firstName, lastName, email, username, password, DOB);
 
   }
   registerClicked()

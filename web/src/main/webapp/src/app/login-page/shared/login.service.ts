@@ -16,8 +16,10 @@ export class LoginService {
     const addUser = "register";
     const url = `${this.addUrl}/${addUser}`;
     let id: number = 0;
+    let balance: number = 0.0;
+    let type: string = "user";
     console.log("before add");
-    let userAdded = {id, firstName, lastName, email, username, password, DOB};
+    let userAdded = {id, firstName, lastName, email, username, password, type, balance, DOB};
 
     return this.httpClient
       .post<User>(url, userAdded);
