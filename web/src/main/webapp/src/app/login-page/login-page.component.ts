@@ -11,7 +11,7 @@ import {LoginService} from "./shared/login.service";
 export class LoginPageComponent implements OnInit {
 
   showRegister: boolean;
-  constructor(public authService: AuthService, private router: Router, public loginService: LoginService) {
+  constructor(public authService: AuthService, private router: Router, private loginService: LoginService) {
 
   }
 

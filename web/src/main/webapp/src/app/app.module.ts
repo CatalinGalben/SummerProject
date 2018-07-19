@@ -23,6 +23,7 @@ import {BrowserAnimationsModule, NoopAnimationsModule} from "@angular/platform-b
 import { BuyComponent } from './buy/buy.component';
 import {TransferService} from "./providers/transfer.service";
 import {LoginService} from "./login-page/shared/login.service";
+import {HttpClientModule} from "@angular/common/http";
 
 
 const routes: Routes=[
@@ -51,7 +52,7 @@ const routes: Routes=[
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
-    HttpModule,
+    HttpClientModule,
     FormsModule,
     RouterModule.forRoot(routes),
 
