@@ -9,8 +9,6 @@ import {TransferService} from "../providers/transfer.service";
 })
 export class MenuComponent implements OnInit {
 
-
-
   constructor(private router: Router, private transferService: TransferService) { }
 
   ngOnInit() {

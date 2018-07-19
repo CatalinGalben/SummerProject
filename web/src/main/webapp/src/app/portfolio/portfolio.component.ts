@@ -20,7 +20,7 @@ export class PortfolioComponent implements OnInit {
   }
 
   goToAdd() {
-    this.router.navigate(['interrogate']);
+    this.router.navigate(['addRecord']);
   }
 
   rowClicked(name: string, noShares: number, price: number) {
@@ -28,6 +28,8 @@ export class PortfolioComponent implements OnInit {
     this.transferService.setData(name, noShares, price);
 
     this.selectedRow = name;
+
+    console.log("PORT price " + price);
 
   }
 

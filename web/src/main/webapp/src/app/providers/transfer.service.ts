@@ -18,6 +18,7 @@ export class TransferService {
     this.name = name;
     this.noShares = noShares;
     this.price = price;
+    console.log("SERVICE price " + this.price);
   }
 
   getName(){
