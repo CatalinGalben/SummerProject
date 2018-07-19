@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/internal/Observable";
 import {User} from "./user.model";
 
+
 @Injectable()
 export class LoginService {
 
@@ -16,11 +17,10 @@ export class LoginService {
     let id: number = 0;
     let balance: number = 0.0;
     let type: string = "user";
-    console.log("before add");
+    console.log(url + " login service - front-end");
     let userAdded = {id, firstName, lastName, email, username, password, type, balance, DOB};
-
-    return this.httpClient
-      .post<User>(url, userAdded);
+    console.log("before return");
+    return this.httpClient.post<User>(url, userAdded);
   }
 
 }

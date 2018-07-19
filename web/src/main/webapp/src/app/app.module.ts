@@ -50,9 +50,9 @@ const routes: Routes=[
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
-    HttpClientModule,
     FormsModule,
     RouterModule.forRoot(routes),
 

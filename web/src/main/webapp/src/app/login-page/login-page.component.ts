@@ -32,7 +32,7 @@ export class LoginPageComponent implements OnInit {
       this.showRegister = false;
       return;
     }
-    this.loginService.createUserEmail(firstName, lastName, email, username, password, DOB);
+    this.loginService.createUserEmail(firstName, lastName, email, username, password, DOB).subscribe(_=>console.log("works"));
 
   }
   registerClicked()
