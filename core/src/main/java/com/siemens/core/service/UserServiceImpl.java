@@ -30,6 +30,18 @@ public class UserServiceImpl implements UserServiceInterface{
     @Autowired
     private HoldingRecordRepository holdingRecordRepository;
     @Override
+    public User login(String username, String password)
+    {
+        Optional<User> optionalUser = userRepository
+                .findAll().stream()
+                .filter(u -> u.getUsername().equals(username) && u.getPassword().equals(password)).findFirst();
+        if(optionalUser.isPresent())
+            return optionalUser.get();
+        return User.builder()
+                .build();
+    }
+
+    @Override
     public User createUser(
             String firstName,
             String lastName,
@@ -57,7 +69,7 @@ public class UserServiceImpl implements UserServiceInterface{
     }
 
     @Override
-    public void addDividend(String symbol, Integer valueOfShare, Integer brokerKey, Integer userKey)
+    public User addDividend(String symbol, Integer valueOfShare, Integer brokerKey, Integer userKey)
     {
         Company company = companyRepository.findAll().stream()
                 .filter(c -> c.getName().equals(symbol)).findFirst().get();
@@ -73,7 +85,7 @@ public class UserServiceImpl implements UserServiceInterface{
         broker.setProfit(broker.getProfit() + lostMoney);
         user.setBalance(user.getBalance() + earnings);
 
-
+        return user;
 
     }
     @Override

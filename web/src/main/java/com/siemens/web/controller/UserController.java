@@ -41,11 +41,34 @@ public class UserController {
         return userConverter.convertModelToDto(savedUser);
     }
 
-    @RequestMapping(value = "users/{key}", method = RequestMethod.PUT)
+
+    @RequestMapping(value = "/users/{username}/{password}", method = RequestMethod.GET)
+    public UserDTO getOneUser(@PathVariable final String username, @PathVariable final String password)
+    {
+        User possibleLoggedUser = userServiceInterface.login(username, password);
+
+        return userConverter.convertModelToDto(possibleLoggedUser);
+    }
+
+
+    @RequestMapping(value = "/users/{key}", method = RequestMethod.PUT)
     public UserDTO setCash(@PathVariable final int key, @RequestBody final int value)
     {
         User updatedUser = userServiceInterface.setAmountOfCash(key, value);
 
         return userConverter.convertModelToDto(updatedUser);
+    }
+    @RequestMapping(value = "/users/{key}", method = RequestMethod.GET)
+    public UserDTO findById(@PathVariable final int key)
+    {
+        return userConverter.convertModelToDto(userServiceInterface.findById(key));
+    }
+    @RequestMapping(value = "/users/dividend", method = RequestMethod.GET)
+    public UserDTO addDividend(
+            @RequestBody String symbol, @RequestBody Integer valueOfShare,
+            @RequestBody Integer brokerKey, @RequestBody Integer userKey)
+    {
+        log.trace("User requested dividend! -- Value of balance changed");
+        return userConverter.convertModelToDto(userServiceInterface.addDividend(symbol,valueOfShare,brokerKey,userKey));
     }
 }
