@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from "angularfire2/auth";
 import * as firebase from "firebase";
+import {User} from "../login-page/shared/user.model";
+import {Observable} from "rxjs/internal/Observable";
+import {HttpClient} from "@angular/common/http";
 
 
 @Injectable({
@@ -44,7 +47,6 @@ export class AuthService {
     */
 
   }
-
   logout() {
     return this.angularFireAuth.auth.signOut()
 

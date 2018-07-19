@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {AuthService} from "../providers/auth.service";
 import * as firebase from "firebase";
+import {LoginService} from "./shared/login.service";
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
@@ -17,7 +18,7 @@ export class LoginPageComponent implements OnInit {
   ngOnInit() {
     this.showRegister = false;
   }
-  saveDetails(email:string, password:string, confirmPassword: string)
+  saveDetails(firstName:string, lastName:string, email: string, username: string, password: string, confirmPassword: string, DOB: string)
   {
 
     if(password.length < 6)
@@ -31,7 +32,7 @@ export class LoginPageComponent implements OnInit {
       this.showRegister = false;
       return;
     }
-    this.authService.createNewAccount(email, password);
+    this.authService.createUserEmail(firstName, lastName, email, username, password, DOB);
 
   }
   registerClicked()

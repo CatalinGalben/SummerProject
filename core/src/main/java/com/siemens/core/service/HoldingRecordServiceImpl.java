@@ -21,10 +21,13 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
     private SharePriceRepository sharePriceRepository;
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private  UserServiceInterface userServiceInterface;
     @Override
     public HoldingRecord createRecord(User user, Broker broker, Company company, Double paidPrice, Integer noShares)
     {
+
+
         return holdingRecordRepository.save(
                 HoldingRecord.builder()
                 .user(user)
@@ -41,6 +44,25 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
     {
         return holdingRecordRepository.findAll();
     }
+
+    @Override
+    public List<HoldingRecord> addToRecord(Integer recordKey, Integer userKey, Integer noShares, Integer shareKey)
+    {
+        List<HoldingRecord> currentRecords = holdingRecordRepository.findAll();
+        currentRecords.forEach(
+                r -> {
+                    if(r.getId().equals(recordKey))
+                        r.setNoShares(r.getNoShares() + noShares);
+                }
+        );
+
+        User user = userRepository.getOne(userKey);
+        SharePrice share = sharePriceRepository.getOne(shareKey);
+        user.setBalance(user.getBalance() - share.getPrice() * noShares);
+        return currentRecords;
+    }
+
+
 
     @Override
     public void liquidate(String symbol)

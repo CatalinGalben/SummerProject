@@ -15,7 +15,7 @@ public class Company extends BaseEntity<Integer>{
 
 
 
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     private String name;
 
     @Column(name = "PE")
@@ -23,7 +23,6 @@ public class Company extends BaseEntity<Integer>{
 
     @Column(name = "dividendYield")
     private float dividendYield;
-
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
     private Set<Fund> funds;
