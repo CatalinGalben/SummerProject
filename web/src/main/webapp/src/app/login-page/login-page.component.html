@@ -7,18 +7,18 @@
     <br><br>
 
   <div>
-    <label>Email:</label>
+    <label>Username:</label>
     <br>
-    <input #email>
+    <input #username>
   </div>
   <div>
     <label >Password:</label>
     <br>
-    <input type="password" #pass>
+    <input type="password" #password>
   </div>
 
   <br>
-  <button class="btn btn-default button1" (click)="loginEmail(email.value, pass.value)">Login with email</button>
+  <button class="btn btn-default button1" (click)="loginDetails(username.value, password.value)">Login with email</button>
   <button class="btn button1" (click)="registerClicked()" id="btnRegister"> Register</button>
 
   <div *ngIf="showRegister">

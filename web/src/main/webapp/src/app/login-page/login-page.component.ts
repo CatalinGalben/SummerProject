@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import {AuthService} from "../providers/auth.service";
 import * as firebase from "firebase";
 import {LoginService} from "./shared/login.service";
+import {User} from "./shared/user.model";
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
@@ -11,6 +12,7 @@ import {LoginService} from "./shared/login.service";
 export class LoginPageComponent implements OnInit {
 
   showRegister: boolean;
+  usedLoggedIn: User;
   constructor(public authService: AuthService, private router: Router, private loginService: LoginService) {
 
   }
@@ -35,6 +37,27 @@ export class LoginPageComponent implements OnInit {
     this.loginService.createUserEmail(firstName, lastName, email, username, password, DOB).subscribe(_=>console.log("works"));
 
   }
+
+  loginDetails(username: string, password: string) {
+    if (password.length < 6)
+    {
+      alert("Password should be at least 6 characters long");
+      return;
+    }
+    this.loginService.loginUserEmail(username, password).subscribe(user => {
+      this.usedLoggedIn = user;
+      if (this.usedLoggedIn == null)
+        this.router.navigate(['']);
+      else {
+        localStorage.setItem("username", this.usedLoggedIn.username);
+        localStorage.setItem("email", this.usedLoggedIn.email);
+        localStorage.setItem("firstName", this.usedLoggedIn.firstName);
+        localStorage.setItem("lastName", this.usedLoggedIn.lastName);
+        this.router.navigate(['']);
+      }
+    })
+  }
+
   registerClicked()
   {
     this.showRegister = !this.showRegister;
@@ -42,11 +65,6 @@ export class LoginPageComponent implements OnInit {
   loginGoogle() {
 
     this.authService.loginWithGoogle().then(() =>
-      this.router.navigate([''])).catch(err => alert(err));
-  }
-
-  loginEmail(user: string, pass: string) {
-    this.authService.loginWithEmail(user, pass).then(() =>
       this.router.navigate([''])).catch(err => alert(err));
   }
 }

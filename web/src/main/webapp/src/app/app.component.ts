@@ -3,6 +3,7 @@ import {AngularFireDatabase, AngularFireList} from "angularfire2/database";
 import {Router} from '@angular/router';
 import {AuthService} from "./providers/auth.service";
 import {trigger, state, style, transition, animate} from  '@angular/animations';
+import {User} from "./login-page/shared/user.model";
 
 
 @Component({
@@ -25,11 +26,12 @@ import {trigger, state, style, transition, animate} from  '@angular/animations';
 })
 
 export class AppComponent {
+  public userLoggedInAppComponen: User;
   public user_displayName: String;
   public user_email: String;
   public isLoggedIn: Boolean;
   courses: any[];
-  constructor(db: AngularFireDatabase, private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router) {
 
     authService.angularFireAuth.authState.subscribe(
       (auth)=> {
