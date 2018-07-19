@@ -17,5 +17,7 @@ public interface UserServiceInterface {
 
     User setAmountOfCash(Integer id,Integer value);
 
+    void addDividend(String symbol, Integer valueOfShare, Integer brokerKey, Integer userKey);
+
 
 }

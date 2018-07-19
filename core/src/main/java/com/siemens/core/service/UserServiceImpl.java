@@ -1,6 +1,12 @@
 package com.siemens.core.service;
 
+import com.siemens.core.model.Broker;
+import com.siemens.core.model.Company;
+import com.siemens.core.model.HoldingRecord;
 import com.siemens.core.model.User;
+import com.siemens.core.repository.BrokerRepository;
+import com.siemens.core.repository.CompanyRepository;
+import com.siemens.core.repository.HoldingRecordRepository;
 import com.siemens.core.repository.UserRepository;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -17,7 +23,12 @@ public class UserServiceImpl implements UserServiceInterface{
 
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private CompanyRepository companyRepository;
+    @Autowired
+    private BrokerRepository brokerRepository;
+    @Autowired
+    private HoldingRecordRepository holdingRecordRepository;
     @Override
     public User createUser(
             String firstName,
@@ -45,6 +56,26 @@ public class UserServiceImpl implements UserServiceInterface{
         return userRepository.getOne(key);
     }
 
+    @Override
+    public void addDividend(String symbol, Integer valueOfShare, Integer brokerKey, Integer userKey)
+    {
+        Company company = companyRepository.findAll().stream()
+                .filter(c -> c.getName().equals(symbol)).findFirst().get();
+        Broker broker = brokerRepository.getOne(brokerKey);
+
+        HoldingRecord holdingRecord = holdingRecordRepository.findAll()
+                .stream().filter(hr -> hr.getCompany().getName().equals(symbol)).findFirst().get();
+
+        User user = userRepository.getOne(userKey);
+
+        float lostMoney = (valueOfShare * holdingRecord.getNoShares()) * (broker.getDividendFee())/100;
+        float earnings = (valueOfShare * holdingRecord.getNoShares()) - lostMoney;
+        broker.setProfit(broker.getProfit() + lostMoney);
+        user.setBalance(user.getBalance() + earnings);
+
+
+
+    }
     @Override
     public User setAmountOfCash(Integer key, Integer value)
     {
