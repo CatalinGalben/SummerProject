@@ -23,4 +23,10 @@ export class LoginService {
     return this.httpClient.post<User>(url, userAdded);
   }
 
+  loginUserEmail(username: string, password: string): Observable<User>{
+    const url = `${this.addUrl}/${username}/${password}`;
+    console.log(this.addUrl  + " login service - front-end");
+    return this.httpClient.get<User>(url)
+  }
+
 }
