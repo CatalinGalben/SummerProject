@@ -21,6 +21,8 @@ export class BuyComponent implements OnInit {
     this.noShares = this.transferService.getNoShares();
     this.price = this.transferService.getPrice();
     this.totPrice = 0;
+
+    console.log("BUY price " + this.price);
   }
 
   calcPrice(searchValue : number ) {

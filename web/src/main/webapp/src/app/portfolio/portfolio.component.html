@@ -1,3 +1,5 @@
+<div class="scrollit">
+
 <table class="table table-hover body">
   <thead>
       <th>Name</th>
@@ -6,15 +8,18 @@
   </thead>
 
   <tbody>
+
     <tr *ngFor="let r of records" (click)="rowClicked(r.name, r.noShares, r.pricePaid)" [class.active]="r.name == selectedRow">
       <td>{{ r.name }}</td>
       <td>{{ r.noShares }}</td>
       <td>{{ r.pricePaid }}</td>
     </tr>
+
   </tbody>
 </table>
+</div>
 
-
+<br/>
 <button class ="white-space: pre-line btn-block button button2" (click)="goToAdd()">Add New Record</button>
 
 
