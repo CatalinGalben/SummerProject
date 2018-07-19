@@ -20,13 +20,19 @@ import { AddRecordComponent } from './add-record/add-record.component';
 import { MenuComponent } from './menu/menu.component';
 import {BrowserAnimationsModule, NoopAnimationsModule} from "@angular/platform-browser/animations";
 
+import { BuyComponent } from './buy/buy.component';
+import {TransferService} from "./providers/transfer.service";
+import {LoginService} from "./login-page/shared/login.service";
+
+
 const routes: Routes=[
   {path: 'homePage', component: HomePageComponent},
   {path: '', component: PortfolioComponent},
   {path: 'loginGoogle', component: LoginPageComponent},
   {path: 'interrogate', component: StockInterogarionComponent},
   {path: 'portfolio', component: PortfolioComponent},
-  {path: 'addRecord', component: AddRecordComponent}
+  {path: 'addRecord', component: AddRecordComponent},
+  {path: 'buy', component: BuyComponent}
 ];
 
 
@@ -38,7 +44,8 @@ const routes: Routes=[
     HomePageComponent,
     PortfolioComponent,
     AddRecordComponent,
-    MenuComponent
+    MenuComponent,
+    BuyComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +58,7 @@ const routes: Routes=[
     BrowserAnimationsModule,
     NoopAnimationsModule
   ],
-  providers: [AuthService, AngularFireAuth, MainService],
+  providers: [AuthService, AngularFireAuth, MainService, TransferService, LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

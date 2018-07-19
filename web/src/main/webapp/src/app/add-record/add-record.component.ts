@@ -22,6 +22,7 @@ export class AddRecordComponent implements OnInit {
   divYield: number;
   PE: number;
 
+
   saveDetails(name: string, price: number, noShares: number, divYield: number, PE: number) {
     console.log("Price: " + price);
     if (Number.isInteger(Number(price)) == false)
@@ -29,6 +30,7 @@ export class AddRecordComponent implements OnInit {
       alert("The share price has to be an integer");
       return;
     }
+
     if (Number.isInteger(Number(noShares)) == false)
     {
       alert("The number of shares has to be an integer");
