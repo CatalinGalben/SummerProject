@@ -15,7 +15,7 @@ export class AddRecordComponent implements OnInit {
   saveDetails(name: string, price: number, noShares: number) {
     console.log("Price: " + price);
 
-    if (Number.isInteger(noShares) == false)
+    if (Number.isInteger(Number(noShares)) == false)
     {
       alert("The number of shares has to be an integer");
       return;

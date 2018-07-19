@@ -1,0 +1,10 @@
+#btnAdd {
+  position:absolute;
+  left: 40%;
+  background-color: #159E83;
+  text-color: #FFFFFF;
+}
+
+input:invalid {
+  border: 2px solid red;
+}
