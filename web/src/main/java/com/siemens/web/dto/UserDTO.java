@@ -17,7 +17,7 @@ public class UserDTO extends BaseDTO {
     private String username;
     private String password;
     private String type;
-    private DateTime dob;
+    private String dob;
     private double balance;
     private Set<HoldingRecordDTO> holdingRecords;
 

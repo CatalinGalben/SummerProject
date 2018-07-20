@@ -38,6 +38,7 @@ public class UserServiceImpl implements UserServiceInterface{
         if(optionalUser.isPresent())
             return optionalUser.get();
         return User.builder()
+                .username("")
                 .build();
     }
 

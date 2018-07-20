@@ -2,6 +2,7 @@ package com.siemens.web.converter;
 
 import com.siemens.core.model.User;
 import com.siemens.web.dto.UserDTO;
+import org.joda.time.DateTime;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,7 +16,7 @@ public class UserConverter extends AbstractConverterBaseEntity<User, UserDTO> {
                 .email(userDTO.getEmail())
                 .password(userDTO.getPassword())
                 .type(userDTO.getType())
-                .dob(userDTO.getDob())
+                .dob(DateTime.parse(userDTO.getDob()))
                 .balance(userDTO.getBalance())
                 .build();
         user.setId(userDTO.getId());
@@ -30,7 +31,7 @@ public class UserConverter extends AbstractConverterBaseEntity<User, UserDTO> {
                 .email(user.getEmail())
                 .password(user.getPassword())
                 .type(user.getType())
-                .dob(user.getDob())
+                .dob(user.getDob().toString())
                 .balance(user.getBalance())
                 .build();
         userDTO.setId(user.getId());
