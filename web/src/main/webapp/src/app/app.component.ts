@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AngularFireDatabase, AngularFireList} from "angularfire2/database";
 import {Router} from '@angular/router';
 import {AuthService} from "./providers/auth.service";
 import {trigger, state, style, transition, animate} from  '@angular/animations';
 import {User} from "./login-page/shared/user.model";
+import {LoginService} from "./login-page/shared/login.service";
 
 
 @Component({
@@ -25,13 +26,14 @@ import {User} from "./login-page/shared/user.model";
 
 })
 
-export class AppComponent {
-  public userLoggedInAppComponen: User;
+export class AppComponent implements OnInit{
+
+
+  public userLoggedInAppComponent: User;
   public user_displayName: String;
   public user_email: String;
   public isLoggedIn: Boolean;
-  courses: any[];
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router, public loginService: LoginService) {
 
     authService.angularFireAuth.authState.subscribe(
       (auth)=> {
@@ -53,9 +55,24 @@ export class AppComponent {
 
   }
 
+  ngOnInit(){
+    this.loginService.currentUser.subscribe(user =>{
+      this.userLoggedInAppComponent = user;
+      if (user.username != null) {
+        this.user_displayName = user.firstName + " " + user.lastName;
+        this.user_email = user.email;
+        this.isLoggedIn = true;
+      }
+    })
+  }
+
+  printUser(user) {
+    console.log(user);
+  }
 
   logout(){
-    this.authService.logout();
+    this.isLoggedIn = false;
+    this.loginService.changeUser(null);
     this.router.navigate(['loginGoogle']);
   }
 
