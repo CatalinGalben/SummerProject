@@ -58,7 +58,7 @@ export class AppComponent implements OnInit{
   ngOnInit(){
     this.loginService.currentUser.subscribe(user =>{
       this.userLoggedInAppComponent = user;
-      if (user.username != null) {
+      if (user != null) {
         this.user_displayName = user.firstName + " " + user.lastName;
         this.user_email = user.email;
         this.isLoggedIn = true;

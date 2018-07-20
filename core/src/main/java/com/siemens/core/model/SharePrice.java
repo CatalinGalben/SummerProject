@@ -1,7 +1,6 @@
 package com.siemens.core.model;
 
 import lombok.*;
-import org.joda.time.DateTime;
 
 import javax.persistence.*;
 
@@ -24,5 +23,5 @@ public class SharePrice extends BaseEntity<Integer>{
     private int price;
 
     @Column(name = "date")
-    private DateTime date;
+    private String date;
 }

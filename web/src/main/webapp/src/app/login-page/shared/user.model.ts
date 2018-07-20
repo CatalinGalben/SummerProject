@@ -7,5 +7,5 @@ export class User {
   password: string;
   type: string;
   balance: number;
-  DOB: string;
+  dob: string;
 }

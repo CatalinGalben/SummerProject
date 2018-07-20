@@ -29,7 +29,7 @@ public class User extends BaseEntity<Integer>{
     @Column(name="type")
     private String type;
     @Column(name="dob")
-    private DateTime dob;
+    private String dob;
     @Column(name="balance")
     private double balance;
     @OneToMany(mappedBy = "user")

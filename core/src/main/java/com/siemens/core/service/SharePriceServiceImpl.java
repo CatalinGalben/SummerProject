@@ -37,7 +37,7 @@ public class SharePriceServiceImpl implements SharePriceServiceInterface{
 
         SharePrice sharePrice = SharePrice.builder()
                 .price(price)
-                .date(DateTime.now())
+                .date(DateTime.now().toString())
                 .company(company)
                 .build();
         return sharePriceRepository.save(sharePrice);
@@ -78,7 +78,7 @@ public class SharePriceServiceImpl implements SharePriceServiceInterface{
             SharePrice sharePrice = SharePrice.builder()
                     .price(Integer.parseInt(parameters[1]))
                     .company(company)
-                    .date(DateTime.now())
+                    .date(DateTime.now().toString())
                     .build();
             return sharePriceRepository.save(sharePrice);
 
@@ -88,7 +88,7 @@ public class SharePriceServiceImpl implements SharePriceServiceInterface{
         //in case of api not being able to determine the symbol
         //the user is going to have to input the desired data manually
         return SharePrice.builder()
-                .date(DateTime.now())
+                .date(DateTime.now().toString())
                 .price(0)
                 .company(null)
                 .build();

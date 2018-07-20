@@ -55,7 +55,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
         this.router.navigate(['']);
       else
         alert("Invalid Username or password");
-
+      this.registerClicked();
     })
   }
 

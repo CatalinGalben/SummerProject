@@ -15,7 +15,7 @@ public class CurrencyExchangeDTO extends BaseDTO {
     private int currencyid1;
     private int currencyid2;
     private int factor;
-    private DateTime dateOfExchange;
+    private String dateOfExchange;
 
     @Override
     public String toString() {

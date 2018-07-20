@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class SharePriceDTO extends BaseDTO {
     private int companyid;
     private int price;
-    private DateTime date;
+    private String date;
 
     @Override
     public String toString() {

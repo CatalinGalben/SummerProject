@@ -11,7 +11,6 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class Etf extends Fund{
 
     @Column(name="type")

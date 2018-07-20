@@ -8,7 +8,7 @@ import com.siemens.core.repository.BrokerRepository;
 import com.siemens.core.repository.CompanyRepository;
 import com.siemens.core.repository.HoldingRecordRepository;
 import com.siemens.core.repository.UserRepository;
-import org.joda.time.DateTime;
+;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,13 +32,16 @@ public class UserServiceImpl implements UserServiceInterface{
     @Override
     public User login(String username, String password)
     {
+        LOG.trace("BACKEND LOGIN");
         Optional<User> optionalUser = userRepository
                 .findAll().stream()
                 .filter(u -> u.getUsername().equals(username) && u.getPassword().equals(password)).findFirst();
-        if(optionalUser.isPresent())
+        if(optionalUser.isPresent()) {
             return optionalUser.get();
-        return User.builder()
-                .username("")
+
+        }
+            return User.builder()
+
                 .build();
     }
 
@@ -51,7 +54,9 @@ public class UserServiceImpl implements UserServiceInterface{
             String password,
             String type,
             Double income,
-            DateTime dob){
+            String dob){
+
+        LOG.trace("User Backend entered");
         User user = User.builder()
                 .firstName( firstName )
                 .lastName( lastName )

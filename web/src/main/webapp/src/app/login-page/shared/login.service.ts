@@ -16,15 +16,16 @@ export class LoginService {
 
   private addUrl = 'http://localhost:8080/api/users';
 
-  createUserEmail(firstName:string, lastName:string, email: string, username: string, password: string, DOB: string): Observable<User> {
+  createUserEmail(firstName:string, lastName:string, email: string, username: string, password: string, dob: string): Observable<User> {
     const addUser = "register";
     const url = `${this.addUrl}/${addUser}`;
     let id: number = 0;
     let balance: number = 0.0;
     let type: string = "user";
     console.log(url + " login service - front-end");
-    let userAdded = {id, firstName, lastName, email, username, password, type, balance, DOB};
+    let userAdded = {id, firstName, lastName, email, username, password, type, balance, dob};
     console.log("before return");
+    console.log(userAdded);
     return this.httpClient.post<User>(url, userAdded);
   }
 

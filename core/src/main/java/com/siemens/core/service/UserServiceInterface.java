@@ -1,7 +1,7 @@
 package com.siemens.core.service;
 
 import com.siemens.core.model.User;
-import org.joda.time.DateTime;
+
 
 public interface UserServiceInterface {
     User createUser(
@@ -12,7 +12,7 @@ public interface UserServiceInterface {
             String password,
             String type,
             Double income,
-            DateTime dob);
+            String dob);
     User findById(Integer key);
 
     User setAmountOfCash(Integer id,Integer value);

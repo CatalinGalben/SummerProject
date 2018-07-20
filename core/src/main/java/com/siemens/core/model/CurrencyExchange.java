@@ -2,7 +2,7 @@ package com.siemens.core.model;
 
 
 import lombok.*;
-import org.joda.time.DateTime;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,5 +28,5 @@ public class CurrencyExchange extends BaseEntity<Integer> {
     private int factor;
 
     @Column(name = "dateOfExchange")
-    private DateTime dateOfExchange;
+    private String dateOfExchange;
 }

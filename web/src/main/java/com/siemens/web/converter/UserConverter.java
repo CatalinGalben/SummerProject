@@ -17,8 +17,8 @@ public class UserConverter extends AbstractConverterBaseEntity<User, UserDTO> {
                 .username(userDTO.getUsername())
                 .password(userDTO.getPassword())
                 .type(userDTO.getType())
-                .dob(DateTime.parse(userDTO.getDob()))
                 .balance(userDTO.getBalance())
+                .dob(userDTO.getDob())
                 .build();
         user.setId(userDTO.getId());
         return user;
@@ -33,8 +33,8 @@ public class UserConverter extends AbstractConverterBaseEntity<User, UserDTO> {
                 .username(user.getUsername())
                 .password(user.getPassword())
                 .type(user.getType())
-                .dob(user.getDob().toString())
                 .balance(user.getBalance())
+                .dob(user.getDob())
                 .build();
         userDTO.setId(user.getId());
         return userDTO;

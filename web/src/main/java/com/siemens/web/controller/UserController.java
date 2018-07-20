@@ -5,6 +5,7 @@ import com.siemens.core.model.User;
 import com.siemens.core.service.UserServiceInterface;
 import com.siemens.web.converter.UserConverter;
 import com.siemens.web.dto.UserDTO;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserController {
-    private static final Logger log = LoggerFactory.getLogger(UserServiceInterface.class);
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private UserServiceInterface userServiceInterface;
@@ -26,6 +27,9 @@ public class UserController {
         System.out.println("UserController - createUser - enter");
 
         log.trace("createUser --- method entered: userEntered={}", userAdded);
+
+        log.trace(userAdded.getDob());
+
         User savedUser = userServiceInterface.createUser(
                 userAdded.getFirstName(),
                 userAdded.getLastName(),
@@ -45,8 +49,10 @@ public class UserController {
     @RequestMapping(value = "/users/{username}/{password}", method = RequestMethod.GET)
     public UserDTO getOneUser(@PathVariable final String username, @PathVariable final String password)
     {
+        log.trace("Login method entered! "+ username + password);
         User possibleLoggedUser = userServiceInterface.login(username, password);
 
+        log.trace(possibleLoggedUser+" Returned from backend");
         return userConverter.convertModelToDto(possibleLoggedUser);
     }
 

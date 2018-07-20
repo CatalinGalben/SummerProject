@@ -1,8 +1,6 @@
 package com.siemens.web.dto;
 
 import lombok.*;
-import org.joda.time.DateTime;
-
 import java.util.Set;
 
 @Getter
@@ -17,8 +15,8 @@ public class UserDTO extends BaseDTO {
     private String username;
     private String password;
     private String type;
+    private Double balance;
     private String dob;
-    private double balance;
     private Set<HoldingRecordDTO> holdingRecords;
 
     @Override
