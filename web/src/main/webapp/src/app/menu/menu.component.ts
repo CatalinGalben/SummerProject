@@ -23,5 +23,8 @@ export class MenuComponent implements OnInit {
     this.location.back();
   }
 
+  goToChart() {
+    this.router.navigate(['barChart']);
+  }
 
 }

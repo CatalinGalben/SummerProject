@@ -24,7 +24,8 @@ import { BuyComponent } from './buy/buy.component';
 import {TransferService} from "./providers/transfer.service";
 import {LoginService} from "./login-page/shared/login.service";
 import {HttpClientModule} from "@angular/common/http";
-
+import { BarChartComponent } from './shared/bar-chart/bar-chart.component';
+import {NgxChartsModule} from "@swimlane/ngx-charts";
 
 const routes: Routes=[
   {path: 'homePage', component: HomePageComponent},
@@ -33,7 +34,8 @@ const routes: Routes=[
   {path: 'interrogate', component: StockInterogarionComponent},
   {path: 'portfolio', component: PortfolioComponent},
   {path: 'addRecord', component: AddRecordComponent},
-  {path: 'buy', component: BuyComponent}
+  {path: 'buy', component: BuyComponent},
+  {path: 'barChart', component: BarChartComponent}
 ];
 
 
@@ -46,7 +48,8 @@ const routes: Routes=[
     PortfolioComponent,
     AddRecordComponent,
     MenuComponent,
-    BuyComponent
+    BuyComponent,
+    BarChartComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +60,8 @@ const routes: Routes=[
     RouterModule.forRoot(routes),
 
     BrowserAnimationsModule,
-    NoopAnimationsModule
+    NoopAnimationsModule,
+    NgxChartsModule
   ],
   providers: [AuthService, AngularFireAuth, MainService, TransferService, LoginService],
   bootstrap: [AppComponent]
