@@ -33,6 +33,8 @@ export class AppComponent implements OnInit{
   public user_displayName: String;
   public user_email: String;
   public isLoggedIn: Boolean;
+  menuState:string = 'out';
+
   constructor(private authService: AuthService, private router: Router, public loginService: LoginService) {
 
     authService.angularFireAuth.authState.subscribe(
@@ -77,7 +79,6 @@ export class AppComponent implements OnInit{
   }
 
 
-  menuState:string = 'out';
 
   toggleMenu() {
     // 1-line if statement that toggles the value:

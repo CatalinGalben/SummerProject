@@ -60,7 +60,6 @@ const routes: Routes=[
     RouterModule.forRoot(routes),
 
     BrowserAnimationsModule,
-    NoopAnimationsModule,
     NgxChartsModule
   ],
   providers: [AuthService, AngularFireAuth, MainService, TransferService, LoginService],
