@@ -11,6 +11,8 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -44,14 +46,16 @@ public class SharePriceServiceImpl implements SharePriceServiceInterface{
 
     }
     @Override
-    public SharePrice getSharePrice(String symbol)
+    public Map<Company, SharePrice> getSharePrice(String symbol)
     {
         //FIRST , check if share price already exists in the database, so the api wont need to interrogate
+        Map<Company, SharePrice> resultCompShare = new HashMap<>();
         Optional<SharePrice> optionalSharePrice = sharePriceRepository
                 .findAll().stream().filter(sp -> sp.getCompany().getName().equals(symbol)).findFirst();
         if(optionalSharePrice.isPresent())
         {
-            return optionalSharePrice.get();
+            resultCompShare.put(optionalSharePrice.get().getCompany(), optionalSharePrice.get());
+            return resultCompShare;
         }
 
         String result = Api.Interogate(symbol);
@@ -73,26 +77,22 @@ public class SharePriceServiceImpl implements SharePriceServiceInterface{
                     .PE(Double.parseDouble(parameters[3]))
                     .build();
 
-            companyRepository.save(company);// saving the company !!!! after creation!
+            Company company1 = companyRepository.save(company);// saving the company !!!! after creation!
 
             SharePrice sharePrice = SharePrice.builder()
                     .price(Integer.parseInt(parameters[1]))
                     .company(company)
                     .date(DateTime.now().toString())
                     .build();
-            return sharePriceRepository.save(sharePrice);
-
-
+            SharePrice sharePrice1 = sharePriceRepository.save(sharePrice);
+            resultCompShare.put(company1, sharePrice1);
+            return  resultCompShare;
 
         }
         //in case of api not being able to determine the symbol
         //the user is going to have to input the desired data manually
-        return SharePrice.builder()
-                .date(DateTime.now().toString())
-                .price(0)
-                .company(null)
-                .build();
-
+        resultCompShare.put(Company.builder().build(), SharePrice.builder().build());
+        return resultCompShare;
 
 
 
