@@ -9,7 +9,13 @@ import java.util.List;
 
 public interface HoldingRecordServiceInterface {
     void liquidate(String symbol);
-    HoldingRecord createRecord(User user, Broker broker, Company company, Double paidPrice, Integer noShares);
+    HoldingRecord createRecord
+            (User user, Broker broker, Company company, Double paidPrice, Integer noShares);
+    HoldingRecord createRecord
+            (User user, Broker broker, Company company, Double paidPrice, Integer noShares, Float nav, Float ter,
+             Float gearing, Float premium);
+    HoldingRecord createRecord
+            (User user, Broker broker, Company company, Double paidPrice, Integer noShares,float nav, float ter, int type);
     List<HoldingRecord> getAllRecords();
     List<HoldingRecord> addToRecord(Integer recordKey, Integer userKey, Integer noShares, Integer shareKey);
 
