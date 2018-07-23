@@ -5,6 +5,9 @@
       <th>Name</th>
       <th>No. Shares</th>
       <th>Price Paid (&euro;)</th>
+      <th>Book Value (&euro;)</th>
+      <th>Current Value (&euro;)</th>
+      <th>Gain (%)</th>
   </thead>
 
   <tbody>
@@ -13,6 +16,7 @@
       <td>{{ r.name }}</td>
       <td>{{ r.noShares }}</td>
       <td>{{ r.pricePaid }}</td>
+
     </tr>
 
   </tbody>
@@ -20,7 +24,7 @@
 </div>
 
 <br/>
-<button class ="white-space: pre-line btn-block button button2" (click)="goToAdd()">Add New Record</button>
+<button id="btnAdd" class ="btn btn-outline-info" (click)="goToAdd()">Add New Record</button>
 
 
 <br/><br/><br/><br/><br/>

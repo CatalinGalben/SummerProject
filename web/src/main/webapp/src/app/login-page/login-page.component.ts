@@ -14,7 +14,6 @@ import {Subscription} from "rxjs/internal/Subscription";
 })
 export class LoginPageComponent implements OnInit, OnDestroy {
 
-
   showRegister: boolean;
   userLoggedIn: User;
   sub: Subscription;
@@ -39,7 +38,11 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       this.showRegister = false;
       return;
     }
-    this.loginService.createUserEmail(firstName, lastName, email, username, password, DOB).subscribe(_=>console.log("works"));
+    this.loginService.createUserEmail(firstName, lastName, email, username, password, DOB).subscribe(_=>{
+      console.log("works");
+      alert("Your account has been created!");
+    });
+    this.registerClicked();
   }
 
   getLoginDetails(username: string, password: string) {
@@ -55,7 +58,6 @@ export class LoginPageComponent implements OnInit, OnDestroy {
         this.router.navigate(['']);
       else
         alert("Invalid Username or password");
-      this.registerClicked();
     })
   }
 
