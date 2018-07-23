@@ -1,6 +1,6 @@
 export class SharePrice {
-  private id: number;
-  private companyid: number;
-  private price: number;
-  private date: string;
+  id: number;
+  companyid: number;
+  price: number;
+  date: string;
 }

@@ -1,7 +1,8 @@
-<app-menu [@slideInOut]="menuState"></app-menu>
+<app-menu [@slideInOut]="menuState" (closeEvent)="toggleMenu()"></app-menu>
 
-<div>
-  <nav class="navbar navbar-default navbar-fixed-top">
+
+   <span class="border border-top-0" >
+  <nav class="navbar  bg-dark navbar-dark fixed-top">
 
     <button (click)="toggleMenu()" class="hamburger">
       <span>toggle menu</span>
@@ -21,8 +22,11 @@
     </div>
 
   </nav>
+   </span>
 
-  <br>
+  <br/><br/><br/><br/><br/><br/>
+
+<div>
   <div class="container">
     <!--<mycomp [varFromChild]="localObj" (numeEvent)="printUser($event)"></mycomp>-->
     <router-outlet></router-outlet>

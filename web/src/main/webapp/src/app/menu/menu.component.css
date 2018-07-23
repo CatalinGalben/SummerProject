@@ -1,3 +1,8 @@
+.close {
+  position: fixed;
+  left: auto;
+}
+
 :host {
   background: #159E83;
   color: #fff;

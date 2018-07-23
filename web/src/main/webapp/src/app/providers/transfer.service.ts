@@ -23,19 +23,19 @@ export class TransferService {
 
   getName(){
     let temp = this.name;
-    this.clearData();
+    //this.clearData();
     return temp;
   }
 
   getNoShares() {
     let temp = this.noShares;
-    this.clearData();
+    //this.clearData();
     return temp;
   }
 
   getPrice() {
     let temp = this.price;
-    this.clearData();
+    //this.clearData();
     return temp;
   }
 

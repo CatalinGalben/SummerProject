@@ -2,7 +2,6 @@ package com.siemens.web.dto;
 
 import lombok.*;
 
-import java.io.Serializable;
 import java.util.Set;
 
 @Getter
@@ -14,6 +13,8 @@ public class BrokerDTO extends BaseDTO {
 
     private String name;
     private double profit;
+    private float dividendFee;
+    private float shareFee;
     private Set<HoldingRecordDTO> holdingRecords;
 
     @Override
@@ -21,6 +22,8 @@ public class BrokerDTO extends BaseDTO {
         return "BrokerDTO{" +
                 "name='" + name + '\'' +
                 ", profit=" + profit +
+                ", dividendFee=" + dividendFee +
+                ", shareFee=" + shareFee +
                 ", holdingRecords=" + holdingRecords +
                 '}';
     }

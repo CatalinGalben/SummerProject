@@ -21,12 +21,10 @@ export class BuyComponent implements OnInit {
     this.noShares = this.transferService.getNoShares();
     this.price = this.transferService.getPrice();
     this.totPrice = 0;
-
-    console.log("BUY price " + this.price);
   }
 
-  calcPrice(searchValue : number ) {
-    this.totPrice = Number(searchValue) * 10;
+  calcPrice(addedValue : number ) {
+    this.totPrice = Number(addedValue) * this.price;
     console.log(this.totPrice);
   }
 

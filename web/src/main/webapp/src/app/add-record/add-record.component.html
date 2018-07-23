@@ -4,33 +4,51 @@
     <div class="col-sm-10">
       <input class="form-control" type="text" placeholder="Company symbol" #name>
     </div>
+<br>
+    <button *ngIf="!checkedCompany" class ="btn btn-primary" id="btnCheck" (click)="checkCompany(name.value)">Check company</button>
 
 
-    <label class="col-sm-2 control-label">No. Shares</label>
-    <div class="col-sm-10">
-      <input class="form-control" type="number" placeholder="Number of shares you want to buy" #noShares>
+    <div *ngIf="checkedCompany">
+
+      <label class="col-sm-2 control-label">No. Shares</label>
+      <div class="col-sm-10">
+        <input class="form-control" type="number" placeholder="Number of shares you want to buy" #noShares>
+      </div>
+
+      <label class="col-sm-2 control-label">Share Price</label>
+      <div class="col-sm-10">
+        <input *ngIf="existsSharePrice" class="form-control" type="number" value="{{price}}" disabled>
+        <input *ngIf="!existsSharePrice" class="form-control" type="number" placeholder="Insert your share price here (in case the share price is not found)" #price>
+      </div>
+
+      <label class="col-sm-2 control-label">Dividend Yield</label>
+      <div class="col-sm-10">
+        <input *ngIf="existsDividendYield" class="form-control" type="number" value="{{divYield}}" disabled>
+        <input *ngIf="!existsDividendYield" class="form-control" type="number" placeholder="Insert the dividend yield ration here (in case the dividend yield is not found)" #divYield>
+      </div>
+
+      <label class="col-sm-2 control-label">Price to Earning ratio</label>
+      <div class="col-sm-10">
+        <input *ngIf="existsPE" class="form-control" type="number" value="{{PE}}" disabled>
+        <input *ngIf="!existsPE" class="form-control" type="number" placeholder="Insert the PE ratio here (in case the PE ratio is not found)" #PE>
+      </div>
+
+      <label class="col-sm-2 control-label">Choose your broker</label>
+      <div class="col-sm-10">
+        <select (ngModelChange)="setNewBroker($event)" (ngModel)="brokers" class="select-picker" data-live-search="true">
+          <option *ngFor="let broker of brokers" [ngValue]="broker">
+            {{broker.name}}
+          </option>
+        </select>
+      </div>
+
     </div>
 
-    <label class="col-sm-2 control-label">Share Price</label>
-    <div class="col-sm-10">
-      <input *ngIf="existsSharePrice" class="form-control" type="number" value="{{price}}" disabled>
-      <input *ngIf="!existsSharePrice" class="form-control" type="number" placeholder="Insert your share price here (in case the share price is not found)" #price>
-    </div>
-
-    <label class="col-sm-2 control-label">Dividend Yield</label>
-    <div class="col-sm-10">
-      <input *ngIf="existsDividendYield" class="form-control" type="number" value="{{divYield}}" disabled>
-      <input *ngIf="!existsDividendYield" class="form-control" type="number" placeholder="Insert the dividend yield ration here (in case the dividend yield is not found)" #divYield>
-    </div>
-
-    <label class="col-sm-2 control-label">Price to Earning ratio</label>
-    <div class="col-sm-10">
-      <input *ngIf="existsPE" class="form-control" type="number" value="{{PE}}" disabled>
-      <input *ngIf="!existsPE" class="form-control" type="number" placeholder="Insert the PE ratio here (in case the PE ratio is not found)" #PE>
-    </div>
 
   </div>
 
 </form>
 
-<button class ="btn btn-primary" id="btnAdd" (click)="saveDetails(name.value, price.value, noShares.value, divYield.value, PE.value)">Add</button>
+<div *ngIf="checkedCompany">
+  <button class ="btn btn-primary" id="btnAdd" (click)="saveDetails(name.value, price.value, noShares.value, divYield.value, PE.value)">Add</button>
+</div>

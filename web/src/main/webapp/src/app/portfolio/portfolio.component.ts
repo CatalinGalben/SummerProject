@@ -24,13 +24,9 @@ export class PortfolioComponent implements OnInit {
   }
 
   rowClicked(name: string, noShares: number, price: number) {
-    console.log("rowClicked: " + name);
     this.transferService.setData(name, noShares, price);
 
     this.selectedRow = name;
-
-    console.log("PORT price " + price);
-
   }
 
 }
