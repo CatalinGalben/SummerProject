@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AddRecordService} from "./shared/add-record.service";
 import {Router} from "@angular/router";
+import {Broker} from "./shared/Broker.model";
 
 @Component({
   selector: 'app-add-record',
@@ -13,14 +14,19 @@ export class AddRecordComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
+   this.recordService.getAllBrokers().subscribe(brokers =>
+   {
+     this.brokers = brokers;
+     console.log(this.brokers);
+   });
   }
 
   existsSharePrice: boolean = false;
   existsDividendYield: boolean = false;
   existsPE: boolean = false;
   price: number;
-  divYield: number;
-  PE: number;
+  brokers: Broker[];
+  selectedBroker: Broker;
 
 
   saveDetails(name: string, price: number, noShares: number, divYield: number, PE: number) {
@@ -47,13 +53,11 @@ export class AddRecordComponent implements OnInit {
       return;
     }
   }
-  //
-  // getSharePrice(name: string) {
-  //   console.log("method: getSharePrice - entered")
-  //   this.recordService.getSharePrice(name)
-  //     .subscribe(
-  //       sharePrice =>
-  //     )
-  // }
+
+  setNewBroker(broker: Broker){
+    console.log(broker);
+    this.selectedBroker = broker;
+  }
+
 
 }

@@ -29,6 +29,16 @@
       <input *ngIf="!existsPE" class="form-control" type="number" placeholder="Insert the PE ratio here (in case the PE ratio is not found)" #PE>
     </div>
 
+    <label class="col-sm-2 control-label">Choose your broker</label>
+    <div class="col-sm-10">
+      <select (ngModelChange)="setNewBroker($event)" (ngModel)="brokers" class="select-picker" data-live-search="true">
+        <option *ngFor="let broker of brokers" [ngValue]="broker">
+          {{broker.name}}
+        </option>
+      </select>
+    </div>
+
+
   </div>
 
 </form>

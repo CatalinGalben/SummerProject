@@ -6,6 +6,7 @@ import com.siemens.core.repository.BrokerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,5 +22,11 @@ public class BrokerServiceImpl implements BrokerServiceInterface {
         if(optionalBroker.isPresent())
             return  optionalBroker.get();
         throw new RuntimeException("The Broker you are looking for does not exist!");
+    }
+
+    @Override
+    public List<Broker> getBrokers()
+    {
+        return brokerRepository.findAll();
     }
 }

@@ -12,6 +12,8 @@ public class BrokerConverter extends AbstractConverterBaseEntity<Broker, BrokerD
         Broker broker = Broker.builder()
                 .name(brokerDTO.getName())
                 .profit(brokerDTO.getProfit())
+                .dividendFee(brokerDTO.getDividendFee())
+                .shareFee(brokerDTO.getShareFee())
                 .build();
         broker.setId(brokerDTO.getId());
         return broker;
@@ -22,6 +24,8 @@ public class BrokerConverter extends AbstractConverterBaseEntity<Broker, BrokerD
         BrokerDTO brokerDTO = BrokerDTO.builder()
                 .name(broker.getName())
                 .profit(broker.getProfit())
+                .dividendFee(broker.getDividendFee())
+                .shareFee(broker.getShareFee())
                 .build();
         brokerDTO.setId(broker.getId());
         return brokerDTO;

@@ -22,6 +22,7 @@
     "@angular/router": "^6.0.3",
     "@swimlane/ngx-charts": "^9.0.0",
     "angularfire2": "^5.0.0-rc.11",
+    "bootstrap-select": "^1.13.1",
     "core-js": "^2.5.4",
     "d3": "^5.5.0",
     "firebase": "^5.2.0",

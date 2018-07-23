@@ -33,7 +33,10 @@ export class AppComponent implements OnInit{
   public user_displayName: String;
   public user_email: String;
   public isLoggedIn: Boolean;
+
   menuState:string = 'out';
+  public user_id: number;
+
 
   constructor(private authService: AuthService, private router: Router, public loginService: LoginService) {
 
@@ -63,6 +66,7 @@ export class AppComponent implements OnInit{
       if (user != null) {
         this.user_displayName = user.firstName + " " + user.lastName;
         this.user_email = user.email;
+        this.user_id = user.id;
         this.isLoggedIn = true;
       }
     })
@@ -73,6 +77,7 @@ export class AppComponent implements OnInit{
   }
 
   logout(){
+    this.authService.logout();
     this.isLoggedIn = false;
     this.loginService.changeUser(null);
     this.router.navigate(['loginGoogle']);
