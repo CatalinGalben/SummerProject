@@ -18,7 +18,7 @@ public class YahooFinanceAPI {
             System.out.println(a.get());
 
         try{
-            Stock stock = YahooFinance.get("SIE.DE");
+            Stock stock = YahooFinance.get("TLV");
             BigDecimal price = stock.getQuote().getPrice();
             BigDecimal change = stock.getQuote().getChangeInPercent();
             BigDecimal dividend = stock.getDividend().getAnnualYield();

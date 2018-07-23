@@ -8,3 +8,10 @@
 input:invalid {
   border: 2px solid red;
 }
+
+#btnCheck {
+  position:absolute;
+  left: 18%;
+  background-color: #159E83;
+  text-color: #FFFFFF;
+}
