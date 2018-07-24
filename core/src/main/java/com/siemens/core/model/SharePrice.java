@@ -20,7 +20,7 @@ public class SharePrice extends BaseEntity<Integer>{
     private Company company;
 
     @Column(name = "price")
-    private int price;
+    private Double price;
 
     @Column(name = "date")
     private String date;

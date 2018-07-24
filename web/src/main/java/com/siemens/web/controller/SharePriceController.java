@@ -8,13 +8,15 @@ import com.siemens.web.converter.CompanyConverter;
 import com.siemens.web.converter.CompanyShareConverter;
 import com.siemens.web.converter.SharePriceConverter;
 import com.siemens.web.dto.CompanyShareDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
 public class SharePriceController {
-
+    private static final Logger log = LoggerFactory.getLogger(SharePriceController.class);
     @Autowired
     private SharePriceServiceInterface sharePriceService;
     @Autowired
@@ -26,6 +28,7 @@ public class SharePriceController {
     @RequestMapping(value = "/shareprice/{name}", method = RequestMethod.GET)
     public CompanyShareDTO getSharePrice(@PathVariable final String name)
     {
+        log.trace(name+" --- Symbol in controller");
         CompanyShare companyShare = sharePriceService.getSharePrice( name );
 
 

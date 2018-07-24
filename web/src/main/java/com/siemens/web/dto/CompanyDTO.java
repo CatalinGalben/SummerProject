@@ -24,7 +24,7 @@ public class CompanyDTO extends BaseDTO{
     public String toString() {
         return "CompanyDTO{" +
                 "name='" + name + '\'' +
-                ", PE=" + PE +
+                ", pe=" + PE +
                 ", dividendYield=" + dividendYield +
                 ", holdingRecords=" + holdingRecords +
                 ", sharePriceid=" + sharePriceid +

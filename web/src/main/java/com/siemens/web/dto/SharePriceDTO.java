@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Builder
 public class SharePriceDTO extends BaseDTO {
     private int companyid;
-    private int price;
+    private Double price;
     private String date;
 
     @Override

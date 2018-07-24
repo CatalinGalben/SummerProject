@@ -35,6 +35,6 @@ public class GroupController {
     @RequestMapping(value = "/creategroup", method = RequestMethod.POST)
     public void createGroup()
     {
-        
+
     }
 }

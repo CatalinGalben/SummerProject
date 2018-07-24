@@ -57,7 +57,7 @@ export class AddRecordComponent implements OnInit {
 
 
 
-  saveDetails(name: string, price: number, noShares: number, divYield: number, PE: number, NAV: number, TER: number, gearing: number, PD: number) {
+  saveDetails(name: string, price: number, noShares: number, dividendYield: number, PE: number, NAV: number, TER: number, gearing: number, PD: number) {
     console.log("Price: " + price);
     if (Number.isInteger(Number(price)) == false)
     {
@@ -70,7 +70,7 @@ export class AddRecordComponent implements OnInit {
       alert("The number of shares has to be an integer");
       return;
     }
-    if (Number.isInteger(Number(divYield)) == false)
+    if (Number.isInteger(Number(dividendYield)) == false)
     {
       alert("The Dividend Yield has to be an integer");
       return;
@@ -81,8 +81,8 @@ export class AddRecordComponent implements OnInit {
       return;
     }
     this.noShares = noShares;
-    this.companyFound.divYield = divYield;
-    this.companyFound.PE = PE;
+    this.companyFound.dividendYield = dividendYield;
+    this.companyFound.pe = PE;
     this.shareFound.price = price;
     let company = this.companyFound;
     let sharePrice = this.shareFound;
@@ -135,12 +135,13 @@ export class AddRecordComponent implements OnInit {
   checkCompany(symbol: string){
     console.log("method: checkCompany -- " + symbol + " -- front-end");
     this.recordService.getCompanyDetails(symbol).subscribe(cs => {
+      console.log(cs);
       this.companyFound = cs.company;
       this.shareFound = cs.sharePrice;
-      this.companyFound.divYield == null ?
-        (this.existsDividendYield = false, this.divYield = null, this.needsUpdated = true) : (this.existsDividendYield = true, this.divYield = this.companyFound.divYield);
-      this.companyFound.PE == null ?
-        (this.existsPE = false, this.PE = null, this.needsUpdated = true) : (this.existsPE = true, this.PE = this.companyFound.PE);
+      this.companyFound.dividendYield == null ?
+        (this.existsDividendYield = false, this.divYield = null, this.needsUpdated = true) : (this.existsDividendYield = true, this.divYield = this.companyFound.dividendYield);
+      this.companyFound.pe == null ?
+        (this.existsPE = false, this.PE = null, this.needsUpdated = true) : (this.existsPE = true, this.PE = this.companyFound.pe);
       this.shareFound.price == null ?
         (this.existsSharePrice = false, this.price = null, this.needsUpdated = true) : (this.existsSharePrice = true, this.price = this.shareFound.price);
       this.checkedCompany = true;

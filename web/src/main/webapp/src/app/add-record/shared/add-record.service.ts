@@ -25,7 +25,7 @@ export class AddRecordService {
     return this.httpClient.post<void>(this.fillingUrl, companyShare);
   }
 
-  // this.companyFound.id, this.companyFound.currencyid, name, price, divYield, PE, this.shareFound.id, this.shareFound.date
+  // this.companyFound.id, this.companyFound.currencyid, name, price, dividendYield, pe, this.shareFound.id, this.shareFound.date
 
   getAllBrokers(): Observable<Broker[]>{
     return this.httpClient.get<Broker[]>(this.brokersUrl);
@@ -33,7 +33,8 @@ export class AddRecordService {
 
 
   getCompanyDetails(symbol: string): Observable<CompanyShare>{
-    const companyUrl =`${this.companyUrl}/${symbol}`;
+    const companyUrl =`${this.companyUrl}/${symbol}`+'.';
+    console.log(companyUrl);
     return this.httpClient.get<CompanyShare>(companyUrl);
   }
 
