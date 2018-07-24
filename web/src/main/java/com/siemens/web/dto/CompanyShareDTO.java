@@ -9,7 +9,7 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-public class CompanyShareDTO {
+public class CompanyShareDTO extends BaseDTO{
     private CompanyDTO company;
     private SharePriceDTO sharePrice;
 }

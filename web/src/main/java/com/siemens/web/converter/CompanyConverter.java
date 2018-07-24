@@ -29,7 +29,6 @@ public class CompanyConverter extends AbstractConverterBaseEntity<Company, Compa
                 .PE(company.getPE())
                 .currencyid(company.getCurrency().getId())
                 .dividendYield(company.getDividendYield())
-                .currencyid(company.getCurrency().getId())
                 .build();
         companyDTO.setId(company.getId());
         return companyDTO;

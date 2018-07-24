@@ -2,6 +2,7 @@ package com.siemens.core.service;
 
 import com.siemens.core.api.Api;
 import com.siemens.core.model.Company;
+import com.siemens.core.model.CompanyShare;
 import com.siemens.core.model.Currency;
 import com.siemens.core.model.SharePrice;
 import com.siemens.core.repository.CompanyRepository;
@@ -24,38 +25,33 @@ public class SharePriceServiceImpl implements SharePriceServiceInterface{
     @Autowired
     private CurrencyRepository currencyRepository;
     @Override
-    public SharePrice manualSharePrice(String symbol, Integer price, Double PE, Float dividend, String currencyName)
+    public void manualSharePrice(Company company, SharePrice sharePrice, String currencyName)
     {
         Currency currency = currencyRepository.findAll().stream()
                 .filter(crr -> crr.getName().equals(currencyName)).findFirst().get();
 
-        Company company = Company.builder()
-                .PE(PE)
-                .name(symbol)
-                .dividendYield(dividend)
-                .currency(currency)
-                .build();
+        company.setCurrency(currency);
         companyRepository.save(company);
 
-        SharePrice sharePrice = SharePrice.builder()
-                .price(price)
-                .date(DateTime.now().toString())
-                .company(company)
-                .build();
-        return sharePriceRepository.save(sharePrice);
+        sharePrice.setDate(DateTime.now().toString());
+        sharePriceRepository.save(sharePrice);
 
     }
     @Override
-    public Map<Company, SharePrice> getSharePrice(String symbol)
+    public CompanyShare getSharePrice(String symbol)
     {
         //FIRST , check if share price already exists in the database, so the api wont need to interrogate
-        Map<Company, SharePrice> resultCompShare = new HashMap<>();
+
+
         Optional<SharePrice> optionalSharePrice = sharePriceRepository
                 .findAll().stream().filter(sp -> sp.getCompany().getName().equals(symbol)).findFirst();
         if(optionalSharePrice.isPresent())
         {
-            resultCompShare.put(optionalSharePrice.get().getCompany(), optionalSharePrice.get());
-            return resultCompShare;
+
+            return CompanyShare.builder()
+                    .company(optionalSharePrice.get().getCompany())
+                    .sharePrice(optionalSharePrice.get())
+                    .build();
         }
 
         String result = Api.Interogate(symbol);
@@ -85,14 +81,21 @@ public class SharePriceServiceImpl implements SharePriceServiceInterface{
                     .date(DateTime.now().toString())
                     .build();
             SharePrice sharePrice1 = sharePriceRepository.save(sharePrice);
-            resultCompShare.put(company1, sharePrice1);
-            return  resultCompShare;
-
+            return CompanyShare.builder()
+                    .company(company1)
+                    .sharePrice(sharePrice1)
+                    .build();
         }
         //in case of api not being able to determine the symbol
         //the user is going to have to input the desired data manually
-        resultCompShare.put(Company.builder().build(), SharePrice.builder().build());
-        return resultCompShare;
+        return CompanyShare.builder()
+                .company(
+                        Company.builder().build()
+                )
+                .sharePrice(
+                        SharePrice.builder().build()
+                )
+                .build();
 
 
 

@@ -1,8 +1,11 @@
 package com.siemens.web.controller;
 
 import com.siemens.core.model.Company;
+import com.siemens.core.model.CompanyShare;
 import com.siemens.core.model.SharePrice;
 import com.siemens.core.service.SharePriceServiceInterface;
+import com.siemens.web.converter.CompanyConverter;
+import com.siemens.web.converter.CompanyShareConverter;
 import com.siemens.web.converter.SharePriceConverter;
 import com.siemens.web.dto.CompanyShareDTO;
 import com.siemens.web.dto.SharePriceDTO;
@@ -23,17 +26,23 @@ public class SharePriceController {
     private SharePriceServiceInterface sharePriceService;
     @Autowired
     private SharePriceConverter shareConverter;
+    @Autowired
+    private CompanyConverter companyConverter;
+    @Autowired
+    private CompanyShareConverter companyShareConverter;
     @RequestMapping(value = "/shareprice", method = RequestMethod.GET)
-    public SharePriceDTO getSharePrice(@RequestBody final String name)
+    public CompanyShareDTO getSharePrice(@RequestBody final String name)
     {
-        Map<Company,SharePrice> requestResult = sharePriceService.getSharePrice( name );
-        Company comp = requestResult.keySet().iterator().next();
-        Tuple<Company, SharePrice> tu
-        return shareConverter.convertModelToDto(sharePrice);
-    }
-    @RequestMapping(value= "/iaopauza", method = RequestMethod.GET)
-    public CompanyShareDTO getCompanyShare(@RequestBody final String symbol)
-    {
+        CompanyShare companyShare = sharePriceService.getSharePrice( name );
 
+
+        return companyShareConverter.convertModelToDto(companyShare);
+    }
+    @RequestMapping(value= "/iaopauza", method = RequestMethod.POST)
+    public void getCompanyShare(@RequestBody final CompanyShareDTO companyShareDTO, @RequestBody final String currencyName)
+    {
+        Company company = companyConverter.convertDtoToModel(companyShareDTO.getCompany());
+        SharePrice sharePrice = shareConverter.convertDtoToModel(companyShareDTO.getSharePrice());
+        sharePriceService.manualSharePrice(company, sharePrice, currencyName);
     }
 }
