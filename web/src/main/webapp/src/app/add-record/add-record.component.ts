@@ -7,6 +7,7 @@ import {CompanyShare} from "./shared/CompanyShare";
 import {SharePrice} from "./shared/SharePrice.model";
 import {LoginService} from "../login-page/shared/login.service";
 import {User} from "../login-page/shared/user.model";
+import {COMPANYTYPES, ETFTYPES} from "../mock-data";
 
 @Component({
   selector: 'app-add-record',
@@ -30,6 +31,9 @@ export class AddRecordComponent implements OnInit {
 
 
   public userLoggedInAddComponent: User;
+
+  companytypes = COMPANYTYPES;
+  etftypes = ETFTYPES;
 
   noShares: number;
   typeOfCompany: number;
@@ -138,11 +142,11 @@ export class AddRecordComponent implements OnInit {
       console.log(cs);
       this.companyFound = cs.company;
       this.shareFound = cs.sharePrice;
-      this.companyFound.dividendYield == null ?
+      this.companyFound.dividendYield == 0 ?
         (this.existsDividendYield = false, this.divYield = null, this.needsUpdated = true) : (this.existsDividendYield = true, this.divYield = this.companyFound.dividendYield);
-      this.companyFound.pe == null ?
+      this.companyFound.pe == 0 ?
         (this.existsPE = false, this.PE = null, this.needsUpdated = true) : (this.existsPE = true, this.PE = this.companyFound.pe);
-      this.shareFound.price == null ?
+      this.shareFound.price == 0 ?
         (this.existsSharePrice = false, this.price = null, this.needsUpdated = true) : (this.existsSharePrice = true, this.price = this.shareFound.price);
       this.checkedCompany = true;
     })
@@ -153,6 +157,7 @@ export class AddRecordComponent implements OnInit {
   }
 
   setNewTypeETF(type: number){
+    console.log("Am intrat in setNewTypeETF cu: " + type)
     this.typeOfETF = type;
   }
 

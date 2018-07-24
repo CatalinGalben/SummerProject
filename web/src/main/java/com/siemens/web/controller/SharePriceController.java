@@ -29,7 +29,7 @@ public class SharePriceController {
     public CompanyShareDTO getSharePrice(@PathVariable final String name)
     {
         log.trace(name+" --- Symbol in controller");
-        CompanyShare companyShare = sharePriceService.getSharePrice( name );
+        CompanyShare companyShare = sharePriceService.getSharePrice( name.toUpperCase() );
 
 
         return companyShareConverter.convertModelToDto(companyShare);

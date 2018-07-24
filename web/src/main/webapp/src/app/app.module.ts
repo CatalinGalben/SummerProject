@@ -26,6 +26,7 @@ import {LoginService} from "./login-page/shared/login.service";
 import {HttpClientModule} from "@angular/common/http";
 import { BarChartComponent } from './shared/bar-chart/bar-chart.component';
 import {NgxChartsModule} from "@swimlane/ngx-charts";
+import {PortfolioService} from "./portfolio/shared/portfolio.service";
 
 const routes: Routes=[
   {path: 'homePage', component: HomePageComponent},
@@ -62,7 +63,7 @@ const routes: Routes=[
     BrowserAnimationsModule,
     NgxChartsModule
   ],
-  providers: [AuthService, AngularFireAuth, MainService, TransferService, LoginService],
+  providers: [AuthService, AngularFireAuth, MainService, TransferService, LoginService, PortfolioService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

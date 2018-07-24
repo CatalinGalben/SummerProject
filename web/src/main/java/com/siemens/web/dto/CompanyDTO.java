@@ -2,7 +2,6 @@ package com.siemens.web.dto;
 
 import lombok.*;
 
-import java.io.Serializable;
 import java.util.Set;
 
 @Getter
@@ -16,7 +15,6 @@ public class CompanyDTO extends BaseDTO{
     private double PE;
     private float dividendYield;
     private Set<HoldingRecordDTO> holdingRecords;
-    private int sharePriceid;
     private Set<CompanyGroupDTO> companyGroups;
     private int currencyid;
 
@@ -27,7 +25,6 @@ public class CompanyDTO extends BaseDTO{
                 ", pe=" + PE +
                 ", dividendYield=" + dividendYield +
                 ", holdingRecords=" + holdingRecords +
-                ", sharePriceid=" + sharePriceid +
                 ", companyGroups=" + companyGroups +
                 ", currencyid=" + currencyid +
                 '}';
