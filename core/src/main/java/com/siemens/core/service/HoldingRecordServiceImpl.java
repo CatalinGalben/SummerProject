@@ -56,7 +56,7 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
                 .premiumDiscount(premium)
                 .ter(ter)
                 .build();
-
+        trust.setCompany(company);
         trustRepository.save(trust);
         fundRepository.save(trust);
 
@@ -79,6 +79,7 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
                 .ter(ter)
                 .type(type)
                 .build();
+        etf.setCompany(company);
         etfRepository.save(etf);
         fundRepository.save(etf);
          return holdingRecordRepository.save(
