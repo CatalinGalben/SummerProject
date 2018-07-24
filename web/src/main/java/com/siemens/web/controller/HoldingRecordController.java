@@ -56,7 +56,7 @@ public class HoldingRecordController {
         return holdingRecordConverter.convertModelToDto(savedHoldingRecord);
     }
 
-    @RequestMapping(value = "/holdingrecords/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/holdingrecords/addtrust", method = RequestMethod.POST)
     public HoldingRecordDTO createHoldingRecord(@RequestBody final HoldingRecordDTO holdingRecordDTO,
                                                 @RequestBody final TrustDTO trustDTO)
     {
@@ -71,7 +71,7 @@ public class HoldingRecordController {
         return holdingRecordConverter.convertModelToDto(savedHoldingRecord);
     }
 
-    @RequestMapping(value = "/holdingrecords/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/holdingrecords/addetf", method = RequestMethod.POST)
     public HoldingRecordDTO createHoldingRecord(@RequestBody final HoldingRecordDTO holdingRecordDTO,
                                                 @RequestBody final EtfDTO etfDTO)
     {
