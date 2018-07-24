@@ -1,7 +1,13 @@
+<p class="title"><b>Price Index</b></p>
+<br/><br/>
+
 <div class="row ngx-chart-container" style="height: 350px;">
   <ngx-charts-line-chart
     [results]="results"
     [autoScale]="true"
+
+    [legend]="true"
+
 
     [scheme]="'fire'"
     [xAxis]="true"
@@ -9,3 +15,4 @@
     [animations]="false">
   </ngx-charts-line-chart>
 </div>
+
