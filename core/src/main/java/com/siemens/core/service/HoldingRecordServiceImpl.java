@@ -23,8 +23,15 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
     private UserRepository userRepository;
     @Autowired
     private  UserServiceInterface userServiceInterface;
+    @Autowired
+    private FundRepository fundRepository;
+    @Autowired
+    private TrustRepository trustRepository;
+    @Autowired
+    private EtfRepository etfRepository;
     @Override
-    public HoldingRecord createRecord(User user, Broker broker, Company company, Double paidPrice, Integer noShares)
+    public HoldingRecord createRecord
+            (User user, Broker broker, Company company, Double paidPrice, Integer noShares)
     {
 
 
@@ -38,7 +45,52 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
                 .build()
         );
     }
+    @Override
+    public  HoldingRecord createRecord
+            (User user, Broker broker, Company company, Double paidPrice, Integer noShares, Float nav, Float ter,
+             Float gearing, Float premium){
 
+        Trust trust = Trust.trustBuilder()
+                .nav(nav)
+                .gearing(gearing)
+                .premiumDiscount(premium)
+                .ter(ter)
+                .build();
+
+        trustRepository.save(trust);
+        fundRepository.save(trust);
+
+        return holdingRecordRepository.save(
+                HoldingRecord.builder()
+                        .user(user)
+                        .broker(broker)
+                        .company(company)
+                        .pricePaid(paidPrice)
+                        .noShares(noShares)
+                        .build()
+        );
+     }
+
+     @Override
+     public  HoldingRecord createRecord
+             (User user, Broker broker, Company company, Double paidPrice, Integer noShares,float nav, float ter, int type){
+        Etf etf = Etf.etfBuilder()
+                .nav(nav)
+                .ter(ter)
+                .type(type)
+                .build();
+        etfRepository.save(etf);
+        fundRepository.save(etf);
+         return holdingRecordRepository.save(
+                 HoldingRecord.builder()
+                         .user(user)
+                         .broker(broker)
+                         .company(company)
+                         .pricePaid(paidPrice)
+                         .noShares(noShares)
+                         .build()
+         );
+    }
     @Override
     public List<HoldingRecord> getAllRecords()
     {

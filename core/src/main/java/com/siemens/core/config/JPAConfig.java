@@ -24,7 +24,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableJpaRepositories({"com.siemens.core.repository"})
 @EnableTransactionManagement
-@EnableCaching
+//@EnableCaching
 public class JPAConfig {
 
     @Value("${db.jdbcUrl}")
