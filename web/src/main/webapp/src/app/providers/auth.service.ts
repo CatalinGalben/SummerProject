@@ -34,7 +34,7 @@ export class AuthService {
         if(!user.emailVerified){
           firebase.auth().signOut().then(function() {
             // Sign-out successful.
-          }).catch(function(error) {
+          }).catch(funct  ion(error) {
             // An error happened.
           });
           alert("Email not verified!");

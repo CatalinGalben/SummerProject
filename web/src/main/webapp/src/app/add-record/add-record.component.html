@@ -35,8 +35,8 @@
 
       <label class="col-sm-2 control-label">Choose your broker</label>
       <div class="col-sm-10">
-        <select (ngModelChange)="setNewBroker($event)" (ngModel)="brokers" class="select-picker" data-live-search="true">
-          <option *ngFor="let broker of brokers" [ngValue]="broker">
+        <select #b (change)="setNewBroker(b.value)" class="select-picker" data-live-search="true">
+          <option *ngFor="let broker of brokers" [value]="broker">
             {{broker.name}}
           </option>
         </select>
@@ -47,8 +47,8 @@
     <div *ngIf="checkedCompany">
       <label class="col-sm-2 control-label">Type of company</label>
       <div class="col-sm-10">
-        <select (onModelChange)="setNewTypeCompany($event)" (ngModel)="companytypes" class="select-picker" data-live-search="true">
-          <option *ngFor="let type of companytypes" [ngValue]="type.number">{{type.type}}</option>
+        <select #companytypehtml (change)="setNewTypeCompany(companytypehtml.value)" (ngModel)="companytypes" class="select-picker" data-live-search="true">
+          <option *ngFor="let type of companytypes" [value]="type.number">{{type.type}}</option>
         </select>
       </div>
     </div>
@@ -81,7 +81,7 @@
     <div *ngIf="typeOfCompany==3">
       <label class="col-sm-2 control-label">Type of ETF</label>
       <div class="col-sm-10">
-        <select (ngModelChange)="setNewTypeETF($event)" (ngModel)="etftypes" class="select-picker" data-live-search="true">
+        <select #typeofetfhtml (change)="setNewTypeETF(typeofetfhtml.value)" (ngModel)="etftypes" class="select-picker" data-live-search="true">
           <option *ngFor="let type of etftypes" [ngValue]="type.number">{{type.type}}</option>
         </select>
       </div>
@@ -92,5 +92,6 @@
 </form>
 
 <div *ngIf="checkedCompany">
-  <button class ="btn btn-primary" id="btnAdd" (click)="saveDetails(name.value, price.value, noShares.value, divYield.value, PE.value, NAV.value, TER.value, gearing.value, PD.value)">Add</button>
+  <button *ngIf="typeOfCompany==1 || typeOfCompany==3" class ="btn btn-primary btnAdd" (click)="saveDetailsNormalOrETF(name.value, price.value, noShares.value, divYield.value)">Add</button>
+  <button *ngIf="typeOfCompany==2" class ="btn btn-primary btnAdd" (click)="saveDetailsTrust(name.value, price.value, noShares.value, divYield.value, NAV.value, TER.value, gearing.value, PD.value)">Add</button>
 </div>

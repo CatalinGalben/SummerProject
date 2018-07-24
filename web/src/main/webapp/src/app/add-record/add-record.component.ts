@@ -61,7 +61,48 @@ export class AddRecordComponent implements OnInit {
 
 
 
-  saveDetails(name: string, price: number, noShares: number, dividendYield: number, PE: number, NAV: number, TER: number, gearing: number, PD: number) {
+  saveDetailsNormalOrETF(name: string, price: number, noShares: number, dividendYield: number, PE: number) {
+    console.log("Price: " + price);
+    if (Number.isInteger(Number(price)) == false)
+    {
+      alert("The share price has to be an integer");
+      return;
+    }
+
+    if (Number.isInteger(Number(noShares)) == false)
+    {
+      alert("The number of shares has to be an integer");
+      return;
+    }
+    if (Number.isInteger(Number(dividendYield)) == false)
+    {
+      alert("The Dividend Yield has to be an integer");
+      return;
+    }
+    if (Number.isInteger(Number(PE)) == false)
+    {
+      alert("The price to earning has to be an integer");
+      return;
+    }
+    this.noShares = noShares;
+    this.companyFound.dividendYield = dividendYield;
+    this.companyFound.pe = PE;
+    this.shareFound.price = price;
+    let company = this.companyFound;
+    let sharePrice = this.shareFound;
+    let companyShare = {company, sharePrice};
+
+
+    if (this.needsUpdated == true){
+      this.recordService.sendCompleteDetails(companyShare);
+      this.needsUpdated = false;
+    }
+
+    this.addHoldingRecord();
+
+  }
+
+  saveDetailsTrust(name: string, price: number, noShares: number, dividendYield: number, PE: number, NAV: number, TER: number, gearing: number, PD: number) {
     console.log("Price: " + price);
     if (Number.isInteger(Number(price)) == false)
     {
@@ -105,6 +146,8 @@ export class AddRecordComponent implements OnInit {
     this.addHoldingRecord();
 
   }
+
+
 
   addHoldingRecord(){
     if (this.typeOfCompany==1){
