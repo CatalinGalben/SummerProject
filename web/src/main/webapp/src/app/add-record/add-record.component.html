@@ -44,11 +44,57 @@
 
     </div>
 
+    <div *ngIf="checkedCompany">
+      <label class="col-sm-2 control-label">Type of company</label>
+      <div class="col-sm-10">
+        <select (ngModelChange)="setNewTypeCompany($event)" class="select-picker" data-live-search="true">
+          <option [ngValue]="1">Normal</option>
+          <option [ngValue]="2">Trust</option>
+          <option [ngValue]="3">ETF</option>
+        </select>
+      </div>
+    </div>
+
+    <div *ngIf="typeOfCompany==2 || typeOfCompany==3">
+      <label class="col-sm-2 control-label">Net Asset Value</label>
+      <div class="col-sm-10">
+        <input  class="form-control" type="number" placeholder="Insert the NAV here" #NAV>
+      </div>
+
+      <label class="col-sm-2 control-label">Total Expense Ratio</label>
+      <div class="col-sm-10">
+        <input class="form-control" type="number" placeholder="Insert the TER here" #TER>
+      </div>
+    </div>
+
+    <div *ngIf="typeOfCompany==2">
+      <label class="col-sm-2 control-label">Gearing Ratio</label>
+      <div class="col-sm-10">
+        <input class="form-control" type="number" placeholder="Insert the gearing ratio here" #gearing>
+      </div>
+
+      <label class="col-sm-2 control-label">Premium / Discount</label>
+      <div class="col-sm-10">
+        <input class="form-control" type="number" placeholder="Insert the Premium/Discount here" #PD>
+      </div>
+
+    </div>
+
+    <div *ngIf="typeOfCompany==3">
+      <label class="col-sm-2 control-label">Type of ETF</label>
+      <div class="col-sm-10">
+        <select (ngModelChange)="setNewTypeETF($event)" class="select-picker" data-live-search="true">
+          <option [ngValue]="1">Index Fund</option>
+          <option [ngValue]="2">Real ETF</option>
+          <option [ngValue]="3">Synthetic ETF</option>
+        </select>
+      </div>
+    </div>
 
   </div>
 
 </form>
 
 <div *ngIf="checkedCompany">
-  <button class ="btn btn-primary" id="btnAdd" (click)="saveDetails(name.value, price.value, noShares.value, divYield.value, PE.value)">Add</button>
+  <button class ="btn btn-primary" id="btnAdd" (click)="saveDetails(name.value, price.value, noShares.value, divYield.value, PE.value, NAV.value, TER.value, gearing.value, PD.value)">Add</button>
 </div>
