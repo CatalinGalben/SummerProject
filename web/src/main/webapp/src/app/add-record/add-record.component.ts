@@ -25,7 +25,9 @@ export class AddRecordComponent implements OnInit {
       console.log(this.brokers);
     });
     this.loginService.currentUser.subscribe(user => {
+      console.log("ba");
       this.userLoggedInAddComponent = user;
+      console.log(this.userLoggedInAddComponent);
     });
   }
 
@@ -61,33 +63,8 @@ export class AddRecordComponent implements OnInit {
 
 
 
-  saveDetailsNormalOrETF(name: string, price: number, noShares: number, dividendYield: number, PE: number) {
-    console.log("Price: " + price);
-    if (Number.isInteger(Number(price)) == false)
-    {
-      alert("The share price has to be an integer");
-      return;
-    }
+  saveDetailsNormal() {
 
-    if (Number.isInteger(Number(noShares)) == false)
-    {
-      alert("The number of shares has to be an integer");
-      return;
-    }
-    if (Number.isInteger(Number(dividendYield)) == false)
-    {
-      alert("The Dividend Yield has to be an integer");
-      return;
-    }
-    if (Number.isInteger(Number(PE)) == false)
-    {
-      alert("The price to earning has to be an integer");
-      return;
-    }
-    this.noShares = noShares;
-    this.companyFound.dividendYield = dividendYield;
-    this.companyFound.pe = PE;
-    this.shareFound.price = price;
     let company = this.companyFound;
     let sharePrice = this.shareFound;
     let companyShare = {company, sharePrice};
@@ -102,33 +79,8 @@ export class AddRecordComponent implements OnInit {
 
   }
 
-  saveDetailsTrust(name: string, price: number, noShares: number, dividendYield: number, PE: number, NAV: number, TER: number, gearing: number, PD: number) {
-    console.log("Price: " + price);
-    if (Number.isInteger(Number(price)) == false)
-    {
-      alert("The share price has to be an integer");
-      return;
-    }
+  saveDetailsTrust(NAV: number, TER: number, gearing: number, PD: number) {
 
-    if (Number.isInteger(Number(noShares)) == false)
-    {
-      alert("The number of shares has to be an integer");
-      return;
-    }
-    if (Number.isInteger(Number(dividendYield)) == false)
-    {
-      alert("The Dividend Yield has to be an integer");
-      return;
-    }
-    if (Number.isInteger(Number(PE)) == false)
-    {
-      alert("The price to earning has to be an integer");
-      return;
-    }
-    this.noShares = noShares;
-    this.companyFound.dividendYield = dividendYield;
-    this.companyFound.pe = PE;
-    this.shareFound.price = price;
     let company = this.companyFound;
     let sharePrice = this.shareFound;
     let companyShare = {company, sharePrice};
@@ -147,9 +99,28 @@ export class AddRecordComponent implements OnInit {
 
   }
 
+  saveDetailsETF(NAV: number, TER: number) {
+    let company = this.companyFound;
+    let sharePrice = this.shareFound;
+    let companyShare = {company, sharePrice};
+
+    this.NAV = NAV;
+    this.TER = TER;
+
+
+    if (this.needsUpdated == true){
+      this.recordService.sendCompleteDetails(companyShare);
+      this.needsUpdated = false;
+    }
+
+    this.addHoldingRecord();
+
+  }
+
 
 
   addHoldingRecord(){
+    console.log(this.userLoggedInAddComponent);
     if (this.typeOfCompany==1){
       this.recordService.addNormalCompany(this.userLoggedInAddComponent.id, this.selectedBroker.id, this.companyFound.id, this.shareFound.price*this.noShares, this.noShares)
         .subscribe(hr => {
@@ -195,13 +166,34 @@ export class AddRecordComponent implements OnInit {
     })
   }
 
-  setNewTypeCompany(type: number){
-    this.typeOfCompany = type;
+  setNewTypeCompany(event){
+    this.typeOfCompany = event.target.value;
   }
 
   setNewTypeETF(type: number){
-    console.log("Am intrat in setNewTypeETF cu: " + type)
+    console.log("Am intrat in setNewTypeETF cu: " + type);
     this.typeOfETF = type;
   }
+
+  setSharePriceHTML(price: number){
+    console.log("setSharePriceHTML -- "+ price);
+    this.shareFound.price = price;
+  }
+
+  setDivYieldHTML(divYield: number){
+    console.log("setDivYieldHTML -- "+ divYield);
+    this.companyFound.dividendYield = divYield;
+  }
+
+  setPEHTML(PE: number) {
+    console.log("setPEHTML -- "+ PE);
+    this.companyFound.pe = PE;
+  }
+
+  setNumberOfShares(noShares: number){
+    console.log("setNumberOfShares --" + noShares);
+    this.noShares = noShares;
+  }
+
 
 }

@@ -12,30 +12,31 @@
 
       <label class="col-sm-2 control-label">No. Shares</label>
       <div class="col-sm-10">
-        <input class="form-control" type="number" placeholder="Number of shares you want to buy" #noShares>
+        <input class="form-control" type="number" placeholder="Number of shares you want to buy" #noShares (change)="setNumberOfShares(noShares.value)">
       </div>
 
       <label class="col-sm-2 control-label">Share Price</label>
       <div class="col-sm-10">
-        <input *ngIf="existsSharePrice" class="form-control" type="number" value="{{price}}" disabled>
-        <input *ngIf="!existsSharePrice" class="form-control" type="number" placeholder="Insert your share price here" #price>
+        <input  *ngIf="existsSharePrice" class="form-control" type="number" value="{{price}}"  disabled>
+        <input *ngIf="!existsSharePrice" class="form-control" type="number" placeholder="Insert your share price here" #price (change)="setSharePriceHTML(price.value)">
       </div>
 
       <label class="col-sm-2 control-label">Dividend Yield</label>
       <div class="col-sm-10">
-        <input *ngIf="existsDividendYield" class="form-control" type="number" value="{{divYield}}" disabled>
-        <input *ngIf="!existsDividendYield" class="form-control" type="number" placeholder="Insert the dividend yield ration here " #divYield>
+        <input *ngIf="existsDividendYield" class="form-control" type="number" value="{{divYield}}"  disabled>
+        <input *ngIf="!existsDividendYield" class="form-control" type="number" placeholder="Insert the dividend yield ration here " #divYield (change)="setDivYieldHTML(divYield.value)">
       </div>
 
       <label class="col-sm-2 control-label">Price to Earning ratio</label>
       <div class="col-sm-10">
         <input *ngIf="existsPE" class="form-control" type="number" value="{{PE}}" disabled>
-        <input *ngIf="!existsPE" class="form-control" type="number" placeholder="Insert the PE ratio here" #PE>
+        <input *ngIf="!existsPE" class="form-control" type="number" placeholder="Insert the PE ratio here" #PE (change)="setPEHTML(PE.value)">
       </div>
 
       <label class="col-sm-2 control-label">Choose your broker</label>
       <div class="col-sm-10">
         <select #b (change)="setNewBroker(b.value)" class="select-picker" data-live-search="true">
+          <option [value]=""></option>
           <option *ngFor="let broker of brokers" [value]="broker">
             {{broker.name}}
           </option>
@@ -47,7 +48,8 @@
     <div *ngIf="checkedCompany">
       <label class="col-sm-2 control-label">Type of company</label>
       <div class="col-sm-10">
-        <select #companytypehtml (change)="setNewTypeCompany(companytypehtml.value)" (ngModel)="companytypes" class="select-picker" data-live-search="true">
+        <select  (change)="setNewTypeCompany($event)" class="select-picker" >
+          <option [value]=""></option>
           <option *ngFor="let type of companytypes" [value]="type.number">{{type.type}}</option>
         </select>
       </div>
@@ -81,6 +83,10 @@
     <div *ngIf="typeOfCompany==3">
       <label class="col-sm-2 control-label">Type of ETF</label>
       <div class="col-sm-10">
+        <!--<select #typeofetfhtml (change)="setNewTypeETF(typeofetfhtml.value)" (ngModel)="etftypes" class="select-picker" data-live-search="true">-->
+        <!--<option *ngFor="let type of etftypes" [ngValue]="type.number">{{type.type}}</option>-->
+      <!--</select>-->
+
         <select #typeofetfhtml (change)="setNewTypeETF(typeofetfhtml.value)" (ngModel)="etftypes" class="select-picker" data-live-search="true">
           <option *ngFor="let type of etftypes" [ngValue]="type.number">{{type.type}}</option>
         </select>
@@ -92,6 +98,7 @@
 </form>
 
 <div *ngIf="checkedCompany">
-  <button *ngIf="typeOfCompany==1 || typeOfCompany==3" class ="btn btn-primary btnAdd" (click)="saveDetailsNormalOrETF(name.value, price.value, noShares.value, divYield.value)">Add</button>
-  <button *ngIf="typeOfCompany==2" class ="btn btn-primary btnAdd" (click)="saveDetailsTrust(name.value, price.value, noShares.value, divYield.value, NAV.value, TER.value, gearing.value, PD.value)">Add</button>
+  <button *ngIf="typeOfCompany==1" class ="btn btn-primary btnAdd" (click)="saveDetailsNormal()">Add Company</button>
+  <button *ngIf="typeOfCompany==2" class ="btn btn-primary btnAdd" (click)="saveDetailsTrust(NAV.value, TER.value, gearing.value, PD.value)">Add Trust</button>
+  <button *ngIf="typeOfCompany==3" class ="btn btn-primary btnAdd" (click)="saveDetailsETF(NAV.value, TER.value)">Add ETF</button>
 </div>
