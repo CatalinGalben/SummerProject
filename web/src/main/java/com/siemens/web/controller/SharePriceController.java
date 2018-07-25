@@ -35,10 +35,11 @@ public class SharePriceController {
         return companyShareConverter.convertModelToDto(companyShare);
     }
     @RequestMapping(value= "/iaopauza", method = RequestMethod.POST)
-    public void getCompanyShare(@RequestBody final CompanyShareDTO companyShareDTO, @RequestBody final String currencyName)
+    public void getCompanyShare(@RequestBody final CompanyShareDTO companyShareDTO)
     {
+        log.trace("-------> manualUpdate");
         Company company = companyConverter.convertDtoToModel(companyShareDTO.getCompany());
         SharePrice sharePrice = shareConverter.convertDtoToModel(companyShareDTO.getSharePrice());
-        sharePriceService.manualSharePrice(company, sharePrice, currencyName);
+        sharePriceService.manualSharePrice(company, sharePrice);
     }
 }
