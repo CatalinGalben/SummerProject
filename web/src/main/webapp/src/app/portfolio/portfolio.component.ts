@@ -35,14 +35,15 @@ export class PortfolioComponent implements OnInit {
     //get loggedIn user
     // this.loginService.currentUser.subscribe(user =>
     // this.userLoggedInPortfolioComponent = user);
+    if (this.loginService.getCurrentUser() != null) {
+      this.userLoggedInPortfolioComponent = this.loginService.getCurrentUser();
 
-    this.userLoggedInPortfolioComponent = this.loginService.getCurrentUser();
-
-    //get all records
-    this.portfolioService.getRecords().subscribe(records => {
-      this.holdingRecords = records
-        .filter(record => record.userid == this.userLoggedInPortfolioComponent.id);
-    });
+      //get all records
+      this.portfolioService.getRecords().subscribe(records => {
+        this.holdingRecords = records
+          .filter(record => record.userid == this.userLoggedInPortfolioComponent.id);
+      });
+    }
 
     //get all brokers
     this.recordService.getAllBrokers().subscribe(brokers =>

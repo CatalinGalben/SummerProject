@@ -186,7 +186,6 @@ export class AddRecordComponent implements OnInit {
 
   setPEHTML(PE: number) {
     console.log("setPEHTML -- "+ PE);
-    console.log("setPEHTML -- user: " + this.userLoggedInAddComponent);
     this.companyFound.pe = PE;
   }
 
