@@ -24,7 +24,7 @@ import { BuyComponent } from './buy/buy.component';
 import {TransferService} from "./providers/transfer.service";
 import {LoginService} from "./login-page/shared/login.service";
 import {HttpClientModule} from "@angular/common/http";
-import { BarChartComponent } from './shared/bar-chart/bar-chart.component';
+import { BarChartComponent } from './bar-chart/bar-chart.component';
 import {NgxChartsModule} from "@swimlane/ngx-charts";
 
 const routes: Routes=[
