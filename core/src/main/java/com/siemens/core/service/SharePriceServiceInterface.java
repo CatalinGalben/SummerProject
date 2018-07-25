@@ -10,5 +10,5 @@ public interface SharePriceServiceInterface {
 
     CompanyShare getSharePrice(String symbol);
 
-    void manualSharePrice(Company company, SharePrice sharePrice, String currencyName);
+    void manualSharePrice(Company company, SharePrice sharePrice);
 }

@@ -28,16 +28,32 @@ public class SharePriceServiceImpl implements SharePriceServiceInterface{
     @Autowired
     private CurrencyRepository currencyRepository;
     @Override
-    public void manualSharePrice(Company company, SharePrice sharePrice, String currencyName)
+    public void manualSharePrice(Company company, SharePrice sharePrice)
     {
-        Currency currency = currencyRepository.findAll().stream()
-                .filter(crr -> crr.getName().equals(currencyName)).findFirst().get();
+        Currency currency = currencyRepository
+                .findAll().stream().filter(c -> c.getSymbol().equals("EUR")).findFirst().get();
 
-        company.setCurrency(currency);
-        companyRepository.save(company);
 
-        sharePrice.setDate(DateTime.now().toString());
-        sharePriceRepository.save(sharePrice);
+        Optional<Company> optionalCompany = companyRepository.findById(company.getId());
+        if(optionalCompany.isPresent())
+        {
+            optionalCompany.get().setName(company.getName());
+            optionalCompany.get().setDividendYield(company.getDividendYield());
+            optionalCompany.get().setPE(company.getPE());
+            optionalCompany.get().setCurrency(currency);
+        }
+        companyRepository.save(optionalCompany.get());
+
+        Optional<SharePrice> optionalSharePrice = sharePriceRepository.findById(sharePrice.getId());
+        if(optionalSharePrice.isPresent())
+        {
+            optionalSharePrice.get().setCompany(optionalCompany.get());
+            optionalSharePrice.get().setDate(DateTime.now().toString());
+            optionalSharePrice.get().setPrice(sharePrice.getPrice());
+        }
+        sharePriceRepository.save(optionalSharePrice.get());
+
+
 
     }
     @Override

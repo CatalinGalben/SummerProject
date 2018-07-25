@@ -72,7 +72,7 @@ export class AddRecordComponent implements OnInit {
 
 
     if (this.needsUpdated == true){
-      this.recordService.sendCompleteDetails(companyShare);
+      this.recordService.sendCompleteDetails(companyShare).subscribe();
       this.needsUpdated = false;
     }
 
@@ -92,7 +92,7 @@ export class AddRecordComponent implements OnInit {
     this.PD = PD;
 
     if (this.needsUpdated == true){
-      this.recordService.sendCompleteDetails(companyShare);
+      this.recordService.sendCompleteDetails(companyShare).subscribe();
       this.needsUpdated = false;
     }
 
@@ -110,7 +110,7 @@ export class AddRecordComponent implements OnInit {
 
 
     if (this.needsUpdated == true){
-      this.recordService.sendCompleteDetails(companyShare);
+      this.recordService.sendCompleteDetails(companyShare).subscribe();
       this.needsUpdated = false;
     }
     this.addHoldingRecord();
@@ -155,12 +155,34 @@ export class AddRecordComponent implements OnInit {
       console.log(cs);
       this.companyFound = cs.company;
       this.shareFound = cs.sharePrice;
-      this.companyFound.dividendYield == 0 ?
-        (this.existsDividendYield = false, this.divYield = null, this.needsUpdated = true) : (this.existsDividendYield = true, this.divYield = this.companyFound.dividendYield);
-      this.companyFound.pe == 0 ?
-        (this.existsPE = false, this.PE = null, this.needsUpdated = true) : (this.existsPE = true, this.PE = this.companyFound.pe);
-      this.shareFound.price == 0 ?
-        (this.existsSharePrice = false, this.price = null, this.needsUpdated = true) : (this.existsSharePrice = true, this.price = this.shareFound.price);
+      // this.companyFound.dividendYield == 0 ?
+      //   (this.existsDividendYield = false, this.divYield = null, this.needsUpdated = true) : (this.existsDividendYield = true, this.divYield = this.companyFound.dividendYield);
+      // this.companyFound.pe == 0 ?
+      //   () : ();
+      // this.shareFound.price == 0 ?
+      //   () : ();
+      // this.checkedCompany = true;
+      if(this.companyFound.dividendYield == 0)
+      {
+        this.existsDividendYield = false; this.divYield = null; this.needsUpdated = true
+      }
+      else{
+        this.existsDividendYield = true; this.divYield = this.companyFound.dividendYield;
+      }
+      if(this.companyFound.pe == 0)
+      {
+        this.existsPE = false; this.PE = null; this.needsUpdated = true
+      }
+      else{
+        this.existsPE = true; this.PE = this.companyFound.pe
+      }
+      if(this.shareFound.price == 0)
+      {
+        this.existsSharePrice = false; this.price = null; this.needsUpdated = true
+      }
+      else {
+        this.existsSharePrice = true; this.price = this.shareFound.price
+      }
       this.checkedCompany = true;
     })
   }

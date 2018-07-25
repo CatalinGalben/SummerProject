@@ -18,11 +18,11 @@ export class AddRecordService {
   private addUrl = 'http://localhost:8080/api/holdingrecords';
 
 
-    constructor(private httpClient: HttpClient ) {
+  constructor(private httpClient: HttpClient ) {
   }
 
-  sendCompleteDetails(companyShare: CompanyShare): Observable<void>{
-    return this.httpClient.post<void>(this.fillingUrl, companyShare);
+  sendCompleteDetails(companyShareDTO: CompanyShare): Observable<void>{
+    return this.httpClient.post<void>(this.fillingUrl, companyShareDTO);
   }
 
   // this.companyFound.id, this.companyFound.currencyid, name, price, dividendYield, pe, this.shareFound.id, this.shareFound.date
