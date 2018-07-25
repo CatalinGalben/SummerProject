@@ -9,9 +9,7 @@ import com.siemens.core.service.CompanyServiceInterface;
 import com.siemens.core.service.HoldingRecordServiceInterface;
 import com.siemens.core.service.UserServiceInterface;
 import com.siemens.web.converter.HoldingRecordConverter;
-import com.siemens.web.dto.EtfDTO;
-import com.siemens.web.dto.HoldingRecordDTO;
-import com.siemens.web.dto.TrustDTO;
+import com.siemens.web.dto.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,24 +55,26 @@ public class HoldingRecordController {
     }
 
     @RequestMapping(value = "/holdingrecords/addtrust", method = RequestMethod.POST)
-    public HoldingRecordDTO createHoldingRecord(@RequestBody final HoldingRecordDTO holdingRecordDTO,
-                                                @RequestBody final TrustDTO trustDTO)
+    public HoldingRecordDTO createHoldingRecord(@RequestBody final TrustWrapper trustWrapper)
     {
+        HoldingRecordDTO holdingRecord = trustWrapper.getHoldingRecord();
+        TrustDTO trust = trustWrapper.getTrust();
         log.trace(" user has requested to buy shares (TRUST)");
-        Company company = companyServiceInterface.findById(holdingRecordDTO.getCompanyid());
-        Broker broker = brokerServiceInterface.findById(holdingRecordDTO.getBrokerid());
-        User user = userServiceInterface.findById(holdingRecordDTO.getUserid());
+        Company company = companyServiceInterface.findById(holdingRecord.getCompanyid());
+        Broker broker = brokerServiceInterface.findById(holdingRecord.getBrokerid());
+        User user = userServiceInterface.findById(holdingRecord.getUserid());
         HoldingRecord savedHoldingRecord = holdingRecordServiceInterface
                 .createRecord
-                        (user, broker, company, holdingRecordDTO.getPricePaid(), holdingRecordDTO.getNoShares(),trustDTO.getNav(),
-                                trustDTO.getTer(), trustDTO.getGearing(), trustDTO.getPremiumDiscount());
+                        (user, broker, company, holdingRecord.getPricePaid(), holdingRecord.getNoShares(),trust.getNav(),
+                                trust.getTer(), trust.getGearing(), trust.getPremiumDiscount());
         return holdingRecordConverter.convertModelToDto(savedHoldingRecord);
     }
 
     @RequestMapping(value = "/holdingrecords/addetf", method = RequestMethod.POST)
-    public HoldingRecordDTO createHoldingRecord(@RequestBody final HoldingRecordDTO holdingRecordDTO,
-                                                @RequestBody final EtfDTO etfDTO)
+    public HoldingRecordDTO createHoldingRecord(@RequestBody final EtfWrapper etfWrapper)
     {
+        HoldingRecordDTO holdingRecordDTO = etfWrapper.getHoldingRecord();
+        EtfDTO etfDTO = etfWrapper.getEtf();
         log.trace(" user has requested to buy shares (ETF)");
         Company company = companyServiceInterface.findById(holdingRecordDTO.getCompanyid());
         Broker broker = brokerServiceInterface.findById(holdingRecordDTO.getBrokerid());

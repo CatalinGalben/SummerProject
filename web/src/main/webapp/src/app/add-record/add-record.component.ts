@@ -81,16 +81,13 @@ export class AddRecordComponent implements OnInit {
     this.cleanInfoRecord();
   }
 
-  saveDetailsTrust(NAV: number, TER: number, gearing: number, PD: number) {
+  saveDetailsTrust() {
 
     let company = this.companyFound;
     let sharePrice = this.shareFound;
     let companyShare = {company, sharePrice};
 
-    this.NAV = NAV;
-    this.TER = TER;
-    this.gearing = gearing;
-    this.PD = PD;
+
 
     if (this.needsUpdated == true){
       this.recordService.sendCompleteDetails(companyShare).subscribe();
@@ -102,13 +99,11 @@ export class AddRecordComponent implements OnInit {
 
   }
 
-  saveDetailsETF(NAV: number, TER: number) {
+  saveDetailsETF() {
     let company = this.companyFound;
     let sharePrice = this.shareFound;
     let companyShare = {company, sharePrice};
 
-    this.NAV = NAV;
-    this.TER = TER;
 
 
     if (this.needsUpdated == true){
@@ -129,13 +124,13 @@ export class AddRecordComponent implements OnInit {
         })
     }
     if (this.typeOfCompany==2){
-      this.recordService.addTrust(this.userLoggedInAddComponent.id, this.selectedBroker.id, this.companyFound.id, this.shareFound.price*this.noShares, this.noShares, this.gearing, this.PD)
+      this.recordService.addTrust(this.userLoggedInAddComponent.id, this.selectedBroker.id, this.companyFound.id, this.shareFound.price*this.noShares, this.noShares, this.gearing, this.PD, this.NAV, this.TER)
         .subscribe(hr => {
           //todo Add to existing holding records / refresh list of holding records
         })
     }
     if (this.typeOfCompany==3){
-      this.recordService.addETF(this.userLoggedInAddComponent.id, this.selectedBroker.id, this.companyFound.id, this.shareFound.price*this.noShares, this.noShares, this.typeOfETF)
+      this.recordService.addETF(this.userLoggedInAddComponent.id, this.selectedBroker.id, this.companyFound.id, this.shareFound.price*this.noShares, this.noShares,  this.NAV, this.TER, this.typeOfETF)
         .subscribe(hr => {
           //todo Add to existing holding records / refresh list of holding records
         })
@@ -218,9 +213,9 @@ export class AddRecordComponent implements OnInit {
     this.typeOfCompany = event.target.value;
   }
 
-  setNewTypeETF(type: number){
-    console.log("Am intrat in setNewTypeETF cu: " + type);
-    this.typeOfETF = type;
+  setNewTypeETF(event){
+    console.log("Am intrat in setNewTypeETF cu: " + event.target.value);
+    this.typeOfETF = event.target.value;
   }
 
   setSharePriceHTML(price: number){
@@ -241,6 +236,24 @@ export class AddRecordComponent implements OnInit {
   setNumberOfShares(noShares: number){
     console.log("setNumberOfShares --" + noShares);
     this.noShares = noShares;
+  }
+  setNavHtml(NAV: number)
+  {
+    console.log("NAV "+ NAV);
+    this.NAV = NAV;
+  }
+  setTerHtml(TER:number)
+  {
+    console.log("TER"+TER);
+    this.TER = TER;
+  }
+  setGearing(gearing:number)
+  {
+    this.gearing = gearing;
+  }
+  setPd(PD:number)
+  {
+    this.PD = PD;
   }
 
 

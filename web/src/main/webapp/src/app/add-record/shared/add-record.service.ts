@@ -52,21 +52,23 @@ export class AddRecordService {
     return this.httpClient.post<HoldingRecord>(addUrlLocal, holdingRecord);
   }
 
-  addTrust(userid: number, brokerid: number, companyid: number, pricePaid: number, noShares: number, gearing: number, premiumDiscount: number): Observable<HoldingRecord>{
+  addTrust(userid: number, brokerid: number, companyid: number, pricePaid: number, noShares: number, gearing: number, premiumDiscount: number, nav: number, ter: number): Observable<HoldingRecord>{
     const add = "addtrust";
     let id = 0;
     let holdingRecord = {id, userid, brokerid, companyid, pricePaid, noShares};
-    let trust = {id, gearing, premiumDiscount};
+    let trust = {id, nav, ter, gearing, premiumDiscount};
+    let trustWrapper = {holdingRecord, trust};
     const addUrlLocal =`${this.addUrl}/${add}`;
-    return this.httpClient.post<HoldingRecord>(addUrlLocal, {holdingRecordDTO:holdingRecord, trustDTO:trust});
+    return this.httpClient.post<HoldingRecord>(addUrlLocal, trustWrapper);
   }
 
-  addETF(userid: number, brokerid: number, companyid: number, pricePaid: number, noShares: number, type: number): Observable<HoldingRecord>{
+  addETF(userid: number, brokerid: number, companyid: number, pricePaid: number, noShares: number, nav: number, ter: number, type: number): Observable<HoldingRecord>{
     const add = "addetf";
     let id = 0;
     let holdingRecord = {id, userid, brokerid, companyid, pricePaid, noShares};
-    let etf = {id, type};
+    let etf = {id:id, nav: nav, ter: ter, type: type};
+    let etfWrapper = {holdingRecord, etf};
     const addUrlLocal =`${this.addUrl}/${add}`;
-    return this.httpClient.post<HoldingRecord>(addUrlLocal, {holdingRecordDTO:holdingRecord, etfDTO:etf});
+    return this.httpClient.post<HoldingRecord>(addUrlLocal, etfWrapper);
   }
 }

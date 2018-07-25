@@ -58,24 +58,24 @@
     <div *ngIf="typeOfCompany==2 || typeOfCompany==3">
       <label class="col-sm-2 control-label">Net Asset Value</label>
       <div class="col-sm-10">
-        <input  class="form-control" type="number" placeholder="Insert the NAV here" #NAV>
+        <input  class="form-control" type="number" placeholder="Insert the NAV here" #NAV (change)="setNavHtml(NAV.value)">
       </div>
 
       <label class="col-sm-2 control-label">Total Expense Ratio</label>
       <div class="col-sm-10">
-        <input class="form-control" type="number" placeholder="Insert the TER here" #TER>
+        <input class="form-control" type="number" placeholder="Insert the TER here" #TER (change)="setTerHtml(TER.value)">
       </div>
     </div>
 
     <div *ngIf="typeOfCompany==2">
       <label class="col-sm-2 control-label">Gearing Ratio</label>
       <div class="col-sm-10">
-        <input class="form-control" type="number" placeholder="Insert the gearing ratio here" #gearing>
+        <input class="form-control" type="number" placeholder="Insert the gearing ratio here" #gearing (change)="setGearing(gearing.value)">
       </div>
 
       <label class="col-sm-2 control-label">Premium / Discount</label>
       <div class="col-sm-10">
-        <input class="form-control" type="number" placeholder="Insert the Premium/Discount here" #PD>
+        <input class="form-control" type="number" placeholder="Insert the Premium/Discount here" #PD (change)="setPd(PD.value)">
       </div>
 
     </div>
@@ -87,8 +87,9 @@
         <!--<option *ngFor="let type of etftypes" [ngValue]="type.number">{{type.type}}</option>-->
       <!--</select>-->
 
-        <select #typeofetfhtml (change)="setNewTypeETF(typeofetfhtml.value)" (ngModel)="etftypes" class="select-picker" data-live-search="true">
-          <option *ngFor="let type of etftypes" [ngValue]="type.number">{{type.type}}</option>
+        <select (change)="setNewTypeETF($event)" class="select-picker" >
+          <option [value]="" ></option>
+          <option *ngFor="let type of etftypes" [value]="type.number">{{type.type}}</option>
         </select>
       </div>
     </div>
@@ -99,6 +100,6 @@
 
 <div *ngIf="checkedCompany">
   <button *ngIf="typeOfCompany==1" class ="btn btn-primary btnAdd" (click)="saveDetailsNormal()">Add Company</button>
-  <button *ngIf="typeOfCompany==2" class ="btn btn-primary btnAdd" (click)="saveDetailsTrust(NAV.value, TER.value, gearing.value, PD.value)">Add Trust</button>
-  <button *ngIf="typeOfCompany==3" class ="btn btn-primary btnAdd" (click)="saveDetailsETF(NAV.value, TER.value)">Add ETF</button>
+  <button *ngIf="typeOfCompany==2" class ="btn btn-primary btnAdd" (click)="saveDetailsTrust()">Add Trust</button>
+  <button *ngIf="typeOfCompany==3" class ="btn btn-primary btnAdd" (click)="saveDetailsETF()">Add ETF</button>
 </div>

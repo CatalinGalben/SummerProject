@@ -73,7 +73,7 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
 
      @Override
      public  HoldingRecord createRecord
-             (User user, Broker broker, Company company, Double paidPrice, Integer noShares,float nav, float ter, int type){
+             (User user, Broker broker, Company company, Double paidPrice, Integer noShares,Float nav, Float ter, int type){
         Etf etf = Etf.etfBuilder()
                 .nav(nav)
                 .ter(ter)
