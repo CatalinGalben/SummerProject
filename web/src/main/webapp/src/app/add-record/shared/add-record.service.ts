@@ -6,6 +6,7 @@ import {SharePrice} from "./SharePrice.model";
 import {Broker} from "./Broker.model";
 import {CompanyShare} from "./CompanyShare";
 import {Trust} from "./Trust.model";
+import {Company} from "./Company.model";
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,8 @@ export class AddRecordService {
   private companyUrl = 'http://localhost:8080/api/shareprice';
   private fillingUrl = 'http://localhost:8080/api/iaopauza';
   private addUrl = 'http://localhost:8080/api/holdingrecords';
+  private companiesUrl = 'http://localhost:8080/api/companies';
+  private sharePricesUrl = 'http://localhost:8080/api/shareprices';
 
 
   constructor(private httpClient: HttpClient ) {
@@ -29,6 +32,14 @@ export class AddRecordService {
 
   getAllBrokers(): Observable<Broker[]>{
     return this.httpClient.get<Broker[]>(this.brokersUrl);
+  }
+
+  getAllCompanies(): Observable<Company[]>{
+    return this.httpClient.get<Company[]>(this.companiesUrl);
+  }
+
+  getAllSharePrices(): Observable<SharePrice[]>{
+    return this.httpClient.get<SharePrice[]>(this.sharePricesUrl);
   }
 
 

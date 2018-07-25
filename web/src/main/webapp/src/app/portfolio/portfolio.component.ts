@@ -10,6 +10,8 @@ import {User} from "../login-page/shared/user.model";
 import {HoldingRecord} from "../add-record/shared/HoldingRecord.model";
 import {AddRecordService} from "../add-record/shared/add-record.service";
 import {Broker} from "../add-record/shared/Broker.model";
+import {SharePrice} from "../add-record/shared/SharePrice.model";
+import {Company} from "../add-record/shared/Company.model";
 
 @Component({
   selector: 'app-portfolio',
@@ -24,6 +26,8 @@ export class PortfolioComponent implements OnInit {
   selectedRow : string;
   userLoggedInPortfolioComponent: User;
   holdingRecords: HoldingRecord[];
+  sharePrices: SharePrice[];
+  companies: Company[];
 
   constructor(private router: Router,
               private transferService:TransferService,
@@ -49,6 +53,16 @@ export class PortfolioComponent implements OnInit {
     this.recordService.getAllBrokers().subscribe(brokers =>
     this.brokers = brokers);
     this.loginService.changeBrokers(this.brokers);
+
+    //get all companies
+    this.recordService.getAllCompanies().subscribe(companies =>
+    this.companies = companies);
+    this.loginService.changeCompanies(this.companies);
+
+    //get all sharePrices
+    this.recordService.getAllSharePrices().subscribe(shareprices =>
+    this.sharePrices = shareprices);
+    this.loginService.changeSharePrices(this.sharePrices);
   }
 
   goToAdd() {

@@ -5,6 +5,8 @@ import {User} from "./user.model";
 import {BehaviorSubject} from "rxjs/internal/BehaviorSubject";
 import {Subject} from "rxjs/internal/Subject";
 import {Broker} from "../../add-record/shared/Broker.model";
+import {Company} from "../../add-record/shared/Company.model";
+import {SharePrice} from "../../add-record/shared/SharePrice.model";
 
 
 @Injectable()
@@ -14,8 +16,15 @@ export class LoginService {
   currentUser: User;
   currentUserForLogin = this.userLoggedInService.asObservable();
 
-  private brokersService = new Subject<Broker[]>();
-  allBrokers = this.brokersService.asObservable();
+  currentBrokers
+  private brokersServiceVariable = new Subject<Broker[]>();
+  allBrokers = this.brokersServiceVariable.asObservable();
+
+  private companiesServiceVariable = new Subject<Company[]>();
+  allCompanies = this.companiesServiceVariable.asObservable();
+
+  private sharePricesServiceVariable = new Subject<SharePrice[]>();
+  allSharePrices = this.sharePricesServiceVariable.asObservable();
 
   constructor(private httpClient: HttpClient) { }
 
@@ -45,7 +54,15 @@ export class LoginService {
   }
 
   changeBrokers(brokers: Broker[]){
-    this.brokersService.next(brokers);
+    this.brokersServiceVariable.next(brokers);
+  }
+
+  changeCompanies(companies: Company[]){
+    this.companiesServiceVariable.next(companies);
+  }
+
+  changeSharePrices(shareprices: SharePrice[]){
+    this.sharePricesServiceVariable.next(shareprices);
   }
 
   getCurrentUser(): User {
