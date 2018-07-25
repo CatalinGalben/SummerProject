@@ -18,12 +18,12 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   userLoggedIn: User;
   sub: Subscription;
   constructor(public authService: AuthService, private router: Router, private loginService: LoginService) {
-
   }
 
   ngOnInit() {
     this.showRegister = false;
-    this.userLoggedIn = this.loginService.getCurrentUser();
+    // this.userLoggedIn = this.loginService.getCurrentUser();
+    this.loginService.currentUserForLogin.subscribe(user=> this.userLoggedIn = user);
   }
   saveDetails(firstName:string, lastName:string, email: string, username: string, password: string, confirmPassword: string, DOB: string)
   {
@@ -53,8 +53,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       return;
     }
     this.sub = this.loginService.loginUserEmail(username, password).subscribe(user => {
-      this.loginService.changeUser(user);
-      this.userLoggedIn = this.loginService.getCurrentUser();
+      this.loginService.changeUserObservable(user);
       if (this.userLoggedIn.username != null)
         this.router.navigate(['']);
       else
