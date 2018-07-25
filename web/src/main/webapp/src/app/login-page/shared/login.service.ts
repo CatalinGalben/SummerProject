@@ -12,6 +12,7 @@ export class LoginService {
 
   private userLoggedInService = new Subject<User>();
   currentUser: User;
+  currentUserForLogin = this.userLoggedInService.asObservable();
 
   private brokersService = new Subject<Broker[]>();
   allBrokers = this.brokersService.asObservable();
@@ -50,5 +51,12 @@ export class LoginService {
   getCurrentUser(): User {
     return this.currentUser;
   }
+
+  changeUserObservable(user: User){
+    this.userLoggedInService.next(user);
+    this.currentUser = user;
+  }
+
+
 
 }

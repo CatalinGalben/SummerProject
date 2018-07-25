@@ -39,6 +39,7 @@ export class AddRecordComponent implements OnInit {
   etftypes = ETFTYPES;
 
   noShares: number;
+
   typeOfCompany: number;
   typeOfETF: number;
 
@@ -72,12 +73,12 @@ export class AddRecordComponent implements OnInit {
 
 
     if (this.needsUpdated == true){
-      this.recordService.sendCompleteDetails(companyShare);
+      this.recordService.sendCompleteDetails(companyShare).subscribe();
       this.needsUpdated = false;
     }
 
     this.addHoldingRecord();
-
+    this.cleanInfoRecord();
   }
 
   saveDetailsTrust(NAV: number, TER: number, gearing: number, PD: number) {
@@ -92,11 +93,12 @@ export class AddRecordComponent implements OnInit {
     this.PD = PD;
 
     if (this.needsUpdated == true){
-      this.recordService.sendCompleteDetails(companyShare);
+      this.recordService.sendCompleteDetails(companyShare).subscribe();
       this.needsUpdated = false;
     }
 
     this.addHoldingRecord();
+    this.cleanInfoRecord();
 
   }
 
@@ -110,10 +112,11 @@ export class AddRecordComponent implements OnInit {
 
 
     if (this.needsUpdated == true){
-      this.recordService.sendCompleteDetails(companyShare);
+      this.recordService.sendCompleteDetails(companyShare).subscribe();
       this.needsUpdated = false;
     }
     this.addHoldingRecord();
+    this.cleanInfoRecord();
   }
 
 
@@ -137,6 +140,30 @@ export class AddRecordComponent implements OnInit {
           //todo Add to existing holding records / refresh list of holding records
         })
     }
+  }
+
+  cleanInfoRecord(){
+    this.selectedBroker = null;
+    this.divYield = null;
+    this.PE = null;
+    this.NAV = null;
+    this.TER = null;
+    this.gearing = null;
+    this.PD = null;
+    this.price = null;
+
+    this.companyFound = null;
+    this.shareFound = null;
+
+    this.needsUpdated = false;
+
+    this.existsSharePrice = false;
+    this.checkedCompany = false;
+    this.existsDividendYield = false;
+    this.existsPE = false;
+
+    this.typeOfCompany= null;
+    this.typeOfETF = null;
   }
 
 
