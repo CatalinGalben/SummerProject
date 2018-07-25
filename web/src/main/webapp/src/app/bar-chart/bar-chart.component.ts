@@ -2,7 +2,6 @@ import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import {AddRecordService} from "../add-record/shared/add-record.service";
 import {ChartService} from "./shared/chart.service";
-import {CompanyShare} from "./shared/CompanyShare";
 
 @Component({
   selector: 'app-ngx-charts',
@@ -12,7 +11,7 @@ import {CompanyShare} from "./shared/CompanyShare";
 export class BarChartComponent implements OnInit, OnChanges {
   @Input() commodity: any;
   results: any;
-  data: CompanyShare[];
+
 
   constructor(private chartService: ChartService) { }
 
