@@ -7,6 +7,7 @@ import {CompanyShare} from "./shared/CompanyShare";
 import {SharePrice} from "./shared/SharePrice.model";
 import {LoginService} from "../login-page/shared/login.service";
 import {User} from "../login-page/shared/user.model";
+import {COMPANYTYPES, ETFTYPES} from "../mock-data";
 
 @Component({
   selector: 'app-add-record',
@@ -30,6 +31,9 @@ export class AddRecordComponent implements OnInit {
 
 
   public userLoggedInAddComponent: User;
+
+  companytypes = COMPANYTYPES;
+  etftypes = ETFTYPES;
 
   noShares: number;
   typeOfCompany: number;
@@ -57,7 +61,48 @@ export class AddRecordComponent implements OnInit {
 
 
 
-  saveDetails(name: string, price: number, noShares: number, dividendYield: number, PE: number, NAV: number, TER: number, gearing: number, PD: number) {
+  saveDetailsNormalOrETF(name: string, price: number, noShares: number, dividendYield: number, PE: number) {
+    console.log("Price: " + price);
+    if (Number.isInteger(Number(price)) == false)
+    {
+      alert("The share price has to be an integer");
+      return;
+    }
+
+    if (Number.isInteger(Number(noShares)) == false)
+    {
+      alert("The number of shares has to be an integer");
+      return;
+    }
+    if (Number.isInteger(Number(dividendYield)) == false)
+    {
+      alert("The Dividend Yield has to be an integer");
+      return;
+    }
+    if (Number.isInteger(Number(PE)) == false)
+    {
+      alert("The price to earning has to be an integer");
+      return;
+    }
+    this.noShares = noShares;
+    this.companyFound.dividendYield = dividendYield;
+    this.companyFound.pe = PE;
+    this.shareFound.price = price;
+    let company = this.companyFound;
+    let sharePrice = this.shareFound;
+    let companyShare = {company, sharePrice};
+
+
+    if (this.needsUpdated == true){
+      this.recordService.sendCompleteDetails(companyShare);
+      this.needsUpdated = false;
+    }
+
+    this.addHoldingRecord();
+
+  }
+
+  saveDetailsTrust(name: string, price: number, noShares: number, dividendYield: number, PE: number, NAV: number, TER: number, gearing: number, PD: number) {
     console.log("Price: " + price);
     if (Number.isInteger(Number(price)) == false)
     {
@@ -102,6 +147,8 @@ export class AddRecordComponent implements OnInit {
 
   }
 
+
+
   addHoldingRecord(){
     if (this.typeOfCompany==1){
       this.recordService.addNormalCompany(this.userLoggedInAddComponent.id, this.selectedBroker.id, this.companyFound.id, this.shareFound.price*this.noShares, this.noShares)
@@ -138,11 +185,11 @@ export class AddRecordComponent implements OnInit {
       console.log(cs);
       this.companyFound = cs.company;
       this.shareFound = cs.sharePrice;
-      this.companyFound.dividendYield == null ?
+      this.companyFound.dividendYield == 0 ?
         (this.existsDividendYield = false, this.divYield = null, this.needsUpdated = true) : (this.existsDividendYield = true, this.divYield = this.companyFound.dividendYield);
-      this.companyFound.pe == null ?
+      this.companyFound.pe == 0 ?
         (this.existsPE = false, this.PE = null, this.needsUpdated = true) : (this.existsPE = true, this.PE = this.companyFound.pe);
-      this.shareFound.price == null ?
+      this.shareFound.price == 0 ?
         (this.existsSharePrice = false, this.price = null, this.needsUpdated = true) : (this.existsSharePrice = true, this.price = this.shareFound.price);
       this.checkedCompany = true;
     })
@@ -153,6 +200,7 @@ export class AddRecordComponent implements OnInit {
   }
 
   setNewTypeETF(type: number){
+    console.log("Am intrat in setNewTypeETF cu: " + type)
     this.typeOfETF = type;
   }
 

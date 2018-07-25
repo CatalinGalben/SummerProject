@@ -48,7 +48,7 @@ export class AddRecordService {
     const add = "add";
     let id = 0;
     let holdingRecord = {id, userid, brokerid, companyid, pricePaid, noShares};
-    const addUrlLocal =`${this.companyUrl}/${add}`;
+    const addUrlLocal =`${this.addUrl}/${add}`;
     return this.httpClient.post<HoldingRecord>(addUrlLocal, holdingRecord);
   }
 
@@ -57,7 +57,7 @@ export class AddRecordService {
     let id = 0;
     let holdingRecord = {id, userid, brokerid, companyid, pricePaid, noShares};
     let trust = {id, gearing, premiumDiscount};
-    const addUrlLocal =`${this.companyUrl}/${add}`;
+    const addUrlLocal =`${this.addUrl}/${add}`;
     return this.httpClient.post<HoldingRecord>(addUrlLocal, {holdingRecordDTO:holdingRecord, trustDTO:trust});
   }
 
@@ -66,7 +66,7 @@ export class AddRecordService {
     let id = 0;
     let holdingRecord = {id, userid, brokerid, companyid, pricePaid, noShares};
     let etf = {id, type};
-    const addUrlLocal =`${this.companyUrl}/${add}`;
+    const addUrlLocal =`${this.addUrl}/${add}`;
     return this.httpClient.post<HoldingRecord>(addUrlLocal, {holdingRecordDTO:holdingRecord, etfDTO:etf});
   }
 }

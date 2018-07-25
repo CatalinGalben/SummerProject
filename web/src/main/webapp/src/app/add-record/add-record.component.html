@@ -18,25 +18,25 @@
       <label class="col-sm-2 control-label">Share Price</label>
       <div class="col-sm-10">
         <input *ngIf="existsSharePrice" class="form-control" type="number" value="{{price}}" disabled>
-        <input *ngIf="!existsSharePrice" class="form-control" type="number" placeholder="Insert your share price here (in case the share price is not found)" #price>
+        <input *ngIf="!existsSharePrice" class="form-control" type="number" placeholder="Insert your share price here" #price>
       </div>
 
       <label class="col-sm-2 control-label">Dividend Yield</label>
       <div class="col-sm-10">
         <input *ngIf="existsDividendYield" class="form-control" type="number" value="{{divYield}}" disabled>
-        <input *ngIf="!existsDividendYield" class="form-control" type="number" placeholder="Insert the dividend yield ration here (in case the dividend yield is not found)" #divYield>
+        <input *ngIf="!existsDividendYield" class="form-control" type="number" placeholder="Insert the dividend yield ration here " #divYield>
       </div>
 
       <label class="col-sm-2 control-label">Price to Earning ratio</label>
       <div class="col-sm-10">
         <input *ngIf="existsPE" class="form-control" type="number" value="{{PE}}" disabled>
-        <input *ngIf="!existsPE" class="form-control" type="number" placeholder="Insert the PE ratio here (in case the PE ratio is not found)" #PE>
+        <input *ngIf="!existsPE" class="form-control" type="number" placeholder="Insert the PE ratio here" #PE>
       </div>
 
       <label class="col-sm-2 control-label">Choose your broker</label>
       <div class="col-sm-10">
-        <select (ngModelChange)="setNewBroker($event)" (ngModel)="brokers" class="select-picker" data-live-search="true">
-          <option *ngFor="let broker of brokers" [ngValue]="broker">
+        <select #b (change)="setNewBroker(b.value)" class="select-picker" data-live-search="true">
+          <option *ngFor="let broker of brokers" [value]="broker">
             {{broker.name}}
           </option>
         </select>
@@ -47,10 +47,8 @@
     <div *ngIf="checkedCompany">
       <label class="col-sm-2 control-label">Type of company</label>
       <div class="col-sm-10">
-        <select (ngModelChange)="setNewTypeCompany($event)" class="select-picker" data-live-search="true">
-          <option [ngValue]="1">Normal</option>
-          <option [ngValue]="2">Trust</option>
-          <option [ngValue]="3">ETF</option>
+        <select #companytypehtml (change)="setNewTypeCompany(companytypehtml.value)" (ngModel)="companytypes" class="select-picker" data-live-search="true">
+          <option *ngFor="let type of companytypes" [value]="type.number">{{type.type}}</option>
         </select>
       </div>
     </div>
@@ -83,10 +81,8 @@
     <div *ngIf="typeOfCompany==3">
       <label class="col-sm-2 control-label">Type of ETF</label>
       <div class="col-sm-10">
-        <select (ngModelChange)="setNewTypeETF($event)" class="select-picker" data-live-search="true">
-          <option [ngValue]="1">Index Fund</option>
-          <option [ngValue]="2">Real ETF</option>
-          <option [ngValue]="3">Synthetic ETF</option>
+        <select #typeofetfhtml (change)="setNewTypeETF(typeofetfhtml.value)" (ngModel)="etftypes" class="select-picker" data-live-search="true">
+          <option *ngFor="let type of etftypes" [ngValue]="type.number">{{type.type}}</option>
         </select>
       </div>
     </div>
@@ -96,5 +92,6 @@
 </form>
 
 <div *ngIf="checkedCompany">
-  <button class ="btn btn-primary" id="btnAdd" (click)="saveDetails(name.value, price.value, noShares.value, divYield.value, PE.value, NAV.value, TER.value, gearing.value, PD.value)">Add</button>
+  <button *ngIf="typeOfCompany==1 || typeOfCompany==3" class ="btn btn-primary btnAdd" (click)="saveDetailsNormalOrETF(name.value, price.value, noShares.value, divYield.value)">Add</button>
+  <button *ngIf="typeOfCompany==2" class ="btn btn-primary btnAdd" (click)="saveDetailsTrust(name.value, price.value, noShares.value, divYield.value, NAV.value, TER.value, gearing.value, PD.value)">Add</button>
 </div>

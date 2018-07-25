@@ -4,6 +4,7 @@ import {Observable} from "rxjs/internal/Observable";
 import {User} from "./user.model";
 import {BehaviorSubject} from "rxjs/internal/BehaviorSubject";
 import {Subject} from "rxjs/internal/Subject";
+import {Broker} from "../../add-record/shared/Broker.model";
 
 
 @Injectable()
@@ -11,6 +12,9 @@ export class LoginService {
 
   private userLoggedInService = new Subject<User>();
   currentUser = this.userLoggedInService.asObservable();
+
+  private brokersService = new Subject<Broker[]>();
+  allBrokers = this.brokersService.asObservable();
 
   constructor(private httpClient: HttpClient) { }
 
@@ -36,7 +40,11 @@ export class LoginService {
   }
 
   changeUser(userLogged: User){
-    this.userLoggedInService.next(userLogged)
+    this.userLoggedInService.next(userLogged);
+  }
+
+  changeBrokers(brokers: Broker[]){
+    this.brokersService.next(brokers);
   }
 
 }

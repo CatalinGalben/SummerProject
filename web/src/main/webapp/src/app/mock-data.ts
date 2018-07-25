@@ -1,6 +1,6 @@
-import { Record } from './record';
+import {CompanyTypes, ETFTypes, Mockmodels} from './mockmodels';
 
-export const RECORDS: Record[] = [
+export const RECORDS: Mockmodels[] = [
   { name: 'Mr. Nice', pricePaid: 1000, noShares:100 },
   { name: 'Narco', pricePaid: 1300, noShares:180 },
   { name: 'Bombasto', pricePaid: 3400, noShares:500 },
@@ -21,4 +21,16 @@ export const RECORDS: Record[] = [
   { name: 'Feri', pricePaid: 1130, noShares:170 },
   { name: 'Dr Q', pricePaid: 3430, noShares:100 },
   { name: 'Nanda', pricePaid: 1900, noShares:200 }
+];
+
+export const COMPANYTYPES: CompanyTypes[] = [
+  { number: 1, type: 'Normal' },
+  { number: 2, type: 'Trust' },
+  { number: 3, type: 'ETF' }
+];
+
+export const ETFTYPES: ETFTypes[] = [
+  { number: 1, type: 'Index Fund'},
+  { number: 2, type: 'Real ETF'},
+  { number: 3, type: 'Synthetic ETF'}
 ];
