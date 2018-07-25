@@ -18,6 +18,12 @@ public class CurrencServiceImpl implements CurrencyServiceInterface{
     private CurrencyExchangeRepository currencyExchangeRepository;
 
     @Override
+    public Currency getCurrency(Integer id)
+    {
+        return currencyRepository.getOne(id);
+    }
+
+    @Override
     public String chooseCurrency(String currentSymbol, String desiredSymbol, Double value)
     {
         Optional<CurrencyExchange> exchangeCase1  = currencyExchangeRepository

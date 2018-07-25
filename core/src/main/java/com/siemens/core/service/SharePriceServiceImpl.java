@@ -68,9 +68,14 @@ public class SharePriceServiceImpl implements SharePriceServiceInterface{
 
             parameters = result.split(";");
 
+            Currency currency;
+            if(parameters[4].equals("null"))
+                currency = currencyRepository
+                        .findAll().stream().filter(c -> c.getSymbol().equals("EUR")).findFirst().get();
+            else
+                currency = currencyRepository
+                        .findAll().stream().filter(c -> c.getSymbol().equals(parameters[4])).findFirst().get();
 
-            Currency currency = currencyRepository
-                    .findAll().stream().filter(c -> c.getSymbol().equals(parameters[4])).findFirst().get();
             Company company = Company.builder()
                     .currency(currency)
                     .name(symbol)
@@ -80,14 +85,16 @@ public class SharePriceServiceImpl implements SharePriceServiceInterface{
                 company.setDividendYield(dividendYield);
             }catch (Exception e)
             {
-                dividendYield = null;
+                dividendYield = Float.parseFloat("0");
+                company.setDividendYield(dividendYield);
             }
             try{
                 priceEarning = Double.parseDouble(parameters[3]);
                 company.setPE(priceEarning);
             }catch (Exception e)
             {
-                priceEarning = null;
+                priceEarning = Double.parseDouble("0");
+                company.setPE(priceEarning);
             }
 
 
@@ -106,8 +113,10 @@ public class SharePriceServiceImpl implements SharePriceServiceInterface{
                 sharePrice.setPrice(sharePriceValue);
             }catch (Exception e)
             {
-                sharePriceValue = null;
+                sharePriceValue = Double.parseDouble("0");
+                sharePrice.setPrice(sharePriceValue);
             }
+
 
             log.trace("Created SHARE PRICE! "+ sharePrice);
             SharePrice sharePrice1 = sharePriceRepository.save(sharePrice);
@@ -120,12 +129,23 @@ public class SharePriceServiceImpl implements SharePriceServiceInterface{
         }
         //in case of api not being able to determine the symbol
         //the user is going to have to input the desired data manually
+        Currency currency = currencyRepository
+                .findAll().stream().filter(c -> c.getSymbol().equals("EUR")).findFirst().get();
+
+        Company newComp = companyRepository.save(Company.builder()
+                .name(symbol)
+                .currency(currency)
+                .build());
+        SharePrice newShare = sharePriceRepository.save(
+                SharePrice.builder().company(newComp).date(DateTime.now().toString()).price(Double.parseDouble("0"))
+                        .build()
+        );
         return CompanyShare.builder()
                 .company(
-                        Company.builder().build()
+                        newComp
                 )
                 .sharePrice(
-                        SharePrice.builder().build()
+                        newShare
                 )
                 .build();
 
