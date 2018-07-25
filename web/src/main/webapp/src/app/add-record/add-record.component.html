@@ -35,9 +35,9 @@
 
       <label class="col-sm-2 control-label">Choose your broker</label>
       <div class="col-sm-10">
-        <select #b (change)="setNewBroker(b.value)" class="select-picker" data-live-search="true">
+        <select (change)="setNewBroker($event)" class="select-picker">
           <option [value]=""></option>
-          <option *ngFor="let broker of brokers" [value]="broker">
+          <option *ngFor="let broker of brokers" [value]="broker.id">
             {{broker.name}}
           </option>
         </select>

@@ -61,15 +61,13 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(){
-    this.loginService.currentUser.subscribe(user =>{
-      this.userLoggedInAppComponent = user;
-      if (user != null) {
-        this.user_displayName = user.firstName + " " + user.lastName;
-        this.user_email = user.email;
-        this.user_id = user.id;
+    this.userLoggedInAppComponent = this.loginService.getCurrentUser();
+      if (this.userLoggedInAppComponent != null) {
+        this.user_displayName = this.userLoggedInAppComponent.firstName + " " + this.userLoggedInAppComponent.lastName;
+        this.user_email = this.userLoggedInAppComponent.email;
+        this.user_id = this.userLoggedInAppComponent.id;
         this.isLoggedIn = true;
       }
-    })
   }
 
   printUser(user) {

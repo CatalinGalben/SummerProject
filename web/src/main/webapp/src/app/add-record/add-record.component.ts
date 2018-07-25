@@ -20,14 +20,15 @@ export class AddRecordComponent implements OnInit {
               private router: Router, private loginService: LoginService) { }
 
   ngOnInit() {
+    // this.loginService.currentUser.subscribe(user =>{
+    //   this.userLoggedInAddComponent=user;
+    //   console.log("add record aeroport de user");
+    // });
+
+    this.userLoggedInAddComponent = this.loginService.getCurrentUser();
     this.recordService.getAllBrokers().subscribe(brokers => {
       this.brokers = brokers;
       console.log(this.brokers);
-    });
-    this.loginService.currentUser.subscribe(user => {
-      console.log("ba");
-      this.userLoggedInAddComponent = user;
-      console.log(this.userLoggedInAddComponent);
     });
   }
 
@@ -112,15 +113,12 @@ export class AddRecordComponent implements OnInit {
       this.recordService.sendCompleteDetails(companyShare);
       this.needsUpdated = false;
     }
-
     this.addHoldingRecord();
-
   }
 
 
 
   addHoldingRecord(){
-    console.log(this.userLoggedInAddComponent);
     if (this.typeOfCompany==1){
       this.recordService.addNormalCompany(this.userLoggedInAddComponent.id, this.selectedBroker.id, this.companyFound.id, this.shareFound.price*this.noShares, this.noShares)
         .subscribe(hr => {
@@ -143,9 +141,10 @@ export class AddRecordComponent implements OnInit {
 
 
 
-  setNewBroker(broker: Broker){
-    console.log(broker + "-- front-end");
-    this.selectedBroker = broker;
+  setNewBroker(event){
+    console.log(event);
+    this.selectedBroker = this.brokers.filter(broker=>broker.id == event.target.value)[0];
+    console.log(this.selectedBroker);
   }
 
 
@@ -187,6 +186,7 @@ export class AddRecordComponent implements OnInit {
 
   setPEHTML(PE: number) {
     console.log("setPEHTML -- "+ PE);
+    console.log("setPEHTML -- user: " + this.userLoggedInAddComponent);
     this.companyFound.pe = PE;
   }
 

@@ -11,7 +11,7 @@ import {Broker} from "../../add-record/shared/Broker.model";
 export class LoginService {
 
   private userLoggedInService = new Subject<User>();
-  currentUser = this.userLoggedInService.asObservable();
+  currentUser: User;
 
   private brokersService = new Subject<Broker[]>();
   allBrokers = this.brokersService.asObservable();
@@ -40,11 +40,15 @@ export class LoginService {
   }
 
   changeUser(userLogged: User){
-    this.userLoggedInService.next(userLogged);
+    this.currentUser = userLogged;
   }
 
   changeBrokers(brokers: Broker[]){
     this.brokersService.next(brokers);
+  }
+
+  getCurrentUser(): User {
+    return this.currentUser;
   }
 
 }

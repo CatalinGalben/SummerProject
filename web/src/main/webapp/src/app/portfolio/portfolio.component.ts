@@ -33,8 +33,10 @@ export class PortfolioComponent implements OnInit {
 
   ngOnInit() {
     //get loggedIn user
-    this.loginService.currentUser.subscribe(user =>
-    this.userLoggedInPortfolioComponent = user);
+    // this.loginService.currentUser.subscribe(user =>
+    // this.userLoggedInPortfolioComponent = user);
+
+    this.userLoggedInPortfolioComponent = this.loginService.getCurrentUser();
 
     //get all records
     this.portfolioService.getRecords().subscribe(records => {
