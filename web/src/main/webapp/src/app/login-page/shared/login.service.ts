@@ -16,7 +16,7 @@ export class LoginService {
   currentUser: User;
   currentUserForLogin = this.userLoggedInService.asObservable();
 
-  currentBrokers
+  currentBrokers;
   private brokersServiceVariable = new Subject<Broker[]>();
   allBrokers = this.brokersServiceVariable.asObservable();
 

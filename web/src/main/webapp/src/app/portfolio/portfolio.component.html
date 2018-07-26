@@ -31,14 +31,29 @@
 </table>
 </div>
 
-<br/>
+<br>
+<div class="row">
 
-<button id="btnAdd" class ="btn btn-outline-info" (click)="goToAdd()">Add new holding share</button>
-&nbsp;
-<button (click)="insertionSort(holdingRecords, holdingRecords.length)" class ="btn btn-outline-info">Sort</button>
-&nbsp;
-<div *ngIf="selectedRow!=null">
-  <button (click)="gotoDetail()" class ="btn btn-outline-info">Add to {{getCompanyForRecord(selectedHoldingRecord.companyid, selectedHoldingRecord)}}</button>
+  <div *ngIf="selectedRow!=null">
+    <button (click)="gotoDetail()" class ="btn btn-outline-success">Add to {{getCompanyForRecord(selectedHoldingRecord.companyid, selectedHoldingRecord)}}</button>
+    &nbsp;
+  </div>
+
+  <div *ngIf="selectedRow!=null">
+    <button (click)="liquidate()" class="btn btn-outline-danger">Liquidate {{getCompanyForRecord(selectedHoldingRecord.companyid, selectedHoldingRecord)}}</button>
+    &nbsp;
+  </div>
+
 </div>
+<br>
+<div class="row">
+  <button id="btnAdd" class ="btn btn-outline-primary" (click)="goToAdd()">Add new holding share</button>
+  &nbsp;
+
+  <button (click)="insertionSort(holdingRecords, holdingRecords.length)" class ="btn btn-outline-info">Sort</button>
+  &nbsp;
+
+</div>
+<br>
 
 <br/><br/><br/><br/><br/>

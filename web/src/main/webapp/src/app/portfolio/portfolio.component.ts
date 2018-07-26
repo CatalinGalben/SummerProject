@@ -91,6 +91,7 @@ export class PortfolioComponent implements OnInit {
   }
 
   refreshRecords(){
+    console.log("refreshRecords -- portfolio.component.ts");
     this.portfolioService.getRecords().subscribe(records => this.holdingRecords = records);
   }
 
@@ -119,6 +120,11 @@ export class PortfolioComponent implements OnInit {
   clickRecord(id: number){
     this.selectedRow = id;
     this.selectedHoldingRecord = this.holdingRecords.filter(hr => hr.id == id)[0];
+  }
+
+  liquidate(){
+    console.log("liquidate method entered -- portfolio.component.ts");
+    this.portfolioService.liquidateRecord(this.currentCompanyNamePortfolio).subscribe(_=>this.refreshRecords());
   }
 
 

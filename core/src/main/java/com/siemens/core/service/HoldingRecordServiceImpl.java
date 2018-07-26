@@ -99,13 +99,15 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
     }
 
     @Override
-    public List<HoldingRecord> addToRecord(Integer recordKey, Integer userKey, Integer noShares, Integer shareKey)
+    public List<HoldingRecord> addToRecord(Integer recordKey, Integer userKey, Integer noShares, Integer shareKey, Integer pricePaid)
     {
         List<HoldingRecord> currentRecords = holdingRecordRepository.findAll();
         currentRecords.forEach(
                 r -> {
-                    if(r.getId().equals(recordKey))
+                    if(r.getId().equals(recordKey)) {
                         r.setNoShares(r.getNoShares() + noShares);
+                        r.setPricePaid(r.getPricePaid() + pricePaid);
+                    }
                 }
         );
 

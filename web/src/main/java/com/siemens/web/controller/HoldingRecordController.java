@@ -86,20 +86,21 @@ public class HoldingRecordController {
     }
 
 
-    @RequestMapping(value = "/records/liquidate", method = RequestMethod.DELETE)
-    public void liquidateRecord(String symbol)
+    @RequestMapping(value = "/records/liquidate/{symbol}", method = RequestMethod.DELETE)
+    public void liquidateRecord(@PathVariable final String symbol)
     {
         log.trace(" user has requested to liquidate all the shares corresponding to: " + symbol);
         holdingRecordServiceInterface.liquidate(symbol);
     }
 
-    @RequestMapping(value = "/records/addshares/{userKey}/{shareKey}/{recordKey}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/records/addshares/{userKey}/{shareKey}/{recordKey}/{pricePaid}", method = RequestMethod.PUT)
     public Set<HoldingRecordDTO> addToRecord(
             @PathVariable final int userKey, @PathVariable final int shareKey,
-            @PathVariable final int recordKey, @RequestBody final int noShares
+            @PathVariable final int recordKey, @PathVariable final int pricePaid,
+            @RequestBody final int noShares
     ){
         List<HoldingRecord> updatedRecords = holdingRecordServiceInterface.
-                addToRecord(recordKey, userKey, noShares, shareKey);
+                addToRecord(recordKey, userKey, noShares, shareKey, pricePaid);
 
         return new HashSet<>(holdingRecordConverter.convertModelsToDtos(updatedRecords));
     }

@@ -22,6 +22,13 @@ export class BuyComponent implements OnInit {
   @Input() no: number;
   totPrice: number;
 
+  userId: number;
+  shareId: number;
+  recordKey: number;
+
+
+  companysymbol: string;
+
   navigated = false;
   holdingRecord: HoldingRecord;
 
@@ -64,6 +71,8 @@ export class BuyComponent implements OnInit {
         this.holdingRecord = new HoldingRecord();
       }
     });
+
+    this.userId = this.loginService.getCurrentUser().id;
   }
 
   calcPrice(addedValue : number ) {
@@ -72,6 +81,7 @@ export class BuyComponent implements OnInit {
   }
 
   setTotalPricePaid(args){
+    this.noShares = args.target.value;
     this.totPrice = this.price*args.target.value;
   }
 
@@ -79,16 +89,23 @@ export class BuyComponent implements OnInit {
     return this.brokers.filter(broker => broker.id == brokerid)[0].name;
   }
 
+
+
   getCompanyForRecord(id: number, rec: HoldingRecord): string{
     console.log(this.companies);
-    return this.companies.filter(company => company.id == id)[0].name;
+    this.companysymbol = this.companies.filter(company => company.id == id)[0].name;
+    return this.companysymbol;
   }
 
   getCurrentShareForCompany(companyid: number): number{
+    this.shareId = this.sharePrices.filter(shareprice => shareprice.companyid == companyid)[0].id;
     this.price = this.sharePrices.filter(shareprice => shareprice.companyid == companyid)[0].price;
     return this.price;
   }
 
+  addToExisting(){
+    this.portfolioService.getUpdatedRecords(this.userId, this.shareId, this.holdingRecord.id, this.totPrice, this.noShares).subscribe();
+  }
 
 
 }

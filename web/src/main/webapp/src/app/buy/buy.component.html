@@ -2,19 +2,19 @@
   <ng-container *ngIf="(companies.length>0 && sharePrices.length>0 && brokers.length>0)">
     <div class="form-group">
 
-      <label class="col-sm-2 control-label"><b>Name of the company: </b> &nbsp;&nbsp; {{getCompanyForRecord(holdingRecord.companyid, holdingRecord)}}</label><br/>
-      <label class="col-sm-2 control-label"><b>Share Price: </b> &nbsp;&nbsp; {{getCurrentShareForCompany(holdingRecord.companyid)}}</label><br/>
-      <label class="col-sm-2 control-label"><b>Broker: </b> &nbsp;&nbsp; {{getBrokerForRecord(holdingRecord.brokerid)}}</label><br/>
+      <label class=""><b>Name of the company: </b> {{getCompanyForRecord(holdingRecord.companyid, holdingRecord)}}</label><br/>
+      <label class=""><b>Share Price: </b> {{getCurrentShareForCompany(holdingRecord.companyid)}}</label><br/>
+      <label class=""><b>Broker: </b> {{getBrokerForRecord(holdingRecord.brokerid)}}</label><br/>
 
-      <label class="col-sm-2 control-label"><b>Number of shares you want to add: </b> &nbsp;&nbsp;</label><br/>
-      <input class="form-control" type="number" placeholder="Number of Shares" #noShares (ngKeypress)="setTotalPricePaid($event)">
+      <label class="label label-info"><b>Number of shares you want to add: </b> </label><br>
+      <input class="form-control" type="number" placeholder="Number of Shares" #noShares (keyup)="setTotalPricePaid($event)">
       <br/>
-      <label *ngIf="totPrice" class="col-sm-2 control-label"><b>Tot. Price</b> &nbsp;&nbsp; {{totPrice}}</label><br/>
+      <h4 *ngIf="totPrice" class="label label-primary control-label" style="size: 15px"><b>Tot. Price</b> &nbsp;&nbsp;<span class="label label-primary"> {{totPrice}} EUR</span></h4><br/>
     </div>
   </ng-container>
 
 </form>
 
 <br/>
-<button class ="btn btn-primary" id="btnAdd">Add</button>
+<button class ="btn btn-primary" id="btnAdd" (click)="addToExisting()">Add</button>
 
