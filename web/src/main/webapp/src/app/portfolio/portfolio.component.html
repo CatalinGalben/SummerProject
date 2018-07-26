@@ -9,16 +9,23 @@
       <th>Book Value (&euro;)</th>
       <th>Current Value (&euro;)</th>
       <th>Gain (%)</th>
+      <th>Broker</th>
   </thead>
 
   <tbody>
 
-    <tr *ngFor="let r of records" (click)="rowClicked(r.name, r.noShares, r.pricePaid)" [class.active]="r.name == selectedRow">
-      <td>{{ r.name }}</td>
-      <td>{{ r.noShares }}</td>
-      <td>{{ r.pricePaid }}</td>
+  <ng-container *ngIf="companies.length>0">
+    <tr *ngFor="let rec of holdingRecords" [class.active]="getCompanyForRecord(rec.id) == selectedRow">
+      <td>{{ getCompanyForRecord(rec.companyid, rec) }}</td>
+      <td>{{ rec.noShares }}</td>
+      <td>{{ getCurrentShareForCompany(rec.companyid).toString()}}</td>
+      <td>{{ rec.pricePaid }}</td>
+      <td>{{ getCurrentShareForCompany(rec.companyid)*rec.noShares }}</td>
+      <td>{{ getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares).toString() + "%"}}</td>
+      <td>{{ getBrokerForRecord(rec.brokerid)}}</td>
 
     </tr>
+  </ng-container>
 
   </tbody>
 </table>
