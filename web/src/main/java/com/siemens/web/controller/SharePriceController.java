@@ -45,7 +45,7 @@ public class SharePriceController {
         log.trace(name+" --- Symbol in controller");
         List<HoldingRecord> holdingRecords = holdingRecordService.getAllRecords();
         Optional<Company> company = companyService.getAllCompanies()
-                .stream().filter(c-> c.getName().equals(name)).findFirst();
+                .stream().filter(c-> c.getName().equals(name.toUpperCase())).findFirst();
 
         if(company.isPresent())
         {

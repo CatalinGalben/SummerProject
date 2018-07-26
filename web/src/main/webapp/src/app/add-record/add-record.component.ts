@@ -175,9 +175,10 @@ export class AddRecordComponent implements OnInit {
     console.log("method: checkCompany -- " + symbol + " -- front-end");
     this.recordService.getCompanyDetails(symbol).subscribe(cs => {
       console.log(cs);
-      if (cs.company==null && cs.sharePrice==null) {
+      if (cs.company.name == null && cs.sharePrice.date == null) {
         alert("The company you're trying to add already exists in your portfolio. If you wish to add shares to the existing company, try clicking on the company then click on the Add button");
         this.checkedCompany = false;
+        this.router.navigate([""]);
         return
       }
       this.companyFound = cs.company;
