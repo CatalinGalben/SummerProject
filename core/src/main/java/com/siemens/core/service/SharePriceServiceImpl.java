@@ -14,9 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class SharePriceServiceImpl implements SharePriceServiceInterface{
@@ -27,6 +25,14 @@ public class SharePriceServiceImpl implements SharePriceServiceInterface{
     private SharePriceRepository sharePriceRepository;
     @Autowired
     private CurrencyRepository currencyRepository;
+
+    @Override
+    public List<SharePrice> getAllPrices()
+    {
+        List<SharePrice> sharePrices = sharePriceRepository.findAll();
+        sharePrices.sort(Comparator.comparing(SharePrice::getDate));
+        return sharePrices;
+    }
     @Override
     public void manualSharePrice(Company company, SharePrice sharePrice)
     {

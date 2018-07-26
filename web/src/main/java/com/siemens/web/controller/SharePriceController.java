@@ -8,10 +8,13 @@ import com.siemens.web.converter.CompanyConverter;
 import com.siemens.web.converter.CompanyShareConverter;
 import com.siemens.web.converter.SharePriceConverter;
 import com.siemens.web.dto.CompanyShareDTO;
+import com.siemens.web.dto.SharePriceDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 
 @RestController
@@ -41,5 +44,10 @@ public class SharePriceController {
         Company company = companyConverter.convertDtoToModel(companyShareDTO.getCompany());
         SharePrice sharePrice = shareConverter.convertDtoToModel(companyShareDTO.getSharePrice());
         sharePriceService.manualSharePrice(company, sharePrice);
+    }
+    @RequestMapping(value = "/shareprices", method = RequestMethod.GET)
+    public Set<SharePriceDTO> getAllPrices()
+    {
+        return  (Set<SharePriceDTO>) shareConverter.convertModelsToDtos(sharePriceService.getAllPrices());
     }
 }

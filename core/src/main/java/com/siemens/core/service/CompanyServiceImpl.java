@@ -5,6 +5,7 @@ import com.siemens.core.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 @Service
 public class CompanyServiceImpl implements  CompanyServiceInterface {
@@ -18,5 +19,10 @@ public class CompanyServiceImpl implements  CompanyServiceInterface {
             return maybeCompany.get();
         }
         throw new RuntimeException("The company you are searching for does not exist");
+    }
+    @Override
+    public List<Company> getAllCompanies()
+    {
+        return companyRepository.findAll();
     }
 }
