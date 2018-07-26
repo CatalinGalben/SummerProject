@@ -39,10 +39,17 @@ export class PortfolioComponent implements OnInit {
               private portfolioService: PortfolioService,
               private recordService: AddRecordService) {
 
+    this.populate();
+
   }
 
 
   ngOnInit() {
+
+
+  }
+
+  populate(){
     //get loggedIn user
     // this.loginService.currentUser.subscribe(user =>
     // this.userLoggedInPortfolioComponent = user);
@@ -74,9 +81,7 @@ export class PortfolioComponent implements OnInit {
     this.recordService.getAllSharePrices().subscribe(shareprices =>{
       this.sharePrices = shareprices.sort((s1, s2)=> s1.id-s2.id);
       this.loginService.changeSharePrices(this.sharePrices);});
-
   }
-
   goToAdd() {
     this.router.navigate(['addRecord']);
   }
@@ -93,6 +98,7 @@ export class PortfolioComponent implements OnInit {
 
   getCompanyForRecord(id: number, rec: HoldingRecord): string{
     console.log(this.companies);
+    console.log(rec);
     console.log("getCompanyForRecord");
     console.log("companyid = "+id);
     console.log(rec);

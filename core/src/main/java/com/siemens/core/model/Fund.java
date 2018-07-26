@@ -26,6 +26,6 @@ public class Fund extends BaseEntity<Integer>{
     }
 
     @ManyToOne
-    @JoinColumn(name="companyId", nullable=false)
+    @JoinColumn(name="companyid", nullable=false)
     private Company company;
 }

@@ -14,8 +14,8 @@
 
   <tbody>
 
-  <ng-container *ngIf="companies.length>0">
-    <tr *ngFor="let rec of holdingRecords" [class.active]="getCompanyForRecord(rec.id) == selectedRow">
+  <ng-container *ngIf="companies.length>0 && holdingRecords.length>0">
+    <tr *ngFor="let rec of holdingRecords ">
       <td>{{ getCompanyForRecord(rec.companyid, rec) }}</td>
       <td>{{ rec.noShares }}</td>
       <td>{{ getCurrentShareForCompany(rec.companyid).toString()}}</td>
