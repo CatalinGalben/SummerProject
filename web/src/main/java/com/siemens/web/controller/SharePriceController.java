@@ -2,18 +2,25 @@ package com.siemens.web.controller;
 
 import com.siemens.core.model.Company;
 import com.siemens.core.model.CompanyShare;
+import com.siemens.core.model.HoldingRecord;
 import com.siemens.core.model.SharePrice;
+import com.siemens.core.service.CompanyServiceInterface;
+import com.siemens.core.service.HoldingRecordServiceInterface;
 import com.siemens.core.service.SharePriceServiceInterface;
 import com.siemens.web.converter.CompanyConverter;
 import com.siemens.web.converter.CompanyShareConverter;
 import com.siemens.web.converter.SharePriceConverter;
+import com.siemens.web.dto.CompanyDTO;
 import com.siemens.web.dto.CompanyShareDTO;
+import com.siemens.web.dto.HoldingRecordDTO;
 import com.siemens.web.dto.SharePriceDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 
@@ -28,10 +35,31 @@ public class SharePriceController {
     private CompanyConverter companyConverter;
     @Autowired
     private CompanyShareConverter companyShareConverter;
+    @Autowired
+    private HoldingRecordServiceInterface holdingRecordService;
+    @Autowired
+    private CompanyServiceInterface companyService;
     @RequestMapping(value = "/shareprice/{name}", method = RequestMethod.GET)
     public CompanyShareDTO getSharePrice(@PathVariable final String name)
     {
         log.trace(name+" --- Symbol in controller");
+        List<HoldingRecord> holdingRecords = holdingRecordService.getAllRecords();
+        Optional<Company> company = companyService.getAllCompanies()
+                .stream().filter(c-> c.getName().equals(name)).findFirst();
+
+        if(company.isPresent())
+        {
+            Optional<HoldingRecord> optionalRecord = holdingRecords.stream()
+                    .filter(hr -> hr.getCompany().getId().equals(company.get().getId())).findFirst();
+            if(optionalRecord.isPresent())
+            {
+                return CompanyShareDTO.builder()
+                        .sharePrice(SharePriceDTO.builder().build())
+                        .company(CompanyDTO.builder().build())
+                        .build();
+            }
+        }
+
         CompanyShare companyShare = sharePriceService.getSharePrice( name.toUpperCase() );
 
 
