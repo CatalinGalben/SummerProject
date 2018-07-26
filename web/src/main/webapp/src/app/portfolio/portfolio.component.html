@@ -38,7 +38,7 @@
 <button (click)="insertionSort(holdingRecords, holdingRecords.length)" class ="btn btn-outline-info">Sort</button>
 &nbsp;
 <div *ngIf="selectedRow!=null">
-  <button (click)=" transferDetailsToBuy(getCompanyForRecord(selectedHoldingRecord.companyid, selectedHoldingRecord), selectedHoldingRecord.noShares, selectedHoldingRecord.noShares, getCurrentShareForCompany(selectedHoldingRecord.companyid).toString(),selectedHoldingRecord.pricePaid,getCurrentShareForCompany(selectedHoldingRecord.companyid)*selectedHoldingRecord.noShares, getBrokerForRecord(selectedHoldingRecord.brokerid))" class ="btn btn-outline-info">Add to {{getCompanyForRecord(selectedHoldingRecord.companyid, selectedHoldingRecord)}}</button>
+  <button (click)="gotoDetail()" class ="btn btn-outline-info">Add to {{getCompanyForRecord(selectedHoldingRecord.companyid, selectedHoldingRecord)}}</button>
 </div>
 
 <br/><br/><br/><br/><br/>

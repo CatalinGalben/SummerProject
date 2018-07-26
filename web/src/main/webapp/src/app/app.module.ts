@@ -35,7 +35,7 @@ const routes: Routes=[
   {path: 'interrogate', component: StockInterogarionComponent},
   {path: 'portfolio', component: PortfolioComponent},
   {path: 'addRecord', component: AddRecordComponent},
-  {path: 'buy', component: BuyComponent},
+  {path: 'buy/:id', component: BuyComponent},
   {path: 'barChart', component: BarChartComponent}
 ];
 

@@ -121,8 +121,9 @@ export class PortfolioComponent implements OnInit {
     this.selectedHoldingRecord = this.holdingRecords.filter(hr => hr.id == id)[0];
   }
 
+
   gotoDetail(): void {
-    //this.router.navigate(['/detail', this.selectedHero.id]);
+    this.router.navigate(['/buy', this.selectedHoldingRecord.id]);
   }
 
 
