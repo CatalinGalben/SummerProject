@@ -60,7 +60,6 @@ export class PortfolioComponent implements OnInit {
       this.portfolioService.getRecords().subscribe(records => {
         this.holdingRecords = records
           .filter(record => record.userid == this.userLoggedInPortfolioComponent.id);
-        console.log(this.holdingRecords);
       });
     }
 
@@ -97,12 +96,6 @@ export class PortfolioComponent implements OnInit {
   }
 
   getCompanyForRecord(id: number, rec: HoldingRecord): string{
-    console.log(this.companies);
-    console.log(rec);
-    console.log("getCompanyForRecord");
-    console.log("companyid = "+id);
-    console.log(rec);
-    console.log(this.companies.filter(company => company.id == id)[0]);
     this.currentCompanyNamePortfolio = this.companies.filter(company => company.id == id)[0].name;
     return this.currentCompanyNamePortfolio
   }
@@ -125,23 +118,23 @@ export class PortfolioComponent implements OnInit {
   }
 
 
-  insertionSort(rec: Mockmodels[], n:number)
+  insertionSort(rec: HoldingRecord[], n:number)
   {
     let i, key, j;
     for (i = 1; i < n; i++)
     {
-      key = this.records[i];
+      key = rec[i];
       j = i-1;
 
       /* Move elements of arr[0..i-1], that are
          greater than key, to one position ahead
          of their current position */
-      while (j >= 0 && this.records[j].name > key.name)
+      while (j >= 0 && this.getCompanyForRecord(rec[j].id, rec[j])> this.getCompanyForRecord(key.id, key))
       {
-        this.records[j+1] = this.records[j];
+        rec[j+1] = rec[j];
         j = j-1;
       }
-      this.records[j+1] = key;
+      rec[j+1] = key;
       }
     }
 

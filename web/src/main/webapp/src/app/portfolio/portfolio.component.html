@@ -14,15 +14,15 @@
 
   <tbody>
 
-  <ng-container *ngIf="companies.length>0 && holdingRecords.length>0">
-    <tr *ngFor="let rec of holdingRecords ">
-      <td>{{ getCompanyForRecord(rec.companyid, rec) }}</td>
-      <td>{{ rec.noShares }}</td>
-      <td>{{ getCurrentShareForCompany(rec.companyid).toString()}}</td>
-      <td>{{ rec.pricePaid }}</td>
-      <td>{{ getCurrentShareForCompany(rec.companyid)*rec.noShares }}</td>
-      <td>{{ getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares).toString() + "%"}}</td>
-      <td>{{ getBrokerForRecord(rec.brokerid)}}</td>
+  <ng-container *ngIf="(companies.length>0 && holdingRecords.length>0 && sharePrices.length>0)">
+    <tr *ngFor="let rec of holdingRecords">
+      <td>{{getCompanyForRecord(rec.companyid, rec)}}</td>
+      <td>{{rec.noShares}}</td>
+      <td>{{getCurrentShareForCompany(rec.companyid).toString()}}</td>
+      <td>{{rec.pricePaid }}</td>
+      <td>{{getCurrentShareForCompany(rec.companyid)*rec.noShares }}</td>
+      <td>{{getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares).toString() + "%"}}</td>
+      <td>{{getBrokerForRecord(rec.brokerid)}}</td>
 
     </tr>
   </ng-container>
@@ -34,6 +34,6 @@
 <br/>
 <button id="btnAdd" class ="btn btn-outline-info" (click)="goToAdd()">Add new holding share</button>
 &nbsp;
-<button (click)="insertionSort(records, records.length)" class ="btn btn-outline-info">Sort</button>
+<button (click)="insertionSort(holdingRecords, holdingRecords.length)" class ="btn btn-outline-info">Sort</button>
 
 <br/><br/><br/><br/><br/>

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import {AuthService} from "../providers/auth.service";
 import * as firebase from "firebase";
@@ -12,7 +12,7 @@ import {Subscription} from "rxjs/internal/Subscription";
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.css']
 })
-export class LoginPageComponent implements OnInit, OnDestroy {
+export class LoginPageComponent implements OnInit{
 
   showRegister: boolean;
   userLoggedIn: User;
@@ -71,7 +71,4 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       this.router.navigate([''])).catch(err => alert(err));
   }
 
-  ngOnDestroy(){
-    this.sub.unsubscribe();
-  }
 }
