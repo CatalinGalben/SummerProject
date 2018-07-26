@@ -1,6 +1,5 @@
 import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import {AddRecordService} from "../add-record/shared/add-record.service";
 import {ChartService} from "./shared/chart.service";
 
 @Component({
@@ -143,6 +142,8 @@ export class BarChartComponent implements OnInit, OnChanges {
         ]
       }
     ]
+
+
 
 
 
