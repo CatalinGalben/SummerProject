@@ -18,7 +18,7 @@ export class MenuComponent implements OnInit {
   }
 
   goToBuy() {
-    this.router.navigate(['buy']);
+    this.router.navigate(['addRecord']);
   }
 
   goBack() {
