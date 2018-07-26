@@ -15,7 +15,7 @@
   <tbody>
 
   <ng-container *ngIf="(companies.length>0 && holdingRecords.length>0 && sharePrices.length>0)">
-    <tr *ngFor="let rec of holdingRecords">
+    <tr *ngFor="let rec of holdingRecords" (click)="clickRecord(rec.id)" [class.active]="selectedRow === rec.id">
       <td>{{getCompanyForRecord(rec.companyid, rec)}}</td>
       <td>{{rec.noShares}}</td>
       <td>{{getCurrentShareForCompany(rec.companyid).toString()}}</td>
@@ -32,8 +32,13 @@
 </div>
 
 <br/>
+
 <button id="btnAdd" class ="btn btn-outline-info" (click)="goToAdd()">Add new holding share</button>
 &nbsp;
 <button (click)="insertionSort(holdingRecords, holdingRecords.length)" class ="btn btn-outline-info">Sort</button>
+&nbsp;
+<div *ngIf="selectedRow!=null">
+  <button (click)=" transferDetailsToBuy(getCompanyForRecord(selectedHoldingRecord.companyid, selectedHoldingRecord), selectedHoldingRecord.noShares, selectedHoldingRecord.noShares, getCurrentShareForCompany(selectedHoldingRecord.companyid).toString(),selectedHoldingRecord.pricePaid,getCurrentShareForCompany(selectedHoldingRecord.companyid)*selectedHoldingRecord.noShares, getBrokerForRecord(selectedHoldingRecord.brokerid))" class ="btn btn-outline-info">Add to {{getCompanyForRecord(selectedHoldingRecord.companyid, selectedHoldingRecord)}}</button>
+</div>
 
 <br/><br/><br/><br/><br/>

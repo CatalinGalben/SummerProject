@@ -25,11 +25,12 @@ export class PortfolioComponent implements OnInit {
   holdingRecords: HoldingRecord[] = [];
   sharePrices: SharePrice[] = [];
   companies: Company[] = [];
+  selectedHoldingRecord: HoldingRecord;
 
   currentCompanyNamePortfolio: string;
 
   records = RECORDS;
-  selectedRow : string;
+  selectedRow : number;
   userLoggedInPortfolioComponent: User;
 
 
@@ -87,8 +88,6 @@ export class PortfolioComponent implements OnInit {
 
   rowClicked(name: string, noShares: number, price: number) {
     this.transferService.setData(name, noShares, price);
-
-    this.selectedRow = name;
   }
 
   refreshRecords(){
@@ -115,6 +114,15 @@ export class PortfolioComponent implements OnInit {
 
   getBrokerForRecord(brokerid: number): string {
     return this.brokers.filter(broker => broker.id == brokerid)[0].name;
+  }
+
+  clickRecord(id: number){
+    this.selectedRow = id;
+    this.selectedHoldingRecord = this.holdingRecords.filter(hr => hr.id == id)[0];
+  }
+
+  gotoDetail(): void {
+    //this.router.navigate(['/detail', this.selectedHero.id]);
   }
 
 
