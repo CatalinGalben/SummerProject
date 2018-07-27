@@ -34,4 +34,8 @@ export class MenuComponent implements OnInit {
     this.closeEvent.next();
   }
 
+  goToCreateGroup() {
+    this.router.navigate(['addGroup']);
+  }
+
 }

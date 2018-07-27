@@ -22,8 +22,8 @@ export class ChartService {
   constructor(private httpClient: HttpClient) { }
 
 
-  getGroups(symbol: string): Observable<Group>{
-    return this.httpClient.get<Group>(this.groupUrl);
+  getGroups(): Observable<Group[]>{
+    return this.httpClient.get<Group[]>(this.groupUrl);
   }
 
   getCompanies(): Observable<Company>{
@@ -37,6 +37,7 @@ export class ChartService {
   createGroup(name: string, parentgroupid: number): Observable<Group>{
     let id = 0;
     let group = {id, name, parentgroupid};
+    console.log("CREATE " + name + " " + parentgroupid);
     return this.httpClient.post<Group>(this.createGroupUrl, group);
   }
 

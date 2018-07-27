@@ -7,6 +7,7 @@ import {Subject} from "rxjs/internal/Subject";
 import {Broker} from "../../add-record/shared/Broker.model";
 import {Company} from "../../add-record/shared/Company.model";
 import {SharePrice} from "../../add-record/shared/SharePrice.model";
+import {Group} from "../../bar-chart/shared/Group.model";
 
 
 @Injectable()
@@ -25,6 +26,9 @@ export class LoginService {
 
   private sharePricesServiceVariable = new Subject<SharePrice[]>();
   allSharePrices = this.sharePricesServiceVariable.asObservable();
+
+  private groupServiceVariable = new Subject<Group[]>();
+  allGroups = this.groupServiceVariable.asObservable();
 
   constructor(private httpClient: HttpClient) { }
 
@@ -72,6 +76,10 @@ export class LoginService {
   changeUserObservable(user: User){
     this.userLoggedInService.next(user);
     this.currentUser = user;
+  }
+
+  changeGroups(groups: Group[]){
+    this.groupServiceVariable.next(groups);
   }
 
 

@@ -27,6 +27,7 @@ import {HttpClientModule} from "@angular/common/http";
 import { BarChartComponent } from './bar-chart/bar-chart.component';
 import {NgxChartsModule} from "@swimlane/ngx-charts";
 import {PortfolioService} from "./portfolio/shared/portfolio.service";
+import { AddGroupComponent } from './add-group/add-group.component';
 
 const routes: Routes=[
   {path: 'homePage', component: HomePageComponent},
@@ -36,7 +37,8 @@ const routes: Routes=[
   {path: 'portfolio', component: PortfolioComponent},
   {path: 'addRecord', component: AddRecordComponent},
   {path: 'buy/:id', component: BuyComponent},
-  {path: 'barChart', component: BarChartComponent}
+  {path: 'barChart', component: BarChartComponent},
+  {path: 'addGroup', component: AddGroupComponent}
 ];
 
 
@@ -50,7 +52,8 @@ const routes: Routes=[
     AddRecordComponent,
     MenuComponent,
     BuyComponent,
-    BarChartComponent
+    BarChartComponent,
+    AddGroupComponent
   ],
   imports: [
     BrowserModule,

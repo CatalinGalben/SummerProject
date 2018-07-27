@@ -1,0 +1,93 @@
+<button class="btn btn-outline-info" (click)="test()">Test</button>
+<button class="btn btn-outline-info" (click)="addRecord()">Add</button>
+
+<div class="scrollit">
+
+  <table class="table table-hover body">
+    <thead>
+    <th>Name</th>
+    <th>No. Shares</th>
+    <th>Share Price (&euro;)</th>
+    <th>Book Value (&euro;)</th>
+    <th>Current Value (&euro;)</th>
+    <th>Gain (%)</th>
+    <th>Broker</th>
+    </thead>
+
+    <tbody>
+
+    <ng-container *ngIf="(companies.length>0 && holdingRecords.length>0 && sharePrices.length>0)">
+      <tr *ngFor="let rec of holdingRecords" (click)="clickRecord(rec.id)" [class.active]="selectedRow === rec.id">
+        <td>{{getCompanyForRecord(rec.companyid, rec)}}</td>
+        <td>{{rec.noShares}}</td>
+        <td>{{getCurrentShareForCompany(rec.companyid).toString()}}</td>
+        <td>{{rec.pricePaid }}</td>
+        <td>{{getCurrentShareForCompany(rec.companyid)*rec.noShares }}</td>
+        <td>{{getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares).toString() + "%"}}</td>
+        <td>{{getBrokerForRecord(rec.brokerid)}}</td>
+
+      </tr>
+    </ng-container>
+
+    </tbody>
+  </table>
+</div>
+
+<!------------  Selected HR  --------------->
+
+<br/>
+<p class="title"><b>Selected</b></p>
+
+<div class="scrollit">
+
+  <table class="table table-hover body">
+    <thead>
+    <th>Name</th>
+    <th>No. Shares</th>
+    <th>Share Price (&euro;)</th>
+    <th>Book Value (&euro;)</th>
+    <th>Current Value (&euro;)</th>
+    <th>Gain (%)</th>
+    <th>Broker</th>
+    </thead>
+    <tbody>
+
+    <ng-container *ngIf="(companies.length>0 && holdingRecords.length>0 && sharePrices.length>0 && selectedHoldingRecords.length>0)">
+      <tr *ngFor="let rec of selectedHoldingRecords">
+        <td>{{getCompanyForRecord(rec.companyid, rec)}}</td>
+        <td>{{rec.noShares}}</td>
+        <td>{{getCurrentShareForCompany(rec.companyid).toString()}}</td>
+        <td>{{rec.pricePaid }}</td>
+        <td>{{getCurrentShareForCompany(rec.companyid)*rec.noShares }}</td>
+        <td>{{getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares).toString() + "%"}}</td>
+        <td>{{getBrokerForRecord(rec.brokerid)}}</td>
+      </tr>
+    </ng-container>
+
+    </tbody>
+  </table>
+</div>
+
+<!------------  Group data  --------------->
+
+<br/>
+
+<label class="col-sm-2 control-label"><b>Group Name</b></label>
+<div class="col-sm-10">
+  <input class="form-control" placeholder="The name of the group you want to create" #name (change)="setGroupName(name.value)">
+</div>
+
+<label class="col-sm-2 control-label"><b>Choose the subgroup</b></label>
+<div class="col-sm-10">
+  <select (change)="setNewGroup($event)" class="select-picker">
+    <option [value]="0" selected></option>
+    <option *ngFor="let group of groups" [value]="group.id" default="None">
+      {{group.name}}
+    </option>
+  </select>
+</div>
+
+<br/>
+<button class="btn btn-outline-info" (click)="saveGroup()">Save Group</button>
+
+<br/><br/><br/><br/><br/>

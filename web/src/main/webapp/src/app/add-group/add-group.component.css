@@ -1,0 +1,11 @@
+.table tr.active td {
+  background-color:#123456 !important;
+  color: white;
+
+}
+
+.scrollit {
+  overflow:scroll;
+  height:400px;
+  width:1200px;
+}
