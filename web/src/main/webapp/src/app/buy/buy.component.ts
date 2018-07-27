@@ -75,7 +75,7 @@ export class BuyComponent implements OnInit {
 
         //get all sharePrices
         this.recordService.getAllSharePrices().subscribe(shareprices =>{
-          this.sharePrices = shareprices.sort((s1, s2)=> s1.id-s2.id);
+          this.sharePrices = shareprices.sort((s1, s2)=> s2.id-s1.id); //aici sunt sortate descrescator
           this.loginService.changeSharePrices(this.sharePrices);});
       } else {
         this.navigated = false;
@@ -87,9 +87,9 @@ export class BuyComponent implements OnInit {
     this.userId = this.user.id;
   }
 
-  calcPrice(addedValue : number ) {
-    this.totPrice = Number(addedValue) * this.price;
-    console.log(this.totPrice);
+  setNoSharesAndPrice(){
+      this.noShares = this.holdingRecord.noShares;
+      this.price = this.sharePrices.filter(share => share.companyid == this.holdingRecord.companyid)[0].price;
   }
 
   setTotalPricePaid(args){
@@ -122,6 +122,9 @@ export class BuyComponent implements OnInit {
   }
 
   getFinalDividend(): number{
+    if (this.noShares == null || this.price == null){
+      this.setNoSharesAndPrice()
+    }
     return this.noShares*this.price*(this.company.dividendYield/100) - this.noShares*this.price*(this.company.dividendYield/100)*this.broker.dividendFee;
   }
 

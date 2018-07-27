@@ -46,8 +46,12 @@ export class PortfolioComponent implements OnInit {
 
 
   ngOnInit() {
-
-
+    this.brokers = [];
+    this.holdingRecords = [];
+    this.sharePrices = [];
+    this.companies = [];
+    this.selectedHoldingRecord = null;
+    this.populate();
   }
 
   populate(){

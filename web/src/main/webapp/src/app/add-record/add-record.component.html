@@ -4,7 +4,7 @@
     <div class="col-sm-10">
       <input class="form-control" type="text" placeholder="Company symbol" #name>
     </div>
-<br>
+    <br>
     <button *ngIf="!checkedCompany" class ="btn btn-primary" id="btnCheck" (click)="checkCompany(name.value)">Check company</button>
 
 
@@ -85,7 +85,7 @@
       <div class="col-sm-10">
         <!--<select #typeofetfhtml (change)="setNewTypeETF(typeofetfhtml.value)" (ngModel)="etftypes" class="select-picker" data-live-search="true">-->
         <!--<option *ngFor="let type of etftypes" [ngValue]="type.number">{{type.type}}</option>-->
-      <!--</select>-->
+        <!--</select>-->
 
         <select (change)="setNewTypeETF($event)" class="select-picker" >
           <option [value]="" ></option>

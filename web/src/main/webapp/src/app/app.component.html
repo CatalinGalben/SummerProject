@@ -13,7 +13,7 @@
 
     <div *ngIf="isLoggedIn">
       <p class="navbar-text navbar-right">
-        Balance: <b>{{user_balance}} EUR  &nbsp;&nbsp;&nbsp;&nbsp;</b>
+        Balance: <b>{{user_balance | number : '1.2'}} EUR  &nbsp;&nbsp;&nbsp;&nbsp;</b>
         Logged in: <b>{{user_displayName==null?user_email:user_displayName}} &nbsp;&nbsp;&nbsp;&nbsp;</b>{{user_displayName==null?null:user_email}}
         <button class ="btn btn-primary button" id="btnLogOut" (click)="logout()">Log Out</button>
       </p>
