@@ -126,11 +126,12 @@ export class PortfolioComponent implements OnInit {
     console.log("liquidate method entered -- portfolio.component.ts");
     this.portfolioService.liquidateRecord(this.currentCompanyNamePortfolio).subscribe(_=>{
       this.refreshRecords();
-      this.loginService.getActualDetailsUser(this.userLoggedInPortfolioComponent.id).subscribe(user => {
-        this.loginService.changeUser(user);
-        this.userLoggedInPortfolioComponent = this.loginService.getCurrentUser();
+      this.loginService.getActualDetailsUser(this.userLoggedInPortfolioComponent.id).subscribe(user=>{
+        this.loginService.changeUserObservable(user);
       })
-    });
+    })
+    this.selectedHoldingRecord = null;
+    this.selectedRow = null;
   }
 
 
