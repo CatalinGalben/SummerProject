@@ -128,8 +128,8 @@ export class PortfolioComponent implements OnInit {
       this.refreshRecords();
       this.loginService.getActualDetailsUser(this.userLoggedInPortfolioComponent.id).subscribe(user=>{
         this.loginService.changeUserObservable(user);
-      })
-    })
+      });
+    });
     this.selectedHoldingRecord = null;
     this.selectedRow = null;
   }

@@ -32,7 +32,7 @@
         <label class=""><b>Broker: </b> {{getBrokerNameForRecord(holdingRecord.brokerid)}} with <span class="bg-danger">{{getBrokerDividendFeeForRecord()}}% as dividend fee</span></label><br/>
 
         <label class="label label-info"><b>Dividend (EUR): </b> </label><br>
-        <input class="form-control" type="number" step="1" min="0" placeholder="Number of Shares" #noShares (keyup)="setTotalDividend($event)">
+        <p>{{getFinalDividend()}}</p>
         <br/>
         <div *ngIf="dividendWanted">
           <h3 class="label label-primary control-label"><b>Tot. Dividend earned</b> &nbsp;&nbsp;<span class="label label-primary"> {{totDividendPaid}} EUR</span></h3><br/>
@@ -44,6 +44,6 @@
   </form>
 
   <br/>
-  <button class ="btn btn-primary" (click)="addToExisting()">Add</button>
+  <button class ="btn btn-primary" (click)="addDividend()">Add dividend</button>
 </ng-container>
 
