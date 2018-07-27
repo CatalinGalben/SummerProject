@@ -70,10 +70,11 @@ public class UserController {
         log.trace("requested single user !");
         return userConverter.convertModelToDto(userServiceInterface.findById(key));
     }
-    @RequestMapping(value = "/users/dividend", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/dividend/{symbol}/{brokerKey}/{userKey}", method = RequestMethod.GET)
     public UserDTO addDividend(
-            @RequestBody String symbol, @RequestBody Integer valueOfShare,
-            @RequestBody Integer brokerKey, @RequestBody Integer userKey)
+            @PathVariable final String symbol,
+            @PathVariable final Integer brokerKey, @PathVariable final Integer userKey,
+            @RequestBody final Double valueOfShare)
     {
         log.trace("User requested dividend! -- Value of balance changed");
         return userConverter.convertModelToDto(userServiceInterface.addDividend(symbol,valueOfShare,brokerKey,userKey));

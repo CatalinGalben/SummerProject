@@ -30,12 +30,21 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
     private TrustRepository trustRepository;
     @Autowired
     private EtfRepository etfRepository;
+
+    private Double calculateLostMoney(Broker broker, SharePrice sharePrice, Integer noShares)
+    {
+        return (broker.getShareFee()*sharePrice.getPrice())*noShares;
+    }
+    @Transactional
     @Override
     public HoldingRecord createRecord
             (User user, Broker broker, Company company, Double paidPrice, Integer noShares)
     {
-
-
+        paidPrice = paidPrice + calculateLostMoney(broker,company.getSharePrice(), noShares);
+        user.setBalance(user.getBalance() - paidPrice);
+        userRepository.save(user);
+        broker.setProfit(calculateLostMoney(broker,company.getSharePrice(), noShares));
+        brokerRepository.save(broker);
         return holdingRecordRepository.save(
                 HoldingRecord.builder()
                 .user(user)
@@ -46,11 +55,16 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
                 .build()
         );
     }
+    @Transactional
     @Override
     public  HoldingRecord createRecord
             (User user, Broker broker, Company company, Double paidPrice, Integer noShares, Float nav, Float ter,
              Float gearing, Float premium){
-
+        paidPrice = paidPrice + calculateLostMoney(broker,company.getSharePrice(), noShares);
+        user.setBalance(user.getBalance() - paidPrice);
+        userRepository.save(user);
+        broker.setProfit(calculateLostMoney(broker,company.getSharePrice(), noShares));
+        brokerRepository.save(broker);
         Trust trust = Trust.trustBuilder()
                 .nav(nav)
                 .gearing(gearing)
@@ -72,9 +86,15 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
         );
      }
 
+     @Transactional
      @Override
      public  HoldingRecord createRecord
              (User user, Broker broker, Company company, Double paidPrice, Integer noShares,Float nav, Float ter, int type){
+         paidPrice = paidPrice + calculateLostMoney(broker,company.getSharePrice(), noShares);
+         user.setBalance(user.getBalance() - paidPrice);
+         userRepository.save(user);
+         broker.setProfit(calculateLostMoney(broker,company.getSharePrice(), noShares));
+         brokerRepository.save(broker);
         Etf etf = Etf.etfBuilder()
                 .nav(nav)
                 .ter(ter)
