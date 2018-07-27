@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TransferService} from "../providers/transfer.service";
-import {ActivatedRoute, Params} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {HoldingRecord} from "../add-record/shared/HoldingRecord.model";
 import {PortfolioService} from "../portfolio/shared/portfolio.service";
 import {AddRecordService} from "../add-record/shared/add-record.service";
@@ -28,13 +28,13 @@ export class BuyComponent implements OnInit {
   userId: number;
   user: User;
   shareId: number;
-  recordKey: number;
   broker: Broker;
 
   buy: boolean;
 
 
   companysymbol: string;
+  company: Company;
 
 
   navigated = false;
@@ -48,7 +48,8 @@ export class BuyComponent implements OnInit {
   constructor(private portfolioService: PortfolioService,
               private route: ActivatedRoute,
               private recordService: AddRecordService,
-              private loginService: LoginService
+              private loginService: LoginService,
+              private router: Router
               ) { }
 
   ngOnInit(): void {
@@ -96,10 +97,7 @@ export class BuyComponent implements OnInit {
     this.totPrice = this.price*args.target.value + this.price*args.target.value*this.broker.shareFee;
   }
 
-  setTotalDividend(args){
-    this.dividendWanted = args.target.value;
-    this.totDividendPaid =+ this.dividendWanted - this.dividendWanted*this.broker.dividendFee;
-  }
+
 
   getBrokerShareFeeForRecord(): number{
     return this.broker.shareFee*100;
@@ -120,13 +118,17 @@ export class BuyComponent implements OnInit {
   }
 
   getFeeForDividend(): number{
-    return this.broker.dividendFee*this.dividendWanted;
+    return this.noShares*this.price*(this.company.dividendYield/100)*this.broker.dividendFee;
   }
 
+  getFinalDividend(): number{
+    return this.noShares*this.price*(this.company.dividendYield/100) - this.noShares*this.price*(this.company.dividendYield/100)*this.broker.dividendFee;
+  }
 
   getCompanyForRecord(id: number, rec: HoldingRecord): string{
     console.log(this.companies);
-    this.companysymbol = this.companies.filter(company => company.id == id)[0].name;
+    this.company = this.companies.filter(company => company.id == id)[0];
+    this.companysymbol = this.company.name;
     return this.companysymbol;
   }
 
@@ -136,13 +138,21 @@ export class BuyComponent implements OnInit {
     return this.price;
 }
 
+  addDividend(){
+
+  }
+
   addToExisting(){
     if (this.user.balance < this.totPrice){
       alert("You don't have enough money!");
       return;
     }
     this.portfolioService.getUpdatedRecords(this.broker.id, this.userId, this.shareId, this.holdingRecord.id, this.price*this.noShares, this.noShares).subscribe();
+    console.log("addToExisting -- buy.component.ts -- id: " + this.userId);
+    this.loginService.getActualDetailsUser(this.userId).subscribe(user=>{
+      console.log(user.balance);
+      this.loginService.changeUserObservable(user);
+    });
+    this.router.navigate([""]);
   }
-
-
 }
