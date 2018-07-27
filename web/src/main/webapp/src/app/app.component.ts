@@ -32,6 +32,7 @@ export class AppComponent implements OnInit{
   public userLoggedInAppComponent: User;
   public user_displayName: String;
   public user_email: String;
+  public user_balance: number;
   public isLoggedIn: Boolean;
 
   menuState:string = 'out';
@@ -73,6 +74,7 @@ export class AppComponent implements OnInit{
     this.loginService.currentUserForLogin.subscribe(user => {
       this.userLoggedInAppComponent = user;
       if (user != null) {
+        this.user_balance = user.balance;
         this.user_displayName = user.firstName + " " + user.lastName;
         this.user_email = user.email;
         this.user_id = user.id;

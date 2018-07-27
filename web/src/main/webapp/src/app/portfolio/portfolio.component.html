@@ -32,17 +32,14 @@
 </div>
 
 <br>
-<div class="row">
+<div class="row" *ngIf="selectedRow!=null">
 
-  <div *ngIf="selectedRow!=null">
     <button (click)="gotoDetail()" class ="btn btn-outline-success">Add to {{getCompanyForRecord(selectedHoldingRecord.companyid, selectedHoldingRecord)}}</button>
     &nbsp;
-  </div>
-
-  <div *ngIf="selectedRow!=null">
+    <button (click)="addDividend()" class="btn btn-outline-warning">Add dividend to {{getCompanyForRecord(selectedHoldingRecord.companyid, selectedHoldingRecord)}}</button>
+    &nbsp;
     <button (click)="liquidate()" class="btn btn-outline-danger">Liquidate {{getCompanyForRecord(selectedHoldingRecord.companyid, selectedHoldingRecord)}}</button>
     &nbsp;
-  </div>
 
 </div>
 <br>

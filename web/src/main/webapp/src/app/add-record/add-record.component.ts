@@ -8,6 +8,8 @@ import {SharePrice} from "./shared/SharePrice.model";
 import {LoginService} from "../login-page/shared/login.service";
 import {User} from "../login-page/shared/user.model";
 import {COMPANYTYPES, ETFTYPES} from "../mock-data";
+import {isNumber} from "util";
+import {share} from "rxjs/operators";
 
 @Component({
   selector: 'app-add-record',
@@ -74,6 +76,12 @@ export class AddRecordComponent implements OnInit {
 
     if (this.needsUpdated == true){
       this.recordService.sendCompleteDetails(companyShare).subscribe();
+      if (sharePrice==null){
+          this.recordService.getAllSharePrices().subscribe(sharePrices => {
+            sharePrice = sharePrices.filter(sp => sp.companyid == company.id)[0];
+            this.shareFound = sharePrice;
+          })
+      }
       this.needsUpdated = false;
     }
 
@@ -91,6 +99,12 @@ export class AddRecordComponent implements OnInit {
 
     if (this.needsUpdated == true){
       this.recordService.sendCompleteDetails(companyShare).subscribe();
+      if (sharePrice==null){
+        this.recordService.getAllSharePrices().subscribe(sharePrices => {
+          sharePrice = sharePrices.filter(sp => sp.companyid == company.id)[0];
+          this.shareFound = sharePrice;
+        })
+      }
       this.needsUpdated = false;
     }
 
@@ -108,6 +122,12 @@ export class AddRecordComponent implements OnInit {
 
     if (this.needsUpdated == true){
       this.recordService.sendCompleteDetails(companyShare).subscribe();
+      if (sharePrice==null){
+        this.recordService.getAllSharePrices().subscribe(sharePrices => {
+          sharePrice = sharePrices.filter(sp => sp.companyid == company.id)[0];
+          this.shareFound = sharePrice;
+        })
+      }
       this.needsUpdated = false;
     }
     this.addHoldingRecord();
@@ -117,23 +137,47 @@ export class AddRecordComponent implements OnInit {
 
 
   addHoldingRecord(){
-    if (this.typeOfCompany==1){
+    if (this.typeOfCompany==1 && this.shareFound){
+      if (this.userLoggedInAddComponent.balance < this.shareFound.price*this.noShares){
+        alert("You don't have enough money!");
+        return;
+      }
       this.recordService.addNormalCompany(this.userLoggedInAddComponent.id, this.selectedBroker.id, this.companyFound.id, this.shareFound.price*this.noShares, this.noShares)
         .subscribe(hr => {
           //todo Add to existing holding records / refresh list of holding records
-        })
+        });
+      this.loginService.getActualDetailsUser(this.userLoggedInAddComponent.id).subscribe(user => {
+        this.loginService.changeUser(user);
+        this.userLoggedInAddComponent = this.loginService.getCurrentUser();
+      })
     }
-    if (this.typeOfCompany==2){
+    if (this.typeOfCompany==2 && this.shareFound){
+      if (this.userLoggedInAddComponent.balance < this.shareFound.price*this.noShares){
+        alert("You don't have enough money!");
+        return;
+      }
       this.recordService.addTrust(this.userLoggedInAddComponent.id, this.selectedBroker.id, this.companyFound.id, this.shareFound.price*this.noShares, this.noShares, this.gearing, this.PD, this.NAV, this.TER)
         .subscribe(hr => {
           //todo Add to existing holding records / refresh list of holding records
-        })
+        });
+      this.loginService.getActualDetailsUser(this.userLoggedInAddComponent.id).subscribe(user => {
+        this.loginService.changeUser(user);
+        this.userLoggedInAddComponent = this.loginService.getCurrentUser();
+      })
     }
-    if (this.typeOfCompany==3){
+    if (this.typeOfCompany==3 && this.shareFound){
+      if (this.userLoggedInAddComponent.balance < this.shareFound.price*this.noShares){
+        alert("You don't have enough money!");
+        return;
+      }
       this.recordService.addETF(this.userLoggedInAddComponent.id, this.selectedBroker.id, this.companyFound.id, this.shareFound.price*this.noShares, this.noShares,  this.NAV, this.TER, this.typeOfETF)
         .subscribe(hr => {
           //todo Add to existing holding records / refresh list of holding records
-        })
+        });
+      this.loginService.getActualDetailsUser(this.userLoggedInAddComponent.id).subscribe(user => {
+        this.loginService.changeUser(user);
+        this.userLoggedInAddComponent = this.loginService.getCurrentUser();
+      })
     }
   }
 

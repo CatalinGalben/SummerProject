@@ -45,8 +45,14 @@ export class LoginService {
 
   loginUserEmail(username: string, password: string): Observable<User>{
     const url = `${this.addUrl}/${username}/${password}`;
-    console.log(this.addUrl  + " login service - front-end");
+    console.log(this.addUrl  + " login service -- front-end");
     return this.httpClient.get<User>(url)
+  }
+
+  getActualDetailsUser(key: number):Observable<User>{
+    const url = `${this.addUrl}/${key}`;
+    console.log(this.addUrl  + " getActualDetailsUser -- front-end");
+    return this.httpClient.get<User>(url);
   }
 
   changeUser(userLogged: User){
@@ -66,6 +72,7 @@ export class LoginService {
   }
 
   getCurrentUser(): User {
+
     return this.currentUser;
   }
 
