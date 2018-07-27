@@ -124,12 +124,25 @@ export class PortfolioComponent implements OnInit {
 
   liquidate(){
     console.log("liquidate method entered -- portfolio.component.ts");
-    this.portfolioService.liquidateRecord(this.currentCompanyNamePortfolio).subscribe(_=>this.refreshRecords());
+    this.portfolioService.liquidateRecord(this.currentCompanyNamePortfolio).subscribe(_=>{
+      this.refreshRecords();
+      this.loginService.getActualDetailsUser(this.userLoggedInPortfolioComponent.id).subscribe(user=>{
+        this.loginService.changeUserObservable(user);
+      });
+    });
+    this.selectedHoldingRecord = null;
+    this.selectedRow = null;
   }
 
 
   gotoDetail(): void {
-    this.router.navigate(['/buy', this.selectedHoldingRecord.id]);
+    console.log("gotoDetail method entered -- portfolio.component.ts");
+    this.router.navigate(['/buy', this.selectedHoldingRecord.id, 1]);
+  }
+
+  addDividend(): void {
+    console.log("gotoDetail method entered -- portfolio.component.ts");
+    this.router.navigate(['/buy', this.selectedHoldingRecord.id, 2]);
   }
 
 

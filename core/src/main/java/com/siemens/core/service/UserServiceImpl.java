@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -71,27 +72,31 @@ public class UserServiceImpl implements UserServiceInterface{
     }
     @Override
     public User findById(Integer key){
-        return userRepository.getOne(key);
+        return userRepository.findById(key).get();
     }
 
     @Override
-    public User addDividend(String symbol, Integer valueOfShare, Integer brokerKey, Integer userKey)
+    @Transactional
+    public User addDividend(String symbol, Double valueOfShare, Integer brokerKey, Integer userKey)
     {
         Company company = companyRepository.findAll().stream()
                 .filter(c -> c.getName().equals(symbol)).findFirst().get();
-        Broker broker = brokerRepository.getOne(brokerKey);
+        float divYield = company.getDividendYield();
+        Optional<Broker> broker = brokerRepository.findById(brokerKey);
 
         HoldingRecord holdingRecord = holdingRecordRepository.findAll()
                 .stream().filter(hr -> hr.getCompany().getName().equals(symbol)).findFirst().get();
 
-        User user = userRepository.getOne(userKey);
+        Optional<User> user = userRepository.findById(userKey);
+        Integer noShares = holdingRecord.getNoShares();
+        Double lostMoney = ((valueOfShare*divYield)*noShares)*broker.get().getDividendFee();
+        Double earnedMoney = (valueOfShare*divYield)*noShares;
 
-        float lostMoney = (valueOfShare * holdingRecord.getNoShares()) * (broker.getDividendFee())/100;
-        float earnings = (valueOfShare * holdingRecord.getNoShares()) - lostMoney;
-        broker.setProfit(broker.getProfit() + lostMoney);
-        user.setBalance(user.getBalance() + earnings);
-
-        return user;
+        broker.get().setProfit(broker.get().getProfit() + lostMoney);
+        user.get().setBalance(user.get().getBalance() + earnedMoney - lostMoney);
+        userRepository.save(user.get());
+        brokerRepository.save(broker.get());
+        return user.get();
 
     }
     @Override

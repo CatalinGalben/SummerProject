@@ -1,20 +1,49 @@
-<form data-toggle="validator" role="form" xmlns="http://www.w3.org/1999/html">
-  <ng-container *ngIf="(companies.length>0 && sharePrices.length>0 && brokers.length>0)">
-    <div class="form-group">
+<ng-container *ngIf="buy">
+  <form data-toggle="validator" role="form" xmlns="http://www.w3.org/1999/html">
+    <ng-container *ngIf="(companies.length>0 && sharePrices.length>0 && brokers.length>0)">
+      <div class="form-group">
 
-      <label class=""><b>Name of the company: </b> {{getCompanyForRecord(holdingRecord.companyid, holdingRecord)}}</label><br/>
-      <label class=""><b>Share Price: </b> {{getCurrentShareForCompany(holdingRecord.companyid)}}</label><br/>
-      <label class=""><b>Broker: </b> {{getBrokerForRecord(holdingRecord.brokerid)}}</label><br/>
+        <label class=""><b>Name of the company: </b> {{getCompanyForRecord(holdingRecord.companyid, holdingRecord)}}</label><br/>
+        <label class=""><b>Share Price: </b> {{getCurrentShareForCompany(holdingRecord.companyid)}}</label><br/>
+        <label class=""><b>Broker: </b> {{getBrokerNameForRecord(holdingRecord.brokerid)}} with <span class="bg-danger">{{getBrokerShareFeeForRecord()}}% as share fee</span></label><br/>
 
-      <label class="label label-info"><b>Number of shares you want to add: </b> </label><br>
-      <input class="form-control" type="number" placeholder="Number of Shares" #noShares (keyup)="setTotalPricePaid($event)">
-      <br/>
-      <h4 *ngIf="totPrice" class="label label-primary control-label" style="size: 15px"><b>Tot. Price</b> &nbsp;&nbsp;<span class="label label-primary"> {{totPrice}} EUR</span></h4><br/>
-    </div>
-  </ng-container>
+        <label class="label label-info"><b>Number of shares you want to add: </b> </label><br>
+        <input class="form-control" step="1" min="0" type="number" placeholder="Number of Shares" #noShares (keyup)="setTotalPricePaid($event)">
+        <br/>
+        <div *ngIf="totPrice">
+          <h3 class="label label-primary control-label"><b>Tot. Price</b> &nbsp;&nbsp;<span class="label label-primary"> {{totPrice}} EUR</span></h3><br/>
+          <h5 class="label label-primary control-label">Fee: <span style="color:red">{{getFeeForTotalPrice()}}</span> EUR</h5>
+        </div>
+      </div>
+    </ng-container>
 
-</form>
+  </form>
 
-<br/>
-<button class ="btn btn-primary" id="btnAdd" (click)="addToExisting()">Add</button>
+  <br/>
+  <button class ="btn btn-primary" id="btnAdd" (click)="addToExisting()">Add</button>
+</ng-container>
+
+<ng-container *ngIf="!buy">
+  <form data-toggle="validator" role="form" xmlns="http://www.w3.org/1999/html">
+    <ng-container *ngIf="(companies.length>0 && sharePrices.length>0 && brokers.length>0)">
+      <div class="form-group">
+
+        <label class=""><b>Name of the company: </b> {{getCompanyForRecord(holdingRecord.companyid, holdingRecord)}}</label><br/>
+        <label class=""><b>Broker: </b> {{getBrokerNameForRecord(holdingRecord.brokerid)}} with <span class="bg-danger">{{getBrokerDividendFeeForRecord()}}% as dividend fee</span></label><br/>
+
+        <label class="label label-info"><b>Dividend (EUR): </b> </label><br>
+        <p>{{getFinalDividend()}}</p>
+        <br/>
+        <div *ngIf="dividendWanted">
+          <h3 class="label label-primary control-label"><b>Tot. Dividend earned</b> &nbsp;&nbsp;<span class="label label-primary"> {{totDividendPaid}} EUR</span></h3><br/>
+          <h5 class="label label-primary control-label">Fee: <span style="color:red">{{getFeeForDividend()}}</span> EUR</h5>
+        </div>
+      </div>
+    </ng-container>
+
+  </form>
+
+  <br/>
+  <button class ="btn btn-primary" (click)="addDividend()">Add dividend</button>
+</ng-container>
 

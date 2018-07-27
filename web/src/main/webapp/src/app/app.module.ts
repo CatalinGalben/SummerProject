@@ -36,9 +36,11 @@ const routes: Routes=[
   {path: 'interrogate', component: StockInterogarionComponent},
   {path: 'portfolio', component: PortfolioComponent},
   {path: 'addRecord', component: AddRecordComponent},
-  {path: 'buy/:id', component: BuyComponent},
-  {path: 'barChart', component: BarChartComponent},
-  {path: 'addGroup', component: AddGroupComponent}
+
+  {path: 'addGroup', component: AddGroupComponent},
+
+  {path: 'buy/:id/:buy', component: BuyComponent},
+  {path: 'barChart', component: BarChartComponent}
 ];
 
 

@@ -18,13 +18,13 @@ export class PortfolioService {
 
   getUpdatedRecords(brokerKey: number, userKey: number, shareKey: number, recordKey: number, pricePaid: number, noShares: number): Observable<HoldingRecord[]> {
     const addShares = "addshares";
-    const urlToUpdate = `${this.allRecordsUrl}/${addShares}${brokerKey}/${userKey}/${shareKey}/${recordKey}/${pricePaid}`;
-    return this.httpClient.put<HoldingRecord[]>(urlToUpdate, noShares);
+    const urlToUpdate = `${this.allRecordsUrl}/${addShares}/${brokerKey}/${userKey}/${shareKey}/${recordKey}`;
+    return this.httpClient.put<HoldingRecord[]>(urlToUpdate, {pricePaid, noShares});
   }
 
   liquidateRecord(symbol: string): Observable<void> {
     const deleteString = "liquidate";
-    const urlToDelete = `${this.allRecordsUrl}/${deleteString}/${symbol}+'.'`;
+    const urlToDelete = `${this.allRecordsUrl}/${deleteString}/${symbol}`+'.';
     return this.httpClient.delete<void>(urlToDelete);
   }
 

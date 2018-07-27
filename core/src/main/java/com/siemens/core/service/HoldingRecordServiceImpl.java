@@ -4,6 +4,7 @@ import com.siemens.core.model.*;
 import com.siemens.core.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,12 +30,21 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
     private TrustRepository trustRepository;
     @Autowired
     private EtfRepository etfRepository;
+
+    private Double calculateLostMoney(Broker broker, SharePrice sharePrice, Integer noShares)
+    {
+        return (broker.getShareFee()*sharePrice.getPrice())*noShares;
+    }
+    @Transactional
     @Override
     public HoldingRecord createRecord
             (User user, Broker broker, Company company, Double paidPrice, Integer noShares)
     {
-
-
+        paidPrice = paidPrice + calculateLostMoney(broker,company.getSharePrice(), noShares);
+        user.setBalance(user.getBalance() - paidPrice);
+        userRepository.save(user);
+        broker.setProfit(calculateLostMoney(broker,company.getSharePrice(), noShares));
+        brokerRepository.save(broker);
         return holdingRecordRepository.save(
                 HoldingRecord.builder()
                 .user(user)
@@ -45,11 +55,16 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
                 .build()
         );
     }
+    @Transactional
     @Override
     public  HoldingRecord createRecord
             (User user, Broker broker, Company company, Double paidPrice, Integer noShares, Float nav, Float ter,
              Float gearing, Float premium){
-
+        paidPrice = paidPrice + calculateLostMoney(broker,company.getSharePrice(), noShares);
+        user.setBalance(user.getBalance() - paidPrice);
+        userRepository.save(user);
+        broker.setProfit(calculateLostMoney(broker,company.getSharePrice(), noShares));
+        brokerRepository.save(broker);
         Trust trust = Trust.trustBuilder()
                 .nav(nav)
                 .gearing(gearing)
@@ -71,9 +86,15 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
         );
      }
 
+     @Transactional
      @Override
      public  HoldingRecord createRecord
              (User user, Broker broker, Company company, Double paidPrice, Integer noShares,Float nav, Float ter, int type){
+         paidPrice = paidPrice + calculateLostMoney(broker,company.getSharePrice(), noShares);
+         user.setBalance(user.getBalance() - paidPrice);
+         userRepository.save(user);
+         broker.setProfit(calculateLostMoney(broker,company.getSharePrice(), noShares));
+         brokerRepository.save(broker);
         Etf etf = Etf.etfBuilder()
                 .nav(nav)
                 .ter(ter)
@@ -99,27 +120,34 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
     }
 
     @Override
-    public List<HoldingRecord> addToRecord(Integer recordKey, Integer userKey, Integer noShares, Integer shareKey, Integer pricePaid)
+    @Transactional
+    public List<HoldingRecord> addToRecord(Integer brokerKey, Integer recordKey, Integer userKey, Integer noShares, Integer shareKey, Double pricePaid)
     {
-        List<HoldingRecord> currentRecords = holdingRecordRepository.findAll();
-        currentRecords.forEach(
-                r -> {
-                    if(r.getId().equals(recordKey)) {
-                        r.setNoShares(r.getNoShares() + noShares);
-                        r.setPricePaid(r.getPricePaid() + pricePaid);
-                    }
-                }
-        );
+        Optional<SharePrice> sharePrice = sharePriceRepository.findById(shareKey);
+        Optional<Broker> broker = brokerRepository.findById(brokerKey);
 
+        Optional<HoldingRecord> holdingRecord = holdingRecordRepository.findById(recordKey);
+        Double lostMoney = (sharePrice.get().getPrice()*broker.get().getShareFee())*noShares;
+        holdingRecord.get().setNoShares(holdingRecord.get().getNoShares() + noShares);
+        holdingRecord.get().setPricePaid(holdingRecord.get().getPricePaid() + noShares * sharePrice.get().getPrice() + lostMoney);
+        holdingRecordRepository.save(holdingRecord.get());
+
+
+
+        broker.get().setProfit(lostMoney);
         User user = userRepository.getOne(userKey);
-        SharePrice share = sharePriceRepository.getOne(shareKey);
-        user.setBalance(user.getBalance() - share.getPrice() * noShares);
-        return currentRecords;
+
+        user.setBalance(user.getBalance() - sharePrice.get().getPrice() * noShares - lostMoney);
+        userRepository.save(user);
+        brokerRepository.save(broker.get());
+
+        return holdingRecordRepository.findAll();
     }
 
 
 
     @Override
+    @Transactional
     public void liquidate(String symbol)
     {
         List<Company> listCompany = companyRepository.findAll();
@@ -140,9 +168,10 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
         SharePrice sharePrice = sharePriceRepository
                 .findAll().stream().filter(sp -> sp.getCompany().getId().equals(company.getId())).findFirst().get();
 
-        user.setBalance(
+        optionalUser.get().setBalance(
                 user.getBalance() + sharePrice.getPrice() * record.getNoShares()
         );
-        holdingRecordRepository.delete(record);
+        userRepository.save(optionalUser.get());
+        holdingRecordRepository.delete(optionalRecord.get());
     }
 }
