@@ -145,7 +145,11 @@ export class AddRecordComponent implements OnInit {
       this.recordService.addNormalCompany(this.userLoggedInAddComponent.id, this.selectedBroker.id, this.companyFound.id, this.shareFound.price*this.noShares, this.noShares)
         .subscribe(hr => {
           //todo Add to existing holding records / refresh list of holding records
-        })
+        });
+      this.loginService.getActualDetailsUser(this.userLoggedInAddComponent.id).subscribe(user => {
+        this.loginService.changeUser(user);
+        this.userLoggedInAddComponent = this.loginService.getCurrentUser();
+      })
     }
     if (this.typeOfCompany==2 && this.shareFound){
       if (this.userLoggedInAddComponent.balance < this.shareFound.price*this.noShares){
@@ -155,7 +159,11 @@ export class AddRecordComponent implements OnInit {
       this.recordService.addTrust(this.userLoggedInAddComponent.id, this.selectedBroker.id, this.companyFound.id, this.shareFound.price*this.noShares, this.noShares, this.gearing, this.PD, this.NAV, this.TER)
         .subscribe(hr => {
           //todo Add to existing holding records / refresh list of holding records
-        })
+        });
+      this.loginService.getActualDetailsUser(this.userLoggedInAddComponent.id).subscribe(user => {
+        this.loginService.changeUser(user);
+        this.userLoggedInAddComponent = this.loginService.getCurrentUser();
+      })
     }
     if (this.typeOfCompany==3 && this.shareFound){
       if (this.userLoggedInAddComponent.balance < this.shareFound.price*this.noShares){
@@ -165,7 +173,11 @@ export class AddRecordComponent implements OnInit {
       this.recordService.addETF(this.userLoggedInAddComponent.id, this.selectedBroker.id, this.companyFound.id, this.shareFound.price*this.noShares, this.noShares,  this.NAV, this.TER, this.typeOfETF)
         .subscribe(hr => {
           //todo Add to existing holding records / refresh list of holding records
-        })
+        });
+      this.loginService.getActualDetailsUser(this.userLoggedInAddComponent.id).subscribe(user => {
+        this.loginService.changeUser(user);
+        this.userLoggedInAddComponent = this.loginService.getCurrentUser();
+      })
     }
   }
 

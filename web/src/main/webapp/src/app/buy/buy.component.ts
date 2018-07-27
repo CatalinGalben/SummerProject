@@ -134,7 +134,7 @@ export class BuyComponent implements OnInit {
     this.shareId = this.sharePrices.filter(shareprice => shareprice.companyid == companyid)[0].id;
     this.price = this.sharePrices.filter(shareprice => shareprice.companyid == companyid)[0].price;
     return this.price;
-  }
+}
 
   addToExisting(){
     if (this.user.balance < this.totPrice){
