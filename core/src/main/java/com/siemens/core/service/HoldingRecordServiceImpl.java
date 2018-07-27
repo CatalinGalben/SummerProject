@@ -4,6 +4,7 @@ import com.siemens.core.model.*;
 import com.siemens.core.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -120,6 +121,7 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
 
 
     @Override
+    @Transactional
     public void liquidate(String symbol)
     {
         List<Company> listCompany = companyRepository.findAll();
@@ -140,9 +142,10 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
         SharePrice sharePrice = sharePriceRepository
                 .findAll().stream().filter(sp -> sp.getCompany().getId().equals(company.getId())).findFirst().get();
 
-        user.setBalance(
+        optionalUser.get().setBalance(
                 user.getBalance() + sharePrice.getPrice() * record.getNoShares()
         );
-        holdingRecordRepository.delete(record);
+        userRepository.save(optionalUser.get());
+        holdingRecordRepository.delete(optionalRecord.get());
     }
 }
