@@ -8,6 +8,8 @@ import {Company} from "../add-record/shared/Company.model";
 import {Broker} from "../add-record/shared/Broker.model";
 import {SharePrice} from "../add-record/shared/SharePrice.model";
 import {LoginService} from "../login-page/shared/login.service";
+import {User} from "../login-page/shared/user.model";
+import {isNumber} from "util";
 
 @Component({
   selector: 'app-buy',
@@ -21,17 +23,23 @@ export class BuyComponent implements OnInit {
   price: number;
   @Input() no: number;
   totPrice: number;
+  totDividendPaid: number;
 
   userId: number;
+  user: User;
   shareId: number;
   recordKey: number;
-  brokerId: number;
+  broker: Broker;
+
+  buy: boolean;
 
 
   companysymbol: string;
 
+
   navigated = false;
   holdingRecord: HoldingRecord;
+  dividendWanted: number;
 
   companies: Company[] = [];
   brokers: Broker[] = [];
@@ -47,6 +55,7 @@ export class BuyComponent implements OnInit {
     this.route.params.forEach((params: Params) => {
       if (params['id'] !== undefined) {
         const id = +params['id'];
+        this.buy = params['buy']==1;
         this.navigated = true;
         this.portfolioService.getRecords().subscribe(hr => (this.holdingRecord = hr.filter(hrs => hrs.id==id)[0]));
 
@@ -73,7 +82,8 @@ export class BuyComponent implements OnInit {
       }
     });
 
-    this.userId = this.loginService.getCurrentUser().id;
+    this.user = this.loginService.getCurrentUser();
+    this.userId = this.user.id;
   }
 
   calcPrice(addedValue : number ) {
@@ -83,14 +93,35 @@ export class BuyComponent implements OnInit {
 
   setTotalPricePaid(args){
     this.noShares = args.target.value;
-    this.totPrice = this.price*args.target.value;
+    this.totPrice = this.price*args.target.value + this.price*args.target.value*this.broker.shareFee;
   }
 
-  getBrokerForRecord(brokerid: number): string {
-    this.brokerId = this.brokers.filter(broker => broker.id == brokerid)[0].id;
-    return this.brokers.filter(broker => broker.id == brokerid)[0].name;
+  setTotalDividend(args){
+    this.dividendWanted = args.target.value;
+    this.totDividendPaid =+ this.dividendWanted - this.dividendWanted*this.broker.dividendFee;
   }
 
+  getBrokerShareFeeForRecord(): number{
+    return this.broker.shareFee*100;
+  }
+
+  getBrokerDividendFeeForRecord(): number{
+    return this.broker.dividendFee*100;
+  }
+
+
+  getBrokerNameForRecord(brokerid: number): string {
+    this.broker = this.brokers.filter(broker => broker.id == brokerid)[0];
+    return this.broker.name;
+  }
+
+  getFeeForTotalPrice(): number {
+    return this.broker.shareFee*this.totPrice;
+  }
+
+  getFeeForDividend(): number{
+    return this.broker.dividendFee*this.dividendWanted;
+  }
 
 
   getCompanyForRecord(id: number, rec: HoldingRecord): string{
@@ -106,7 +137,11 @@ export class BuyComponent implements OnInit {
   }
 
   addToExisting(){
-    this.portfolioService.getUpdatedRecords(this.brokerId, this.userId, this.shareId, this.holdingRecord.id, this.totPrice, this.noShares).subscribe();
+    if (this.user.balance < this.totPrice){
+      alert("You don't have enough money!");
+      return;
+    }
+    this.portfolioService.getUpdatedRecords(this.broker.id, this.userId, this.shareId, this.holdingRecord.id, this.price*this.noShares, this.noShares).subscribe();
   }
 
 

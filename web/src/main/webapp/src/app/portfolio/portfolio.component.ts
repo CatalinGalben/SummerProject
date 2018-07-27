@@ -129,7 +129,13 @@ export class PortfolioComponent implements OnInit {
 
 
   gotoDetail(): void {
-    this.router.navigate(['/buy', this.selectedHoldingRecord.id]);
+    console.log("gotoDetail method entered -- portfolio.component.ts");
+    this.router.navigate(['/buy', this.selectedHoldingRecord.id, 1]);
+  }
+
+  addDividend(): void {
+    console.log("gotoDetail method entered -- portfolio.component.ts");
+    this.router.navigate(['/buy', this.selectedHoldingRecord.id, 2]);
   }
 
 
