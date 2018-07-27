@@ -67,6 +67,7 @@ public class UserController {
     @RequestMapping(value = "/users/{key}", method = RequestMethod.GET)
     public UserDTO findById(@PathVariable final int key)
     {
+        log.trace("requested single user !");
         return userConverter.convertModelToDto(userServiceInterface.findById(key));
     }
     @RequestMapping(value = "/users/dividend", method = RequestMethod.GET)

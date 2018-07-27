@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserServiceInterface{
     }
     @Override
     public User findById(Integer key){
-        return userRepository.getOne(key);
+        return userRepository.findById(key).get();
     }
 
     @Override
