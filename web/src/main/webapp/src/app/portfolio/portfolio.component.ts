@@ -141,10 +141,10 @@ export class PortfolioComponent implements OnInit {
       key = rec[i];
       j = i-1;
 
-      /* Move elements of arr[0..i-1], that are
+      /* Move elements of rec, that are
          greater than key, to one position ahead
          of their current position */
-      while (j >= 0 && this.getCompanyForRecord(rec[j].id, rec[j])> this.getCompanyForRecord(key.id, key))
+      while (j >= 0 && this.getCompanyForRecord(rec[j].companyid, rec[j])> this.getCompanyForRecord(key.companyid, key))
       {
         rec[j+1] = rec[j];
         j = j-1;
