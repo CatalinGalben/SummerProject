@@ -25,6 +25,7 @@ export class BuyComponent implements OnInit {
   userId: number;
   shareId: number;
   recordKey: number;
+  brokerId: number;
 
 
   companysymbol: string;
@@ -86,6 +87,7 @@ export class BuyComponent implements OnInit {
   }
 
   getBrokerForRecord(brokerid: number): string {
+    this.brokerId = this.brokers.filter(broker => broker.id == brokerid)[0].id;
     return this.brokers.filter(broker => broker.id == brokerid)[0].name;
   }
 
@@ -104,7 +106,7 @@ export class BuyComponent implements OnInit {
   }
 
   addToExisting(){
-    this.portfolioService.getUpdatedRecords(this.userId, this.shareId, this.holdingRecord.id, this.totPrice, this.noShares).subscribe();
+    this.portfolioService.getUpdatedRecords(this.brokerId, this.userId, this.shareId, this.holdingRecord.id, this.totPrice, this.noShares).subscribe();
   }
 
 
