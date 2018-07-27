@@ -93,10 +93,10 @@ public class HoldingRecordController {
         holdingRecordServiceInterface.liquidate(symbol);
     }
 
-    @RequestMapping(value = "/records/addshares/{userKey}/{shareKey}/{recordKey}/{pricePaid}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/records/addshares/{userKey}/{shareKey}/{recordKey}/{pricePaid}/{brokerKey}", method = RequestMethod.PUT)
     public Set<HoldingRecordDTO> addToRecord(
             @PathVariable final int userKey, @PathVariable final int shareKey,
-            @PathVariable final int recordKey, @PathVariable final int pricePaid,
+            @PathVariable final int recordKey, @PathVariable final int pricePaid, @PathVariable final int brokerKey,
             @RequestBody final int noShares
     ){
         List<HoldingRecord> updatedRecords = holdingRecordServiceInterface.
