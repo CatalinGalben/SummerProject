@@ -93,15 +93,19 @@ public class HoldingRecordController {
         holdingRecordServiceInterface.liquidate(symbol);
     }
 
-    @RequestMapping(value = "/records/addshares/{userKey}/{shareKey}/{recordKey}/{pricePaid}/{brokerKey}", method = RequestMethod.PUT)
-    public Set<HoldingRecordDTO> addToRecord(
+    @RequestMapping(value = "/records/addshares/{brokerKey}/{userKey}/{shareKey}/{recordKey}", method = RequestMethod.PUT)
+    public Set<HoldingRecordDTO> addToRecord( @PathVariable final int brokerKey,
             @PathVariable final int userKey, @PathVariable final int shareKey,
-            @PathVariable final int recordKey, @PathVariable final int pricePaid, @PathVariable final int brokerKey,
-            @RequestBody final int noShares
+            @PathVariable final int recordKey,
+            @RequestBody final priceWrapper priceWrapper
     ){
-        List<HoldingRecord> updatedRecords = holdingRecordServiceInterface.
-                addToRecord(recordKey, userKey, noShares, shareKey, pricePaid);
 
-        return new HashSet<>(holdingRecordConverter.convertModelsToDtos(updatedRecords));
+        Double pricePaid = priceWrapper.getPricePaid();
+        Integer noShares = priceWrapper.getNoShares();
+        log.trace("### User has requested to add shares to existing ones! ###");
+        List<HoldingRecord> updatedRecords = holdingRecordServiceInterface.
+                addToRecord(brokerKey, recordKey, userKey, noShares, shareKey, pricePaid);
+
+        return (Set<HoldingRecordDTO>) holdingRecordConverter.convertModelsToDtos(updatedRecords);
     }
 }

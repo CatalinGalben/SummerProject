@@ -100,22 +100,28 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
     }
 
     @Override
-    public List<HoldingRecord> addToRecord(Integer recordKey, Integer userKey, Integer noShares, Integer shareKey, Integer pricePaid)
+    @Transactional
+    public List<HoldingRecord> addToRecord(Integer brokerKey, Integer recordKey, Integer userKey, Integer noShares, Integer shareKey, Double pricePaid)
     {
-        List<HoldingRecord> currentRecords = holdingRecordRepository.findAll();
-        currentRecords.forEach(
-                r -> {
-                    if(r.getId().equals(recordKey)) {
-                        r.setNoShares(r.getNoShares() + noShares);
-                        r.setPricePaid(r.getPricePaid() + pricePaid);
-                    }
-                }
-        );
+        Optional<SharePrice> sharePrice = sharePriceRepository.findById(shareKey);
+        Optional<Broker> broker = brokerRepository.findById(brokerKey);
 
+        Optional<HoldingRecord> holdingRecord = holdingRecordRepository.findById(recordKey);
+        Double lostMoney = (sharePrice.get().getPrice()*broker.get().getShareFee())*noShares;
+        holdingRecord.get().setNoShares(holdingRecord.get().getNoShares() + noShares);
+        holdingRecord.get().setPricePaid(holdingRecord.get().getPricePaid() + noShares * sharePrice.get().getPrice() + lostMoney);
+        holdingRecordRepository.save(holdingRecord.get());
+
+
+
+        broker.get().setProfit(lostMoney);
         User user = userRepository.getOne(userKey);
-        SharePrice share = sharePriceRepository.getOne(shareKey);
-        user.setBalance(user.getBalance() - share.getPrice() * noShares);
-        return currentRecords;
+
+        user.setBalance(user.getBalance() - sharePrice.get().getPrice() * noShares - lostMoney);
+        userRepository.save(user);
+        brokerRepository.save(broker.get());
+
+        return holdingRecordRepository.findAll();
     }
 
 
