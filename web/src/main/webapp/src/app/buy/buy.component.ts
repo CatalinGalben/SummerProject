@@ -157,12 +157,15 @@ export class BuyComponent implements OnInit {
       alert("You don't have enough money!");
       return;
     }
-    this.portfolioService.getUpdatedRecords(this.broker.id, this.userId, this.shareId, this.holdingRecord.id, this.price*this.noShares, this.noShares).subscribe();
+    this.portfolioService.getUpdatedRecords(this.broker.id, this.userId, this.shareId, this.holdingRecord.id, this.price*this.noShares, this.noShares)
+      .subscribe(_ => this.loginService.getActualDetailsUser(this.userId)
+        .subscribe(user=>
+        {
+        console.log(user.balance);
+        this.loginService.changeUserObservable(user);
+        })
+      );
     console.log("addToExisting -- buy.component.ts -- id: " + this.userId);
-    this.loginService.getActualDetailsUser(this.userId).subscribe(user=>{
-      console.log(user.balance);
-      this.loginService.changeUserObservable(user);
-    });
     this.router.navigate([""]);
   }
 }
