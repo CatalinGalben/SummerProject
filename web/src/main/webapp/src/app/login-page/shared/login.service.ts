@@ -65,11 +65,12 @@ export class LoginService {
     return this.httpClient.post<User>(url, sharePrice);
   }
 
-  setNewBalanceUserService(key: number, value: number): Observable<User>{
-    const url = `${this.addUrl}/${key}`;
+  setNewBalanceUserService(key: number, newBalanceValue: number): Observable<User>{
+    const balance = "balance";
+    const url =`${this.addUrl}/${balance}/${key}`;
     console.log(url);
-    console.log(value);
-    return this.httpClient.put<User>(url, value);
+    console.log(newBalanceValue);
+    return this.httpClient.post<User>(url, {newBalanceValue});
   }
 
   changeUser(userLogged: User){

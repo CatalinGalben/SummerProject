@@ -32,6 +32,7 @@ export class PortfolioComponent implements OnInit {
   records = RECORDS;
   selectedRow : number;
   userLoggedInPortfolioComponent: User;
+  newBalanceValue: number;
 
 
   constructor(private router: Router,
@@ -146,8 +147,9 @@ export class PortfolioComponent implements OnInit {
   }
 
   setNewBalanceUser(newBalance: number) {
+    this.newBalanceValue = newBalance;
     console.log("setNewBalanceUser method entered -- portfolio.component.ts");
-    this.loginService.setNewBalanceUserService(this.userLoggedInPortfolioComponent.id, newBalance).subscribe(user =>{
+    this.loginService.setNewBalanceUserService(this.userLoggedInPortfolioComponent.id, this.newBalanceValue).subscribe(user =>{
       this.loginService.changeUserObservable(user);
       this.userLoggedInPortfolioComponent = user;
     })
