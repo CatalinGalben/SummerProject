@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserServiceInterface{
     {
         Company company = companyRepository.findAll().stream()
                 .filter(c -> c.getName().equals(symbol)).findFirst().get();
-        float divYield = company.getDividendYield();
+        float divYield = company.getDividendYield()/100;
         Optional<Broker> broker = brokerRepository.findById(brokerKey);
 
         HoldingRecord holdingRecord = holdingRecordRepository.findAll()
@@ -89,8 +89,8 @@ public class UserServiceImpl implements UserServiceInterface{
 
         Optional<User> user = userRepository.findById(userKey);
         Integer noShares = holdingRecord.getNoShares();
-        Double lostMoney = ((valueOfShare*divYield)*noShares)*broker.get().getDividendFee();
-        Double earnedMoney = (valueOfShare*divYield)*noShares;
+        Double lostMoney = (valueOfShare*noShares*divYield)*(broker.get().getDividendFee());
+        Double earnedMoney = valueOfShare*noShares*divYield;
 
         broker.get().setProfit(broker.get().getProfit() + lostMoney);
         user.get().setBalance(user.get().getBalance() + earnedMoney - lostMoney);

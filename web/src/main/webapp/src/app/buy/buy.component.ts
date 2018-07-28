@@ -23,7 +23,7 @@ export class BuyComponent implements OnInit {
   price: number;
   @Input() no: number;
   totPrice: number;
-  totDividendPaid: number;
+  totalDividendForUser: number;
 
   userId: number;
   user: User;
@@ -39,7 +39,6 @@ export class BuyComponent implements OnInit {
 
   navigated = false;
   holdingRecord: HoldingRecord;
-  dividendWanted: number;
 
   companies: Company[] = [];
   brokers: Broker[] = [];
@@ -125,7 +124,8 @@ export class BuyComponent implements OnInit {
     if (this.noShares == null || this.price == null){
       this.setNoSharesAndPrice()
     }
-    return this.noShares*this.price*(this.company.dividendYield/100) - this.noShares*this.price*(this.company.dividendYield/100)*this.broker.dividendFee;
+    this.totalDividendForUser = this.noShares*this.price*(this.company.dividendYield/100) - this.noShares*this.price*(this.company.dividendYield/100)*this.broker.dividendFee;
+    return this.totalDividendForUser;
   }
 
   getCompanyForRecord(id: number, rec: HoldingRecord): string{
@@ -142,8 +142,15 @@ export class BuyComponent implements OnInit {
 }
 
   addDividend(){
+    this.loginService.addDividendService(this.price, this.companysymbol, this.broker.id, this.userId).subscribe(user => {
+      this.loginService.changeUserObservable(user);
+      this.user = user;
+      this.router.navigate(['']);
+    })
 
   }
+
+
 
   addToExisting(){
     if (this.user.balance < this.totPrice){

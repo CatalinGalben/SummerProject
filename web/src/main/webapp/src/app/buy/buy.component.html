@@ -20,7 +20,7 @@
   </form>
 
   <br/>
-  <button class ="btn btn-primary" id="btnAdd" (click)="addToExisting()">Add</button>
+  <button class ="btn btn-primary" (click)="addToExisting()">Add</button>
 </ng-container>
 
 <ng-container *ngIf="!buy">
@@ -31,14 +31,15 @@
         <label class=""><b>Name of the company: </b> {{getCompanyForRecord(holdingRecord.companyid, holdingRecord)}}</label><br/>
         <label class=""><b>Broker: </b> {{getBrokerNameForRecord(holdingRecord.brokerid)}} with <span class="bg-danger">{{getBrokerDividendFeeForRecord() | number : '1.2'}}% as dividend fee</span></label><br/>
 
-        <label class="label label-info"><b>Dividend (EUR): </b> </label><br>
-        <p>{{getFinalDividend() | number : '1.2'}}</p>
-        <br/>
-        <div *ngIf="dividendWanted">
-          <h3 class="label label-primary control-label"><b>Tot. Dividend earned</b> &nbsp;&nbsp;<span class="label label-primary"> {{totDividendPaid}} EUR</span></h3><br/>
-          <h5 class="label label-primary control-label">Fee: <span style="color:red">{{getFeeForDividend()}}</span> EUR</h5>
+        <h3 class="label label-primary control-label"><b>Tot. Dividend earned</b> &nbsp;&nbsp;<span class="label label-primary"> {{getFinalDividend() | number : '1.2' }} EUR</span></h3><br/>
+        <h5 class="label label-primary control-label">Fee: <span style="color:red">{{getFeeForDividend() | number : '1.2'}}</span> EUR</h5>
+
+        <!--<label class="label label-info"><b>Dividend (EUR): </b> </label><br>-->
+        <!--<p>{{getFinalDividend() | number : '1.2'}}</p>-->
+        <!--<br/>-->
+        <!--<div *ngIf="dividendWanted">-->
+
         </div>
-      </div>
     </ng-container>
 
   </form>

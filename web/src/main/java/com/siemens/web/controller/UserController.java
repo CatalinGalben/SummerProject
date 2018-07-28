@@ -70,7 +70,7 @@ public class UserController {
         log.trace("requested single user !");
         return userConverter.convertModelToDto(userServiceInterface.findById(key));
     }
-    @RequestMapping(value = "/users/dividend/{symbol}/{brokerKey}/{userKey}", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/dividend/{symbol}/{brokerKey}/{userKey}", method = RequestMethod.POST)
     public UserDTO addDividend(
             @PathVariable final String symbol,
             @PathVariable final Integer brokerKey, @PathVariable final Integer userKey,
