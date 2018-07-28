@@ -49,21 +49,27 @@ export class LoginService {
 
   loginUserEmail(username: string, password: string): Observable<User>{
     const url = `${this.addUrl}/${username}/${password}`;
-    console.log(this.addUrl  + " login service -- front-end");
+    console.log(url  + " login service -- front-end");
     return this.httpClient.get<User>(url)
   }
 
   getActualDetailsUser(key: number):Observable<User>{
     const url = `${this.addUrl}/${key}`;
-    console.log(this.addUrl  + " getActualDetailsUser -- front-end");
+    console.log(url  + " getActualDetailsUser -- front-end");
     return this.httpClient.get<User>(url);
   }
   addDividendService(sharePrice: number, symbol:string, brokerKey: number, userKey: number): Observable<User>{
     const dividend = "dividend";
     const url = `${this.addUrl}/${dividend}/${symbol}/${brokerKey}/${userKey}`;
-    console.log(this.addUrl + " addDividendService -- front-end");
+    console.log(url + " addDividendService -- front-end");
     return this.httpClient.post<User>(url, sharePrice);
+  }
 
+  setNewBalanceUserService(key: number, value: number): Observable<User>{
+    const url = `${this.addUrl}/${key}`;
+    console.log(url);
+    console.log(value);
+    return this.httpClient.put<User>(url, value);
   }
 
   changeUser(userLogged: User){

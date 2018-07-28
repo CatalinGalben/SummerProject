@@ -140,9 +140,17 @@ export class PortfolioComponent implements OnInit {
     this.router.navigate(['/buy', this.selectedHoldingRecord.id, 1]);
   }
 
-  addDividend(): void {
+  gotoAddDividend(): void {
     console.log("gotoDetail method entered -- portfolio.component.ts");
     this.router.navigate(['/buy', this.selectedHoldingRecord.id, 2]);
+  }
+
+  setNewBalanceUser(newBalance: number) {
+    console.log("setNewBalanceUser method entered -- portfolio.component.ts");
+    this.loginService.setNewBalanceUserService(this.userLoggedInPortfolioComponent.id, newBalance).subscribe(user =>{
+      this.loginService.changeUserObservable(user);
+      this.userLoggedInPortfolioComponent = user;
+    })
   }
 
 
