@@ -100,12 +100,13 @@ public class UserServiceImpl implements UserServiceInterface{
 
     }
     @Override
-    public User setAmountOfCash(Integer key, Integer value)
+    @Transactional
+    public User setAmountOfCash(Integer key, Double value)
     {
-        User user = userRepository.getOne(key);
-        user.setBalance(value);
+        Optional<User> user = userRepository.findById(key);
+        user.get().setBalance(value);
 
-        return user;
+        return userRepository.save(user.get());
     }
 
 }

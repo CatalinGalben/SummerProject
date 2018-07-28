@@ -58,7 +58,7 @@ public class UserController {
 
 
     @RequestMapping(value = "/users/{key}", method = RequestMethod.PUT)
-    public UserDTO setCash(@PathVariable final int key, @RequestBody final int value)
+    public UserDTO setCash(@PathVariable final int key, @RequestBody final Double value)
     {
         User updatedUser = userServiceInterface.setAmountOfCash(key, value);
 
