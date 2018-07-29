@@ -38,4 +38,8 @@ export class MenuComponent implements OnInit {
     this.router.navigate(['addGroup']);
   }
 
+  goToPortfolio(){
+    this.router.navigate(['']);
+  }
+
 }
