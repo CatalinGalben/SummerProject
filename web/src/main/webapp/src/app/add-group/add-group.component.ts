@@ -183,7 +183,7 @@ export class AddGroupComponent implements OnInit {
   */
 
   saveGroup() {
-    this.groupService.createGroup(this.selectedCompanies, this.groupName);
+    this.groupService.createGroup(this.selectedCompanies, this.groupName, this.userLoggedInPortfolioComponent);
   }
 
 
