@@ -1,9 +1,9 @@
 package com.siemens.web.controller;
 
-import com.siemens.core.model.*;
-import com.siemens.core.repository.BrokerRepository;
-import com.siemens.core.repository.CompanyRepository;
-import com.siemens.core.repository.HoldingRecordRepository;
+import com.siemens.core.model.Broker;
+import com.siemens.core.model.Company;
+import com.siemens.core.model.HoldingRecord;
+import com.siemens.core.model.User;
 import com.siemens.core.service.BrokerServiceInterface;
 import com.siemens.core.service.CompanyServiceInterface;
 import com.siemens.core.service.HoldingRecordServiceInterface;
@@ -87,10 +87,10 @@ public class HoldingRecordController {
 
 
     @RequestMapping(value = "/records/liquidate/{symbol}", method = RequestMethod.PUT)
-    public void liquidateRecord(@PathVariable final String symbol, @RequestBody final Integer numberOfShares)
+    public void liquidateRecord(@PathVariable final String symbol, @RequestBody final priceWrapper noShares)
     {
         log.trace(" user has requested to liquidate all the shares corresponding to: " + symbol);
-        holdingRecordServiceInterface.liquidate(symbol, numberOfShares);
+        holdingRecordServiceInterface.liquidate(symbol, noShares.getNoShares());
     }
 
     @RequestMapping(value = "/records/addshares/{brokerKey}/{userKey}/{shareKey}/{recordKey}", method = RequestMethod.PUT)

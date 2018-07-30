@@ -79,8 +79,10 @@ public class UserController {
     public UserDTO addDividend(
             @PathVariable final String symbol,
             @PathVariable final Integer userKey,
-            @RequestBody final Double earnedMoney)
+            @RequestBody final PlainPriceWrapper priceWrapper)
     {
+
+        Double earnedMoney = priceWrapper.getNewBalanceValue();
         log.trace("User requested dividend! -- Value of balance changed");
         return userConverter.convertModelToDto(userServiceInterface.addDividend(symbol,earnedMoney,userKey));
     }

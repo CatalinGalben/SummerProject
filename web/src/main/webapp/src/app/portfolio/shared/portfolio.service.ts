@@ -25,7 +25,7 @@ export class PortfolioService {
   liquidateRecord(symbol: string, noShares: number): Observable<void> {
     const deleteString = "liquidate";
     const urlToDelete = `${this.allRecordsUrl}/${deleteString}/${symbol}`+'.';
-    return this.httpClient.put<void>(urlToDelete, noShares);
+    return this.httpClient.put<void>(urlToDelete, {noShares});
   }
 
 }
