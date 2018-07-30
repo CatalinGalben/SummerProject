@@ -63,6 +63,7 @@ allprojects {
 //        compile group: 'javax.el', name: 'javax.el-api', version: "$javaxElApiVersion"
 //        compile group: 'org.glassfish', name: 'javax.el', version: "$glassfishJavaxElVersion"
 
+        compile group: 'org.springframework', name: 'spring-web', version: '5.0.8.RELEASE'
         //lombok
         compile group: 'org.projectlombok', name: 'lombok', version: "$lombokVersion"
 

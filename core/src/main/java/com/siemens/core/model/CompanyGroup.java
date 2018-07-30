@@ -24,4 +24,8 @@ public class CompanyGroup extends BaseEntity<Integer> {
     @JoinColumn(name = "groupid")
     private Group group;
 
+    @ManyToOne
+    @JoinColumn(name = "userid")
+    private User user;
+
 }

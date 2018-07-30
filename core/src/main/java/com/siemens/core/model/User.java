@@ -34,7 +34,8 @@ public class User extends BaseEntity<Integer>{
     private double balance;
     @OneToMany(mappedBy = "user")
     private Set<HoldingRecord> holdingRecords;
-
+    @OneToMany(mappedBy = "user")
+    private Set<CompanyGroup> companyGroups;
 
 
     @PreUpdate

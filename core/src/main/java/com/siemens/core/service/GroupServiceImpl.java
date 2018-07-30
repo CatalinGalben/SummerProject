@@ -1,9 +1,6 @@
 package com.siemens.core.service;
 
-import com.siemens.core.model.Company;
-import com.siemens.core.model.CompanyGroup;
-import com.siemens.core.model.Group;
-import com.siemens.core.model.SharePrice;
+import com.siemens.core.model.*;
 import com.siemens.core.repository.CompanyGroupRepository;
 import com.siemens.core.repository.GroupRepository;
 import com.siemens.core.repository.SharePriceRepository;
@@ -24,7 +21,6 @@ public class GroupServiceImpl implements GroupServiceInterface {
     private CompanyGroupRepository companyGroupRepo;
     @Autowired
     private SharePriceRepository sharePriceRepo;
-
     @Override
     public List<Group> getGroups()
     {
@@ -59,7 +55,7 @@ public class GroupServiceImpl implements GroupServiceInterface {
 
     }
     @Override
-    public void createGroup(Set<Company>companies, String nameOfGroup)
+    public void createGroup(Set<Company>companies, String nameOfGroup, User user)
     {
         Group newGroup = Group.builder()
                 .name(nameOfGroup)
@@ -70,6 +66,7 @@ public class GroupServiceImpl implements GroupServiceInterface {
                             CompanyGroup.builder()
                             .company(company)
                             .group(newGroup)
+                            .user(user)
                             .build()
                     )
 
