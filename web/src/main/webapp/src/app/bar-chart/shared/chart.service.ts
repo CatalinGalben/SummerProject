@@ -6,7 +6,7 @@ import { Company } from "../../add-record/shared/Company.model";
 import {Group} from "./Group.model";
 import {CompanyGroup} from "./CompanyGroup.model";
 import {HoldingRecord} from "../../add-record/shared/HoldingRecord.model";
-
+import {User} from "../../login-page/shared/user.model";
 
 @Injectable({
   providedIn: 'root'
@@ -34,12 +34,13 @@ export class ChartService {
     return this.httpClient.get<CompanyGroup>(this.companiesGroupUrl);
   }
 
-  createGroup(companies: Company[], groupName: string): Observable<CompanyGroup>{
+  createGroup(companies: Company[], groupName: string, user: User): Observable<CompanyGroup>{
     let groupWrapper = {companies, groupName};
 
     console.log("SERVICE: " + groupName);
     for(let i=0; i<companies.length; i++)
       console.log(companies[i].id + " " + companies[i].name);
+    console.log(user.username + " " +  user.password + " " + user.email);
 
     return this.httpClient.post<CompanyGroup>(this.createCompanyGroupUrl, groupWrapper);
   }
