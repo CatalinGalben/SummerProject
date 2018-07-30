@@ -15,7 +15,7 @@ public interface UserServiceInterface {
             String dob);
     User findById(Integer key);
 
-    User setAmountOfCash(Integer id,Integer value);
+    User setAmountOfCash(Integer id,Double value);
 
     User addDividend(String symbol, Double valueOfShare, Integer brokerKey, Integer userKey);
 

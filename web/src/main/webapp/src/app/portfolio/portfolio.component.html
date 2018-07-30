@@ -19,9 +19,10 @@
       <td>{{getCompanyForRecord(rec.companyid, rec)}}</td>
       <td>{{rec.noShares}}</td>
       <td>{{getCurrentShareForCompany(rec.companyid).toString()}}</td>
-      <td>{{rec.pricePaid }}</td>
-      <td>{{getCurrentShareForCompany(rec.companyid)*rec.noShares }}</td>
-      <td>{{getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares).toString() + "%"}}</td>
+      <td>{{rec.pricePaid  | number : '1.2'}}</td>
+      <td>{{getCurrentShareForCompany(rec.companyid)*rec.noShares | number : '1.2'}}</td>
+      <td *ngIf="getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares)>=0" style="color: green">+{{getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares) | number : '1.2'}}%</td>
+      <td *ngIf="getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares)<0" style="color: red">{{getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares) | number : '1.2'}}%</td>
       <td>{{getBrokerForRecord(rec.brokerid)}}</td>
 
     </tr>
@@ -36,7 +37,7 @@
 
     <button (click)="gotoDetail()" class ="btn btn-outline-success">Add to {{getCompanyForRecord(selectedHoldingRecord.companyid, selectedHoldingRecord)}}</button>
     &nbsp;
-    <button (click)="addDividend()" class="btn btn-outline-warning">Add dividend to {{getCompanyForRecord(selectedHoldingRecord.companyid, selectedHoldingRecord)}}</button>
+    <button (click)="gotoAddDividend()" class="btn btn-outline-warning">Add dividend to {{getCompanyForRecord(selectedHoldingRecord.companyid, selectedHoldingRecord)}}</button>
     &nbsp;
     <button (click)="liquidate()" class="btn btn-outline-danger">Liquidate {{getCompanyForRecord(selectedHoldingRecord.companyid, selectedHoldingRecord)}}</button>
     &nbsp;
@@ -52,5 +53,8 @@
 
 </div>
 <br>
+
+<h3 class="text-primary">Balance: </h3> <input type="number" class="form-control" #newBalanceUser><br>
+<button (click)="setNewBalanceUser(newBalanceUser.value)" class="btn btn-dark">Set new balance</button>
 
 <br/><br/><br/><br/><br/>

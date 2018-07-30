@@ -4,6 +4,7 @@ package com.siemens.web.controller;
 import com.siemens.core.model.User;
 import com.siemens.core.service.UserServiceInterface;
 import com.siemens.web.converter.UserConverter;
+import com.siemens.web.dto.PlainPriceWrapper;
 import com.siemens.web.dto.UserDTO;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -57,10 +58,12 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = "/users/{key}", method = RequestMethod.PUT)
-    public UserDTO setCash(@PathVariable final int key, @RequestBody final int value)
+    @RequestMapping(value = "/users/balance/{key}", method = RequestMethod.POST)
+    public UserDTO setCash(@PathVariable final Integer key,
+                           @RequestBody final PlainPriceWrapper plainPriceWrapper)
     {
-        User updatedUser = userServiceInterface.setAmountOfCash(key, value);
+        Double newBalanceValue = plainPriceWrapper.getNewBalanceValue();
+        User updatedUser = userServiceInterface.setAmountOfCash(key, newBalanceValue);
 
         return userConverter.convertModelToDto(updatedUser);
     }
@@ -70,7 +73,7 @@ public class UserController {
         log.trace("requested single user !");
         return userConverter.convertModelToDto(userServiceInterface.findById(key));
     }
-    @RequestMapping(value = "/users/dividend/{symbol}/{brokerKey}/{userKey}", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/dividend/{symbol}/{brokerKey}/{userKey}", method = RequestMethod.POST)
     public UserDTO addDividend(
             @PathVariable final String symbol,
             @PathVariable final Integer brokerKey, @PathVariable final Integer userKey,

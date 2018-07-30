@@ -43,7 +43,7 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
         paidPrice = paidPrice + calculateLostMoney(broker,company.getSharePrice(), noShares);
         user.setBalance(user.getBalance() - paidPrice);
         userRepository.save(user);
-        broker.setProfit(calculateLostMoney(broker,company.getSharePrice(), noShares));
+        broker.setProfit(broker.getProfit()+calculateLostMoney(broker,company.getSharePrice(), noShares));
         brokerRepository.save(broker);
         return holdingRecordRepository.save(
                 HoldingRecord.builder()
@@ -63,7 +63,7 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
         paidPrice = paidPrice + calculateLostMoney(broker,company.getSharePrice(), noShares);
         user.setBalance(user.getBalance() - paidPrice);
         userRepository.save(user);
-        broker.setProfit(calculateLostMoney(broker,company.getSharePrice(), noShares));
+        broker.setProfit(broker.getProfit()+calculateLostMoney(broker,company.getSharePrice(), noShares));
         brokerRepository.save(broker);
         Trust trust = Trust.trustBuilder()
                 .nav(nav)
@@ -93,7 +93,7 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
          paidPrice = paidPrice + calculateLostMoney(broker,company.getSharePrice(), noShares);
          user.setBalance(user.getBalance() - paidPrice);
          userRepository.save(user);
-         broker.setProfit(calculateLostMoney(broker,company.getSharePrice(), noShares));
+         broker.setProfit(broker.getProfit()+calculateLostMoney(broker,company.getSharePrice(), noShares));
          brokerRepository.save(broker);
         Etf etf = Etf.etfBuilder()
                 .nav(nav)
@@ -134,7 +134,7 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
 
 
 
-        broker.get().setProfit(lostMoney);
+        broker.get().setProfit(broker.get().getProfit()+lostMoney);
         User user = userRepository.getOne(userKey);
 
         user.setBalance(user.getBalance() - sharePrice.get().getPrice() * noShares - lostMoney);

@@ -32,6 +32,7 @@ export class PortfolioComponent implements OnInit {
   records = RECORDS;
   selectedRow : number;
   userLoggedInPortfolioComponent: User;
+  newBalanceValue: number;
 
 
   constructor(private router: Router,
@@ -46,8 +47,12 @@ export class PortfolioComponent implements OnInit {
 
 
   ngOnInit() {
-
-
+    this.brokers = [];
+    this.holdingRecords = [];
+    this.sharePrices = [];
+    this.companies = [];
+    this.selectedHoldingRecord = null;
+    this.populate();
   }
 
   populate(){
@@ -106,11 +111,7 @@ export class PortfolioComponent implements OnInit {
 
   getGain(paid: number, sumNow: number): number{
     let result = paid/sumNow;
-    if (result >= 1){
-      return (result - 1)*100;
-    }
-    else
-      return (1 - result)*100;
+    return -(result - 1)*100;
   }
 
   getBrokerForRecord(brokerid: number): string {
@@ -140,9 +141,18 @@ export class PortfolioComponent implements OnInit {
     this.router.navigate(['/buy', this.selectedHoldingRecord.id, 1]);
   }
 
-  addDividend(): void {
+  gotoAddDividend(): void {
     console.log("gotoDetail method entered -- portfolio.component.ts");
     this.router.navigate(['/buy', this.selectedHoldingRecord.id, 2]);
+  }
+
+  setNewBalanceUser(newBalance: number) {
+    this.newBalanceValue = newBalance;
+    console.log("setNewBalanceUser method entered -- portfolio.component.ts");
+    this.loginService.setNewBalanceUserService(this.userLoggedInPortfolioComponent.id, this.newBalanceValue).subscribe(user =>{
+      this.loginService.changeUserObservable(user);
+      this.userLoggedInPortfolioComponent = user;
+    })
   }
 
 

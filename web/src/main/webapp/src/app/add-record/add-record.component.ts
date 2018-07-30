@@ -8,7 +8,6 @@ import {SharePrice} from "./shared/SharePrice.model";
 import {LoginService} from "../login-page/shared/login.service";
 import {User} from "../login-page/shared/user.model";
 import {COMPANYTYPES, ETFTYPES} from "../mock-data";
-import {isNumber} from "util";
 import {share} from "rxjs/operators";
 
 @Component({
@@ -137,11 +136,15 @@ export class AddRecordComponent implements OnInit {
 
 
   addHoldingRecord(){
+    if (this.noShares == 0){
+      alert("You need to buy at least 1 share!");
+      return;
+    }
+    if (this.userLoggedInAddComponent.balance < this.shareFound.price*this.noShares){
+      alert("You don't have enough money!");
+      return;
+    }
     if (this.typeOfCompany==1 && this.shareFound){
-      if (this.userLoggedInAddComponent.balance < this.shareFound.price*this.noShares){
-        alert("You don't have enough money!");
-        return;
-      }
       this.recordService.addNormalCompany(this.userLoggedInAddComponent.id, this.selectedBroker.id, this.companyFound.id, this.shareFound.price*this.noShares, this.noShares)
         .subscribe(hr => {
           //todo Add to existing holding records / refresh list of holding records
@@ -151,10 +154,6 @@ export class AddRecordComponent implements OnInit {
         });
     }
     if (this.typeOfCompany==2 && this.shareFound){
-      if (this.userLoggedInAddComponent.balance < this.shareFound.price*this.noShares){
-        alert("You don't have enough money!");
-        return;
-      }
       this.recordService.addTrust(this.userLoggedInAddComponent.id, this.selectedBroker.id, this.companyFound.id, this.shareFound.price*this.noShares, this.noShares, this.gearing, this.PD, this.NAV, this.TER)
         .subscribe(hr => {
           //todo Add to existing holding records / refresh list of holding records
@@ -164,10 +163,6 @@ export class AddRecordComponent implements OnInit {
         });
     }
     if (this.typeOfCompany==3 && this.shareFound){
-      if (this.userLoggedInAddComponent.balance < this.shareFound.price*this.noShares){
-        alert("You don't have enough money!");
-        return;
-      }
       this.recordService.addETF(this.userLoggedInAddComponent.id, this.selectedBroker.id, this.companyFound.id, this.shareFound.price*this.noShares, this.noShares,  this.NAV, this.TER, this.typeOfETF)
         .subscribe(hr => {
           //todo Add to existing holding records / refresh list of holding records
@@ -176,6 +171,7 @@ export class AddRecordComponent implements OnInit {
           })
         });
     }
+    this.router.navigate([""]);
   }
 
   cleanInfoRecord(){
@@ -253,7 +249,8 @@ export class AddRecordComponent implements OnInit {
         this.existsSharePrice = true; this.price = this.shareFound.price
       }
       this.checkedCompany = true;
-    })
+    });
+
   }
 
   setNewTypeCompany(event){
