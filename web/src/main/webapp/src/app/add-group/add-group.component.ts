@@ -123,23 +123,24 @@ export class AddGroupComponent implements OnInit {
     this.selectedHoldingRecord = this.holdingRecords.filter(hr => hr.id == id)[0];
   }
 
-  test() {
-    for (let i=0; i<this.selectedCompanies.length; i++) {
-      console.log(this.selectedCompanies[i].id + " " + this.selectedCompanies[i].name);
-    }
-  }
   addRecord() {
+    if (this.selectedHoldingRecord == null) {
+      alert("No row selected");
+    }
+
     let k = this.selectedHoldingRecords.length;
     if (!this.isMemberSelectedHR(this.selectedHoldingRecord)) {
         this.selectedHoldingRecords[k] = this.selectedHoldingRecord;
         // console.log("K: " + k); // 0 -> n-1
         // console.log(k + ": " + this.selectedHoldingRecord.noShares + " " + this.selectedHoldingRecord.pricePaid + " | " + this.selectedHoldingRecords[0].noShares);
 
-        let comany = this.companies.filter(company => company.id == this.selectedHoldingRecord.companyid)[0];
-        if (!this.isMemberSelectedCompany(comany)) {
+        let company = this.companies.filter(company => company.id == this.selectedHoldingRecord.companyid)[0];
+        if (!this.isMemberSelectedCompany(company)) {
           this.selectedCompanies[k] = this.companies.filter(company => company.id == this.selectedHoldingRecord.companyid)[0];
           // console.log("C: " + this.selectedCompanies[k].pe);
         }
+    } else {
+      alert("Company added");
     }
   }
 
@@ -162,9 +163,10 @@ export class AddGroupComponent implements OnInit {
   }
 
   setGroupName(name: string) {
-    this.groupName = name;  console.log("group name: " + this.groupName);
+    this.groupName = name;
   }
 
+  /*
   saveGroup() {
     if (this.selectedParentGroup == null) {
       this.groupService.createGroup(this.groupName, 0);
@@ -177,6 +179,11 @@ export class AddGroupComponent implements OnInit {
 
   setNewGroup(event) {
     this.selectedParentGroup = this.groups.filter(group=>group.id == event.target.value)[0];
+  }
+  */
+
+  saveGroup() {
+    this.groupService.createGroup(this.selectedCompanies, this.groupName);
   }
 
 

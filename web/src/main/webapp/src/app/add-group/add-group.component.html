@@ -1,4 +1,3 @@
-<button class="btn btn-outline-info" (click)="test()">Test</button>
 <button class="btn btn-outline-info" (click)="addRecord()">Add</button>
 
 <div class="scrollit">
@@ -77,15 +76,7 @@
   <input class="form-control" placeholder="The name of the group you want to create" #name (change)="setGroupName(name.value)">
 </div>
 
-<label class="col-sm-2 control-label"><b>Choose the subgroup</b></label>
-<div class="col-sm-10">
-  <select (change)="setNewGroup($event)" class="select-picker">
-    <option [value]="0" selected></option>
-    <option *ngFor="let group of groups" [value]="group.id" default="None">
-      {{group.name}}
-    </option>
-  </select>
-</div>
+
 
 <br/>
 <button class="btn btn-outline-info" (click)="saveGroup()">Save Group</button>
