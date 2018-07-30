@@ -2,6 +2,7 @@ package com.siemens.web.controller;
 
 
 import com.siemens.core.model.User;
+import com.siemens.core.service.CurrencyServiceInterface;
 import com.siemens.core.service.UserServiceInterface;
 import com.siemens.web.converter.UserConverter;
 import com.siemens.web.dto.PlainPriceWrapper;
@@ -21,6 +22,8 @@ public class UserController {
 
     @Autowired
     private UserConverter userConverter;
+    @Autowired
+    private CurrencyServiceInterface currencyServiceInterface;
 
     @RequestMapping(value = "/users/register", method = RequestMethod.POST)
     public UserDTO createUser(@RequestBody final UserDTO userAdded)
@@ -52,7 +55,7 @@ public class UserController {
     {
         log.trace("Login method entered! "+ username + password);
         User possibleLoggedUser = userServiceInterface.login(username, password);
-
+        currencyServiceInterface.addCurrency();
         log.trace(possibleLoggedUser+" Returned from backend");
         return userConverter.convertModelToDto(possibleLoggedUser);
     }
@@ -73,13 +76,13 @@ public class UserController {
         log.trace("requested single user !");
         return userConverter.convertModelToDto(userServiceInterface.findById(key));
     }
-    @RequestMapping(value = "/users/dividend/{symbol}/{brokerKey}/{userKey}", method = RequestMethod.POST)
+    @RequestMapping(value = "/users/dividend/{symbol}/{userKey}", method = RequestMethod.POST)
     public UserDTO addDividend(
             @PathVariable final String symbol,
-            @PathVariable final Integer brokerKey, @PathVariable final Integer userKey,
-            @RequestBody final Double valueOfShare)
+            @PathVariable final Integer userKey,
+            @RequestBody final Double earnedMoney)
     {
         log.trace("User requested dividend! -- Value of balance changed");
-        return userConverter.convertModelToDto(userServiceInterface.addDividend(symbol,valueOfShare,brokerKey,userKey));
+        return userConverter.convertModelToDto(userServiceInterface.addDividend(symbol,earnedMoney,userKey));
     }
 }

@@ -1,12 +1,15 @@
 package com.siemens.core.service;
 
+import com.siemens.core.api.CurrencyApi;
 import com.siemens.core.model.Currency;
 import com.siemens.core.model.CurrencyExchange;
 import com.siemens.core.repository.CurrencyExchangeRepository;
 import com.siemens.core.repository.CurrencyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Map;
 import java.util.Observable;
 import java.util.Optional;
 
@@ -23,6 +26,20 @@ public class CurrencServiceImpl implements CurrencyServiceInterface{
         return currencyRepository.getOne(id);
     }
 
+    @Transactional
+    @Override
+    public void addCurrency()
+    {
+        Map<String , Double> values = CurrencyApi.Interogate();
+        for(Map.Entry<String, Double> entry : values.entrySet()){
+           currencyRepository.save(
+                   Currency.builder()
+                   .name(entry.getKey())
+                   .symbol(entry.getKey())
+                   .build()
+           );
+        }
+    }
     @Override
     public String chooseCurrency(String currentSymbol, String desiredSymbol, Double value)
     {

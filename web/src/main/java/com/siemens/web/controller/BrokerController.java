@@ -6,6 +6,7 @@ import com.siemens.web.dto.BrokerDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +30,12 @@ public class BrokerController {
 
         return (Set<BrokerDTO>)brokerConverter.convertModelsToDtos(brokerService.getBrokers());
 
+    }
+
+    @RequestMapping(value = "/brokers/{name}", method = RequestMethod.GET)
+    public BrokerDTO setBroker(@PathVariable final String name)
+    {
+        return brokerConverter.convertModelToDto(brokerService.createBroker(name.toUpperCase()));
     }
 
 }

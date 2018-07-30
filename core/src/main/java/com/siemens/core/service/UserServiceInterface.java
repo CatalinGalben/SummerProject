@@ -17,7 +17,7 @@ public interface UserServiceInterface {
 
     User setAmountOfCash(Integer id,Double value);
 
-    User addDividend(String symbol, Double valueOfShare, Integer brokerKey, Integer userKey);
+    User addDividend(String symbol, Double earnedMoney, Integer userKey);
 
     User login(String username, String password);
 

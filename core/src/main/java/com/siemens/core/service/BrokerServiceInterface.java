@@ -8,5 +8,6 @@ public interface BrokerServiceInterface {
 
     Broker findById(Integer id);
     List<Broker> getBrokers();
+    Broker createBroker(String name);
 
 }

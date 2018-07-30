@@ -40,11 +40,10 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
     public HoldingRecord createRecord
             (User user, Broker broker, Company company, Double paidPrice, Integer noShares)
     {
-        paidPrice = paidPrice + calculateLostMoney(broker,company.getSharePrice(), noShares);
+
         user.setBalance(user.getBalance() - paidPrice);
         userRepository.save(user);
-        broker.setProfit(broker.getProfit()+calculateLostMoney(broker,company.getSharePrice(), noShares));
-        brokerRepository.save(broker);
+
         return holdingRecordRepository.save(
                 HoldingRecord.builder()
                 .user(user)
@@ -60,11 +59,12 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
     public  HoldingRecord createRecord
             (User user, Broker broker, Company company, Double paidPrice, Integer noShares, Float nav, Float ter,
              Float gearing, Float premium){
-        paidPrice = paidPrice + calculateLostMoney(broker,company.getSharePrice(), noShares);
+
+
         user.setBalance(user.getBalance() - paidPrice);
         userRepository.save(user);
-        broker.setProfit(broker.getProfit()+calculateLostMoney(broker,company.getSharePrice(), noShares));
-        brokerRepository.save(broker);
+
+
         Trust trust = Trust.trustBuilder()
                 .nav(nav)
                 .gearing(gearing)
@@ -90,11 +90,11 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
      @Override
      public  HoldingRecord createRecord
              (User user, Broker broker, Company company, Double paidPrice, Integer noShares,Float nav, Float ter, int type){
-         paidPrice = paidPrice + calculateLostMoney(broker,company.getSharePrice(), noShares);
+
          user.setBalance(user.getBalance() - paidPrice);
          userRepository.save(user);
-         broker.setProfit(broker.getProfit()+calculateLostMoney(broker,company.getSharePrice(), noShares));
-         brokerRepository.save(broker);
+
+
         Etf etf = Etf.etfBuilder()
                 .nav(nav)
                 .ter(ter)
@@ -123,23 +123,17 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
     @Transactional
     public List<HoldingRecord> addToRecord(Integer brokerKey, Integer recordKey, Integer userKey, Integer noShares, Integer shareKey, Double pricePaid)
     {
-        Optional<SharePrice> sharePrice = sharePriceRepository.findById(shareKey);
-        Optional<Broker> broker = brokerRepository.findById(brokerKey);
 
         Optional<HoldingRecord> holdingRecord = holdingRecordRepository.findById(recordKey);
-        Double lostMoney = (sharePrice.get().getPrice()*broker.get().getShareFee())*noShares;
+
         holdingRecord.get().setNoShares(holdingRecord.get().getNoShares() + noShares);
-        holdingRecord.get().setPricePaid(holdingRecord.get().getPricePaid() + noShares * sharePrice.get().getPrice() + lostMoney);
+        holdingRecord.get().setPricePaid(holdingRecord.get().getPricePaid() + pricePaid);
         holdingRecordRepository.save(holdingRecord.get());
 
-
-
-        broker.get().setProfit(broker.get().getProfit()+lostMoney);
         User user = userRepository.getOne(userKey);
-
-        user.setBalance(user.getBalance() - sharePrice.get().getPrice() * noShares - lostMoney);
+        user.setBalance(user.getBalance() - pricePaid);
         userRepository.save(user);
-        brokerRepository.save(broker.get());
+
 
         return holdingRecordRepository.findAll();
     }
@@ -148,7 +142,7 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
 
     @Override
     @Transactional
-    public void liquidate(String symbol)
+    public void liquidate(String symbol, Integer numberOfShares)
     {
         List<Company> listCompany = companyRepository.findAll();
         Optional<Company> companyOptional = listCompany.stream().filter(c -> c.getName().equals(symbol.toUpperCase()))
@@ -169,9 +163,15 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
                 .findAll().stream().filter(sp -> sp.getCompany().getId().equals(company.getId())).findFirst().get();
 
         optionalUser.get().setBalance(
-                user.getBalance() + sharePrice.getPrice() * record.getNoShares()
+                user.getBalance() + sharePrice.getPrice() * numberOfShares
         );
         userRepository.save(optionalUser.get());
-        holdingRecordRepository.delete(optionalRecord.get());
+        if(optionalRecord.get().getNoShares() - numberOfShares > 0)
+        {
+            optionalRecord.get().setNoShares(optionalRecord.get().getNoShares() - numberOfShares);
+            holdingRecordRepository.save(optionalRecord.get());
+        }
+        else
+            holdingRecordRepository.delete(optionalRecord.get());
     }
 }

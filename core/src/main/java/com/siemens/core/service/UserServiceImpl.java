@@ -77,25 +77,11 @@ public class UserServiceImpl implements UserServiceInterface{
 
     @Override
     @Transactional
-    public User addDividend(String symbol, Double valueOfShare, Integer brokerKey, Integer userKey)
+    public User addDividend(String symbol, Double earnedMoney, Integer userKey)
     {
-        Company company = companyRepository.findAll().stream()
-                .filter(c -> c.getName().equals(symbol)).findFirst().get();
-        float divYield = company.getDividendYield()/100;
-        Optional<Broker> broker = brokerRepository.findById(brokerKey);
-
-        HoldingRecord holdingRecord = holdingRecordRepository.findAll()
-                .stream().filter(hr -> hr.getCompany().getName().equals(symbol)).findFirst().get();
-
         Optional<User> user = userRepository.findById(userKey);
-        Integer noShares = holdingRecord.getNoShares();
-        Double lostMoney = (valueOfShare*noShares*divYield)*(broker.get().getDividendFee());
-        Double earnedMoney = valueOfShare*noShares*divYield;
-
-        broker.get().setProfit(broker.get().getProfit() + lostMoney);
-        user.get().setBalance(user.get().getBalance() + earnedMoney - lostMoney);
+        user.get().setBalance(user.get().getBalance() + earnedMoney);
         userRepository.save(user.get());
-        brokerRepository.save(broker.get());
         return user.get();
 
     }

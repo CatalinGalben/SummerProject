@@ -86,11 +86,11 @@ public class HoldingRecordController {
     }
 
 
-    @RequestMapping(value = "/records/liquidate/{symbol}", method = RequestMethod.DELETE)
-    public void liquidateRecord(@PathVariable final String symbol)
+    @RequestMapping(value = "/records/liquidate/{symbol}", method = RequestMethod.PUT)
+    public void liquidateRecord(@PathVariable final String symbol, @RequestBody final Integer numberOfShares)
     {
         log.trace(" user has requested to liquidate all the shares corresponding to: " + symbol);
-        holdingRecordServiceInterface.liquidate(symbol);
+        holdingRecordServiceInterface.liquidate(symbol, numberOfShares);
     }
 
     @RequestMapping(value = "/records/addshares/{brokerKey}/{userKey}/{shareKey}/{recordKey}", method = RequestMethod.PUT)

@@ -6,4 +6,5 @@ public interface CurrencyServiceInterface {
 
     String chooseCurrency(String currentSymbol, String desiredSymbol, Double value);
     Currency getCurrency(Integer id);
+    public void addCurrency();
 }

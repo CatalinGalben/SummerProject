@@ -8,7 +8,7 @@ import com.siemens.core.model.User;
 import java.util.List;
 
 public interface HoldingRecordServiceInterface {
-    void liquidate(String symbol);
+    void liquidate(String symbol, Integer numberOfShares);
     HoldingRecord createRecord
             (User user, Broker broker, Company company, Double paidPrice, Integer noShares);
     HoldingRecord createRecord

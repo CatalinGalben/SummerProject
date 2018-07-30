@@ -1,3 +1,7 @@
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import jdk.nashorn.internal.parser.JSONParser;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.web.client.RestTemplate;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
@@ -6,6 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class YahooFinanceAPI {
@@ -21,7 +26,7 @@ public class YahooFinanceAPI {
 //            System.out.println(a.get());
 //
 //        try{
-//            Stock stock = YahooFinance.get("SIE.DE");
+//            Stock stock = YahooFinance.get("rcp.l");
 //            BigDecimal price = stock.getQuote().getPrice();
 //            BigDecimal change = stock.getQuote().getChangeInPercent();
 //            BigDecimal dividend = stock.getDividend().getAnnualYield();
@@ -42,13 +47,20 @@ public class YahooFinanceAPI {
         RestTemplate restTemplate = new RestTemplate();
         String result =
                 restTemplate.getForObject(
-                        "https://data.fixer.io/api/latest" +
+                        "http://data.fixer.io/api/latest" +
                                 "?access_key=ea946dd8421ed294c58ff5b94c03072e" +
-                                "&base=EUR" +
-                                "&symbols=USD",
+                                "&base=EUR",
                         String.class,"42", "21"
                 );
         System.out.println(result);
+        JSONObject  object = new JSONObject(result);
+        JSONObject rates = object.getJSONObject("rates");
+        System.out.println("\n"+rates);
+        Map<String, Object> pairs = rates.toMap();
+        for (Map.Entry<String, Object> entry : pairs.entrySet())
+        {
+            System.out.println(entry.getKey() + "/" + Double.parseDouble(entry.getValue().toString()));
+        }
 
 
 
