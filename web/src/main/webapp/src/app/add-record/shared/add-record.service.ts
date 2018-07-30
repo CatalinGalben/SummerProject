@@ -64,6 +64,7 @@ export class AddRecordService {
     let id = 0;
     let holdingRecord = {id, userid, brokerid, companyid, pricePaid, noShares};
     const addUrlLocal =`${this.addUrl}/${add}`;
+    console.log(addUrlLocal);
     return this.httpClient.post<HoldingRecord>(addUrlLocal, holdingRecord);
   }
 
