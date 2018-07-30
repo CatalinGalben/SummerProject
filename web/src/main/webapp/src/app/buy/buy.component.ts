@@ -10,8 +10,10 @@ import {SharePrice} from "../add-record/shared/SharePrice.model";
 import {LoginService} from "../login-page/shared/login.service";
 import {User} from "../login-page/shared/user.model";
 import {isNumber} from "util";
+import {PortfolioComponent} from "../portfolio/portfolio.component";
 
 @Component({
+  providers:[PortfolioComponent],
   selector: 'app-buy',
   templateUrl: './buy.component.html',
   styleUrls: ['./buy.component.css']
@@ -49,7 +51,8 @@ export class BuyComponent implements OnInit {
               private route: ActivatedRoute,
               private recordService: AddRecordService,
               private loginService: LoginService,
-              private router: Router
+              private router: Router,
+              private portfolioComponent: PortfolioComponent
               ) { }
 
   ngOnInit(): void {
@@ -170,12 +173,16 @@ export class BuyComponent implements OnInit {
       return;
     }
     this.portfolioService.getUpdatedRecords(this.broker.id, this.userId, this.shareId, this.holdingRecord.id, this.bookValueExisting, this.noShares)
-      .subscribe(_ => this.loginService.getActualDetailsUser(this.userId)
-        .subscribe(user=>
-        {
-        console.log(user.balance);
-        this.loginService.changeUserObservable(user);
-        })
+      .subscribe(_ => {
+        this.portfolioComponent.populate();
+        this.loginService.getActualDetailsUser(this.userId)
+            .subscribe(user=>
+            {
+              console.log(user.balance);
+              this.loginService.changeUserObservable(user);
+            });
+        }
+
       );
     console.log("addToExisting -- buy.component.ts -- id: " + this.userId);
     this.router.navigate([""]);

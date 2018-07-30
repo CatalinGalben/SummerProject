@@ -28,7 +28,7 @@ export class PortfolioComponent implements OnInit {
   selectedHoldingRecord: HoldingRecord;
 
   liquidatedpressed = false;
-  noSharesToLiquidate: number;
+  noSharesToLiquidate = 0;
 
   currentCompanyNamePortfolio: string;
 
@@ -107,6 +107,14 @@ export class PortfolioComponent implements OnInit {
     return this.currentCompanyNamePortfolio
   }
 
+  getBookValueLost(): number {
+    return (this.selectedHoldingRecord.pricePaid/this.selectedHoldingRecord.noShares)*this.noSharesToLiquidate;
+  }
+
+  getLiquidatedMoney(): number {
+    return this.noSharesToLiquidate*this.getCurrentShareForCompany(this.selectedHoldingRecord.companyid)
+  }
+
   getCurrentShareForCompany(companyid: number): number{
     return this.sharePrices.filter(shareprice => shareprice.companyid == companyid)[0].price;
   }
@@ -127,6 +135,7 @@ export class PortfolioComponent implements OnInit {
 
   pressLiquidate() {
     this.liquidatedpressed = !this.liquidatedpressed;
+    this.noSharesToLiquidate = null;
   }
 
   liquidate(){

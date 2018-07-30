@@ -155,8 +155,8 @@ export class AddRecordComponent implements OnInit {
     }
 
     //get Broker from database;
-    this.recordService.getBrokerDetails(this.brokerName).subscribe(broker => this.brokerEntered = broker);
-
+    this.recordService.getBrokerDetails(this.brokerName).subscribe(broker =>
+      this.brokerEntered = broker);
     if (this.typeOfCompany==1 && this.shareFound){
       this.recordService.addNormalCompany(this.userLoggedInAddComponent.id, this.brokerEntered.id, this.companyFound.id, this.bookValue, this.noShares)
         .subscribe(hr => {
@@ -184,6 +184,8 @@ export class AddRecordComponent implements OnInit {
           })
         });
     }
+
+
     this.router.navigate([""]);
   }
 
