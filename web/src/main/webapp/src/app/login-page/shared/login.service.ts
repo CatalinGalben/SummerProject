@@ -58,11 +58,11 @@ export class LoginService {
     console.log(url  + " getActualDetailsUser -- front-end");
     return this.httpClient.get<User>(url);
   }
-  addDividendService(sharePrice: number, symbol:string, brokerKey: number, userKey: number): Observable<User>{
+  addDividendService(dividendTotal: number, symbol:string, userKey: number): Observable<User>{
     const dividend = "dividend";
-    const url = `${this.addUrl}/${dividend}/${symbol}/${brokerKey}/${userKey}`;
+    const url = `${this.addUrl}/${dividend}/${symbol}/${userKey}`;
     console.log(url + " addDividendService -- front-end");
-    return this.httpClient.post<User>(url, sharePrice);
+    return this.httpClient.post<User>(url, dividendTotal);
   }
 
   setNewBalanceUserService(key: number, newBalanceValue: number): Observable<User>{

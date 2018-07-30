@@ -55,15 +55,24 @@ export class AddRecordComponent implements OnInit {
   price: number;
   divYield: number;
   PE: number;
+  bookValue: number;
 
   NAV: number;
   TER: number;
   gearing: number;
   PD: number;
 
-  brokers: Broker[];
-  selectedBroker: Broker;
+  brokerEntered: Broker;
+  brokerName: string;
 
+  brokers: Broker[];
+  // selectedBroker: Broker;
+
+
+  setBookValue(bookValue: number){
+    console.log("setBookValue -- method entered -- add-record-component.ts");
+    this.bookValue = bookValue;
+  }
 
 
   saveDetailsNormal() {
@@ -140,12 +149,16 @@ export class AddRecordComponent implements OnInit {
       alert("You need to buy at least 1 share!");
       return;
     }
-    if (this.userLoggedInAddComponent.balance < this.shareFound.price*this.noShares){
+    if (this.userLoggedInAddComponent.balance < this.bookValue){
       alert("You don't have enough money!");
       return;
     }
+
+    //get Broker from database;
+    this.recordService.getBrokerDetails(this.brokerName).subscribe(broker => this.brokerEntered = broker);
+
     if (this.typeOfCompany==1 && this.shareFound){
-      this.recordService.addNormalCompany(this.userLoggedInAddComponent.id, this.selectedBroker.id, this.companyFound.id, this.shareFound.price*this.noShares, this.noShares)
+      this.recordService.addNormalCompany(this.userLoggedInAddComponent.id, this.brokerEntered.id, this.companyFound.id, this.bookValue, this.noShares)
         .subscribe(hr => {
           //todo Add to existing holding records / refresh list of holding records
           this.loginService.getActualDetailsUser(this.userLoggedInAddComponent.id).subscribe(user=>{
@@ -154,7 +167,7 @@ export class AddRecordComponent implements OnInit {
         });
     }
     if (this.typeOfCompany==2 && this.shareFound){
-      this.recordService.addTrust(this.userLoggedInAddComponent.id, this.selectedBroker.id, this.companyFound.id, this.shareFound.price*this.noShares, this.noShares, this.gearing, this.PD, this.NAV, this.TER)
+      this.recordService.addTrust(this.userLoggedInAddComponent.id, this.brokerEntered.id, this.companyFound.id, this.bookValue, this.noShares, this.gearing, this.PD, this.NAV, this.TER)
         .subscribe(hr => {
           //todo Add to existing holding records / refresh list of holding records
           this.loginService.getActualDetailsUser(this.userLoggedInAddComponent.id).subscribe(user=>{
@@ -163,7 +176,7 @@ export class AddRecordComponent implements OnInit {
         });
     }
     if (this.typeOfCompany==3 && this.shareFound){
-      this.recordService.addETF(this.userLoggedInAddComponent.id, this.selectedBroker.id, this.companyFound.id, this.shareFound.price*this.noShares, this.noShares,  this.NAV, this.TER, this.typeOfETF)
+      this.recordService.addETF(this.userLoggedInAddComponent.id, this.brokerEntered.id, this.companyFound.id, this.bookValue, this.noShares,  this.NAV, this.TER, this.typeOfETF)
         .subscribe(hr => {
           //todo Add to existing holding records / refresh list of holding records
           this.loginService.getActualDetailsUser(this.userLoggedInAddComponent.id).subscribe(user=>{
@@ -175,7 +188,9 @@ export class AddRecordComponent implements OnInit {
   }
 
   cleanInfoRecord(){
-    this.selectedBroker = null;
+    // this.selectedBroker = null;
+    this.brokerName = null;
+    this.brokerEntered = null;
     this.divYield = null;
     this.PE = null;
     this.NAV = null;
@@ -199,12 +214,16 @@ export class AddRecordComponent implements OnInit {
   }
 
 
-
-  setNewBroker(event){
-    console.log(event);
-    this.selectedBroker = this.brokers.filter(broker=>broker.id == event.target.value)[0];
-    console.log(this.selectedBroker);
+  setBrokerName(name: string) {
+    console.log("setBrokerName -- method entered - add-record.component.ts");
+    this.brokerName = name;
   }
+
+  // setNewBroker(event){
+  //   console.log(event);
+  //   this.selectedBroker = this.brokers.filter(broker=>broker.id == event.target.value)[0];
+  //   console.log(this.selectedBroker);
+  // }
 
 
 

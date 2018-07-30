@@ -22,10 +22,10 @@ export class PortfolioService {
     return this.httpClient.put<HoldingRecord[]>(urlToUpdate, {pricePaid, noShares});
   }
 
-  liquidateRecord(symbol: string): Observable<void> {
+  liquidateRecord(symbol: string, noShares: number): Observable<void> {
     const deleteString = "liquidate";
     const urlToDelete = `${this.allRecordsUrl}/${deleteString}/${symbol}`+'.';
-    return this.httpClient.delete<void>(urlToDelete);
+    return this.httpClient.put<void>(urlToDelete, noShares);
   }
 
 }
