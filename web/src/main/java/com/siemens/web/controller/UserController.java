@@ -7,7 +7,6 @@ import com.siemens.core.service.UserServiceInterface;
 import com.siemens.web.converter.UserConverter;
 import com.siemens.web.dto.PlainPriceWrapper;
 import com.siemens.web.dto.UserDTO;
-import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +54,7 @@ public class UserController {
     {
         log.trace("Login method entered! "+ username + password);
         User possibleLoggedUser = userServiceInterface.login(username, password);
-        currencyServiceInterface.addCurrency();
+//        currencyServiceInterface.addCurrency();
         log.trace(possibleLoggedUser+" Returned from backend");
         return userConverter.convertModelToDto(possibleLoggedUser);
     }
