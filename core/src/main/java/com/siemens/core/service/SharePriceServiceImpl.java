@@ -9,6 +9,7 @@ import com.siemens.core.repository.CompanyRepository;
 import com.siemens.core.repository.CurrencyRepository;
 import com.siemens.core.repository.SharePriceRepository;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ public class SharePriceServiceImpl implements SharePriceServiceInterface{
     @Override
     public void manualSharePrice(Company company, SharePrice sharePrice)
     {
+
         Currency currency = currencyRepository
                 .findAll().stream().filter(c -> c.getSymbol().equals("EUR")).findFirst().get();
 
@@ -54,7 +56,7 @@ public class SharePriceServiceImpl implements SharePriceServiceInterface{
         if(optionalSharePrice.isPresent())
         {
             optionalSharePrice.get().setCompany(optionalCompany.get());
-            optionalSharePrice.get().setDate(DateTime.now().toString());
+            optionalSharePrice.get().setDate(DateTime.now().toString("yyyy/MM/dd"));
             optionalSharePrice.get().setPrice(sharePrice.getPrice());
         }
         sharePriceRepository.save(optionalSharePrice.get());

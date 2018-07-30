@@ -54,7 +54,7 @@ public class UserController {
     {
         log.trace("Login method entered! "+ username + password);
         User possibleLoggedUser = userServiceInterface.login(username, password);
-//        currencyServiceInterface.addCurrency();
+        currencyServiceInterface.setExchangeRates();
         log.trace(possibleLoggedUser+" Returned from backend");
         return userConverter.convertModelToDto(possibleLoggedUser);
     }

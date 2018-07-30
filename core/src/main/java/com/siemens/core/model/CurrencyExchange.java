@@ -4,9 +4,7 @@ package com.siemens.core.model;
 import lombok.*;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "currency_exchange")
@@ -18,14 +16,16 @@ import javax.persistence.Table;
 public class CurrencyExchange extends BaseEntity<Integer> {
 
 
-    @Column(name = "currency1")
+    @ManyToOne
+    @JoinColumn(name = "currency1Id")
     private Currency currency1;
 
-    @Column(name = "currency2")
+    @ManyToOne
+    @JoinColumn(name = "currency2Id")
     private Currency currency2;
 
     @Column(name = "factor")
-    private int factor;
+    private Double factor;
 
     @Column(name = "dateOfExchange")
     private String dateOfExchange;
