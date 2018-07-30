@@ -24,7 +24,7 @@ export const RECORDS: Mockmodels[] = [
 ];
 
 export const COMPANYTYPES: CompanyTypes[] = [
-  { number: 1, type: 'Normal' },
+  { number: 1, type: 'Shares' },
   { number: 2, type: 'Trust' },
   { number: 3, type: 'ETF' }
 ];

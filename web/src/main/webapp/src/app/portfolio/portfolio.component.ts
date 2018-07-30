@@ -27,6 +27,9 @@ export class PortfolioComponent implements OnInit {
   companies: Company[] = [];
   selectedHoldingRecord: HoldingRecord;
 
+  liquidatedpressed = false;
+  noSharesToLiquidate: number;
+
   currentCompanyNamePortfolio: string;
 
   records = RECORDS;
@@ -42,7 +45,6 @@ export class PortfolioComponent implements OnInit {
               private recordService: AddRecordService) {
 
     this.populate();
-
   }
 
 
@@ -123,9 +125,17 @@ export class PortfolioComponent implements OnInit {
     this.selectedHoldingRecord = this.holdingRecords.filter(hr => hr.id == id)[0];
   }
 
+  pressLiquidate() {
+    this.liquidatedpressed = !this.liquidatedpressed;
+  }
+
   liquidate(){
     console.log("liquidate method entered -- portfolio.component.ts");
-    this.portfolioService.liquidateRecord(this.currentCompanyNamePortfolio).subscribe(_=>{
+    if (this.selectedHoldingRecord.noShares < this.noSharesToLiquidate){
+      alert("The number of shares you want to liquidate is bigger than the number of shares you have for this company");
+      return;
+    }
+    this.portfolioService.liquidateRecord(this.currentCompanyNamePortfolio, this.noSharesToLiquidate).subscribe(_=>{
       this.refreshRecords();
       this.loginService.getActualDetailsUser(this.userLoggedInPortfolioComponent.id).subscribe(user=>{
         this.loginService.changeUserObservable(user);
@@ -133,6 +143,12 @@ export class PortfolioComponent implements OnInit {
     });
     this.selectedHoldingRecord = null;
     this.selectedRow = null;
+    this.liquidatedpressed = !this.liquidatedpressed;
+    this.noSharesToLiquidate = 0;
+  }
+
+  setNoSharesLiquidated(noShares: number) {
+    this.noSharesToLiquidate = noShares;
   }
 
 

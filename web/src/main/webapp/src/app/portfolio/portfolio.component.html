@@ -39,8 +39,14 @@
     &nbsp;
     <button (click)="gotoAddDividend()" class="btn btn-outline-warning">Add dividend to {{getCompanyForRecord(selectedHoldingRecord.companyid, selectedHoldingRecord)}}</button>
     &nbsp;
+    <button (click)="pressLiquidate()" class="btn btn-outline-danger">Liquidate {{getCompanyForRecord(selectedHoldingRecord.companyid, selectedHoldingRecord)}}</button>
+    &nbsp;
+
+    <div *ngIf="liquidatedpressed">
+    <input #noSharesLiquidate (keyup)="setNoSharesLiquidated(noSharesLiquidate.value)" min="0" step="1">
     <button (click)="liquidate()" class="btn btn-outline-danger">Liquidate {{getCompanyForRecord(selectedHoldingRecord.companyid, selectedHoldingRecord)}}</button>
     &nbsp;
+    </div>
 
 </div>
 <br>

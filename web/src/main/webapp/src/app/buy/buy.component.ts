@@ -29,6 +29,7 @@ export class BuyComponent implements OnInit {
   user: User;
   shareId: number;
   broker: Broker;
+  bookValueExisting: number;
 
   buy: boolean;
 
@@ -86,22 +87,27 @@ export class BuyComponent implements OnInit {
     this.userId = this.user.id;
   }
 
+  //se apela daca intr-o functie care era pentru previous computations
   setNoSharesAndPrice(){
       this.noShares = this.holdingRecord.noShares;
       this.price = this.sharePrices.filter(share => share.companyid == this.holdingRecord.companyid)[0].price;
   }
 
-  setTotalPricePaid(args){
+
+  setNoSharesExisting(args) {
     this.noShares = args.target.value;
-    this.totPrice = this.price*args.target.value + this.price*args.target.value*this.broker.shareFee;
   }
 
+  setBookValueExisting(args) {
+    this.bookValueExisting = args.target.value;
+  }
 
-
+  //broker share fee, versiunea intiala;
   getBrokerShareFeeForRecord(): number{
     return this.broker.shareFee*100;
   }
 
+  //broker dividend fee, versiunea initiala;
   getBrokerDividendFeeForRecord(): number{
     return this.broker.dividendFee*100;
   }
@@ -112,14 +118,21 @@ export class BuyComponent implements OnInit {
     return this.broker.name;
   }
 
+  //Taxa pentru total price, versiunea initiala
   getFeeForTotalPrice(): number {
     return this.broker.shareFee*this.totPrice;
   }
 
+  //Taxa pentru dividend, versiunea initiala
   getFeeForDividend(): number{
     return this.noShares*this.price*(this.company.dividendYield/100)*this.broker.dividendFee;
   }
 
+  setDividendToBeAdded(dividend: number) {
+    this.totalDividendForUser = dividend;
+  }
+
+  //Calcularea dividendului, versiunea cu taxe, instanta, dupa dividendYield
   getFinalDividend(): number{
     if (this.noShares == null || this.price == null){
       this.setNoSharesAndPrice()
@@ -142,7 +155,7 @@ export class BuyComponent implements OnInit {
 }
 
   addDividend(){
-    this.loginService.addDividendService(this.price, this.companysymbol, this.broker.id, this.userId).subscribe(user => {
+    this.loginService.addDividendService(this.totalDividendForUser, this.companysymbol, this.userId).subscribe(user => {
       this.loginService.changeUserObservable(user);
       this.user = user;
       this.router.navigate(['']);
@@ -152,11 +165,11 @@ export class BuyComponent implements OnInit {
 
 
   addToExisting(){
-    if (this.user.balance < this.totPrice){
+    if (this.user.balance < this.bookValueExisting){
       alert("You don't have enough money!");
       return;
     }
-    this.portfolioService.getUpdatedRecords(this.broker.id, this.userId, this.shareId, this.holdingRecord.id, this.price*this.noShares, this.noShares)
+    this.portfolioService.getUpdatedRecords(this.broker.id, this.userId, this.shareId, this.holdingRecord.id, this.bookValueExisting, this.noShares)
       .subscribe(_ => this.loginService.getActualDetailsUser(this.userId)
         .subscribe(user=>
         {

@@ -42,6 +42,10 @@ export class AddRecordService {
     return this.httpClient.get<SharePrice[]>(this.sharePricesUrl);
   }
 
+  getBrokerDetails(name: string): Observable<Broker> {
+    const brokerUrl = `${this.brokersUrl}/${name}`;
+    return this.httpClient.get<Broker>(brokerUrl);
+  }
 
   getCompanyDetails(symbol: string): Observable<CompanyShare>{
     const companyUrl =`${this.companyUrl}/${symbol}`+'.';

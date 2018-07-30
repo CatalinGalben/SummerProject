@@ -28,6 +28,7 @@ import { BarChartComponent } from './bar-chart/bar-chart.component';
 import {NgxChartsModule} from "@swimlane/ngx-charts";
 import {PortfolioService} from "./portfolio/shared/portfolio.service";
 import { AddGroupComponent } from './add-group/add-group.component';
+import { ChangeCurrencyComponent } from './change-currency/change-currency.component';
 
 const routes: Routes=[
   {path: 'homePage', component: HomePageComponent},
@@ -36,6 +37,7 @@ const routes: Routes=[
   {path: 'interrogate', component: StockInterogarionComponent},
   {path: 'portfolio', component: PortfolioComponent},
   {path: 'addRecord', component: AddRecordComponent},
+  {path: 'currency', component: ChangeCurrencyComponent},
 
   {path: 'addGroup', component: AddGroupComponent},
 
@@ -55,7 +57,8 @@ const routes: Routes=[
     MenuComponent,
     BuyComponent,
     BarChartComponent,
-    AddGroupComponent
+    AddGroupComponent,
+    ChangeCurrencyComponent
   ],
   imports: [
     BrowserModule,

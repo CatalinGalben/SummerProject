@@ -17,25 +17,32 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
   }
 
-  goToBuy() {
-    this.router.navigate(['addRecord']);
-  }
-
-  goBack() {
-    this.location.back();
-  }
-
-  goToChart() {
-    this.router.navigate(['barChart']);
-  }
 
   // tell the parent, app.component, to close the menu
   closeMenu() {
     this.closeEvent.next();
   }
 
+
+  goBack() {
+    this.location.back();
+  }
+
+
+  goToBuy() {
+    this.router.navigate(['addRecord']);
+  }
+
+  goToChart() {
+    this.router.navigate(['barChart']);
+  }
+
   goToCreateGroup() {
     this.router.navigate(['addGroup']);
+  }
+
+  goToCurrency(){
+    this.router.navigate(['currency']);
   }
 
   goToPortfolio(){
