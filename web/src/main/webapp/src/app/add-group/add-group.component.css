@@ -9,3 +9,9 @@
   height:400px;
   width:1200px;
 }
+
+em {
+  float:right;
+  color:#E05C65;
+  padding-left:10px;
+}
