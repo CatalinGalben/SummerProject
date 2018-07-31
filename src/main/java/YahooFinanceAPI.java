@@ -44,7 +44,7 @@ public class YahooFinanceAPI {
 //            System.out.println(e);
 //        }
 
-//        RestTemplate restTemplate = new RestTemplate();
+           RestTemplate restTemplate = new RestTemplate();
 //        String result =
 //                restTemplate.getForObject(
 //                        "http://data.fixer.io/api/latest" +
@@ -62,7 +62,17 @@ public class YahooFinanceAPI {
 //            System.out.println(entry.getKey() + "/" + Double.parseDouble(entry.getValue().toString()));
 //        }
 //
+        String result =
+                restTemplate.getForObject(
+                        "http://data.fixer.io/api/latest" +
+                                "?access_key=ea946dd8421ed294c58ff5b94c03072e" +
+                                "&base=EUR"+
+                                "&symbols=RON,EUR,USD,GBP",
 
+                        String.class,"42", "21"
+                );
+
+        System.out.println(result);
         DateTimeFormatter f = DateTimeFormat.forPattern("yyyy/MM/dd");
         String dateTime = DateTime.now().toString("yyyy/MM/dd");
         DateTime dateTime1 = f.parseDateTime(dateTime);

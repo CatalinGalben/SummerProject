@@ -14,7 +14,9 @@ public class CurrencyApi {
                 restTemplate.getForObject(
                         "http://data.fixer.io/api/latest" +
                                 "?access_key=ea946dd8421ed294c58ff5b94c03072e" +
-                                "&base=EUR",
+                                "&base=EUR"+
+                                "&symbols=RON,EUR,USD,GBP",
+
                         String.class,"42", "21"
                 );
         JSONObject object = new JSONObject(result);
@@ -23,7 +25,7 @@ public class CurrencyApi {
         Map<String, Double> exchanges = new HashMap<>();
         for (Map.Entry<String, Object> entry : pairs.entrySet())
         {
-            System.out.println(entry.getKey() + "/" + Double.parseDouble(entry.getValue().toString()));
+
             exchanges.put(entry.getKey(),Double.parseDouble(entry.getValue().toString()));
         }
         return exchanges;
