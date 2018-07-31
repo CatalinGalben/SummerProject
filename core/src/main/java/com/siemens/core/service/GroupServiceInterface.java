@@ -4,6 +4,7 @@ import com.siemens.core.model.Company;
 import com.siemens.core.model.CompanyGroup;
 import com.siemens.core.model.Group;
 import com.siemens.core.model.User;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +18,7 @@ public interface GroupServiceInterface {
     void createGroup(Set<Company> companies, String nameOfGroups, User user);
 
 
-    Map<String, String> getBenchmarks(Set<Group> groups);
+    JSONObject getBenchmarks(Set<Group> groups);
 
     List<Group> getGroups();
 

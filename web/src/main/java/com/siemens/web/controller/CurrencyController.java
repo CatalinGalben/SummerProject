@@ -27,7 +27,8 @@ public class CurrencyController {
     @RequestMapping(value = "/currency/currencies" ,method = RequestMethod.GET)
     public Set<CurrencyDTO> getAllCurrencies()
     {
-        return (Set<CurrencyDTO>) currencyConverter.convertModelsToDtos(currencyService.getCurrencies());
+        List<Currency> currencies = currencyService.getCurrencies();
+        return (Set<CurrencyDTO>) currencyConverter.convertModelsToDtos(currencies);
     }
     @RequestMapping(value = "/currency/currencyexchanges", method = RequestMethod.GET)
     public Set<CurrencyExchangeDTO> getExchanges()
