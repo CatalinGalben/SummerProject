@@ -20,6 +20,7 @@ public class CurrencyExchangeConverter extends AbstractConverter<CurrencyExchang
         return CurrencyExchangeDTO.builder()
                 .currencyid1(currencyExchange.getCurrency1().getId())
                 .currencyid2(currencyExchange.getCurrency2().getId())
+                .factor(currencyExchange.getFactor())
                 .dateOfExchange(currencyExchange.getDateOfExchange())
                 .build();
     }

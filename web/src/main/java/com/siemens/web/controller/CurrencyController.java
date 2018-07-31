@@ -1,6 +1,7 @@
 package com.siemens.web.controller;
 
 import com.siemens.core.model.Currency;
+import com.siemens.core.model.CurrencyExchange;
 import com.siemens.core.service.CurrencyServiceInterface;
 import com.siemens.web.converter.CurrencyConverter;
 import com.siemens.web.converter.CurrencyExchangeConverter;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -30,7 +32,8 @@ public class CurrencyController {
     @RequestMapping(value = "/currency/currencyexchanges", method = RequestMethod.GET)
     public Set<CurrencyExchangeDTO> getExchanges()
     {
-        return (Set<CurrencyExchangeDTO>) currencyExchangeConverter.convertModelsToDtos(currencyService.getTodayRates());
+        List<CurrencyExchange> currencyExchanges = currencyService.getTodayRates();
+        return (Set<CurrencyExchangeDTO>) currencyExchangeConverter.convertModelsToDtos(currencyExchanges);
     }
     @RequestMapping(value = "/currency/{id}", method = RequestMethod.GET)
     public CurrencyDTO getCurrency(@PathVariable final Integer id)

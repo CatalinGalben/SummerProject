@@ -157,8 +157,9 @@ public class CurrencyServiceImpl implements CurrencyServiceInterface{
     @Override
     public List<CurrencyExchange> getTodayRates()
     {
-        return currencyExchangeRepository.findAll().stream()
-                .filter(ce -> ce.getDateOfExchange().equals(DateTime.now().toString())).collect(Collectors.toList());
+        List<CurrencyExchange> exchanges = currencyExchangeRepository.findAll().stream()
+                .filter(ce -> ce.getDateOfExchange().equals(DateTime.now().toString("yyyy/MM/dd"))).collect(Collectors.toList());
+        return exchanges;
     }
     private Double convert(String currentSymbol,String desiredSymbol, Double value)
     {
