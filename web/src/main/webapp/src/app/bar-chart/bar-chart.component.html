@@ -1,9 +1,58 @@
 <p class="title"><b>Price Index</b></p>
 <br/><br/>
 
+<table class="table body">
+  <thead>
+  <th>Group</th>
+  </thead>
+  <tbody>
+
+  <ng-container *ngIf="(groups.length > 0)">
+    <tr *ngFor="let gr of groups" (click)="clickRecord(gr.name)"  [class.active]="selectedRow === gr.name">
+      <td>
+        <table class="table body">
+          <thead>
+          <th>{{gr.name}}</th>
+          </thead>
+          <tbody>
+              <table class="table">
+                  <thead>
+                  <th>Name</th>
+                  <th>No. Shares</th>
+                  <th>Share Price (&euro;)</th>
+                  <th>Book Value (&euro;)</th>
+                  <th>Current Value (&euro;)</th>
+                  <th>Gain (%)</th>
+                  <th>Broker</th>
+                  </thead>
+                  <tbody>
+                      <ng-container *ngIf="(companies.length > 0)">
+                        <tr *ngFor="let rec of holdingRecords">
+                          <td>{{getCompanyForRecord(rec.companyid, rec)}}</td>
+                          <td>{{rec.noShares}}</td>
+                          <td>{{getCurrentShareForCompany(rec.companyid).toString()}}</td>
+                          <td>{{rec.pricePaid | number : '1.2'}}</td>
+                          <td>{{getCurrentShareForCompany(rec.companyid)*rec.noShares | number : '1.2'}}</td>
+                          <td>{{getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares) | number : '1.2'}}%</td>
+                          <td>{{getBrokerForRecord(rec.brokerid)}}</td>
+                        </tr>
+                      </ng-container>
+                  </tbody>
+              </table>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </ng-container>
+
+  </tbody>
+</table>
+
+<br/>
+
 <div class="row ngx-chart-container" style="height: 350px;">
   <ngx-charts-line-chart
-    [results]="results"
+    [results]="results2"
     [autoScale]="true"
 
     [legend]="true"
@@ -15,4 +64,9 @@
     [animations]="false">
   </ngx-charts-line-chart>
 </div>
+
+<br/>
+
+
+
 
