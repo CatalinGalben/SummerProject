@@ -71,11 +71,10 @@ export class AppComponent implements OnInit{
     //     this.user_id = this.userLoggedInAppComponent.id;
     //     this.isLoggedIn = true;
     //   }
-
     this.loginService.currentUserForLogin.subscribe(user => {
       this.userLoggedInAppComponent = user;
       if (user != null) {
-        this.user_balance = user.balance*this.loginService.getCurrentFactor();
+        this.user_balance = user.balance;
         this.user_displayName = user.firstName + " " + user.lastName;
         this.user_email = user.email;
         this.user_id = user.id;
@@ -100,7 +99,9 @@ export class AppComponent implements OnInit{
     return this.loginService.getCurrencyName();
   }
 
-
+  getCurrentFactor(): number{
+    return this.loginService.getCurrentFactor();
+  }
 
   toggleMenu() {
     // 1-line if statement that toggles the value:

@@ -4,7 +4,7 @@
       <div class="form-group">
 
         <label class=""><b>Name of the company: </b> {{getCompanyForRecord(holdingRecord.companyid, holdingRecord)}}</label><br/>
-        <label class=""><b>Share Price: </b> {{getCurrentShareForCompany(holdingRecord.companyid)}}</label><br/>
+        <label class=""><b>Share Price: </b> {{getCurrentShareForCompany(holdingRecord.companyid)*getCurrentFactor()}} {{getCurrentCurrencyName()}}</label><br/>
         <!--<label class=""><b>Broker: </b> {{getBrokerNameForRecord(holdingRecord.brokerid)}} with <span class="bg-danger">{{getBrokerShareFeeForRecord()}}% as share fee</span></label><br/>-->
         <label class=""><b>Broker: </b> {{getBrokerNameForRecord(holdingRecord.brokerid)}}</label><br/>
 
@@ -12,7 +12,7 @@
         <input class="form-control" step="1" min="0" type="number" placeholder="Number of Shares" #noShares (keyup)="setNoSharesExisting($event)">
         <br/>
         <!--<h3 class="label label-primary control-label"><b>Total Price</b> &nbsp;&nbsp;<span class="label label-primary"> {{totPrice}} EUR</span></h3><br/>-->
-        <h3 class="label label-primary control-label"><b>Book Value:</b></h3><br/>
+        <h3 class="label label-primary control-label"><b>Book Value ({{getCurrentCurrencyName()}})</b></h3><br/>
         <input class="form-control" #bookValueExisting (keyup)="setBookValueExisting($event)">
 
         <!--<h5 class="label label-primary control-label">Fee: <span style="color:red">{{getFeeForTotalPrice()}}</span> EUR</h5>-->
@@ -35,7 +35,7 @@
         <label><b>Broker: </b> {{getBrokerNameForRecord(holdingRecord.brokerid)}}</label>
         <!--<h3 class="label label-primary control-label"><b>Total Dividend earned</b> &nbsp;&nbsp;<span class="label label-primary"> {{getFinalDividend() | number : '1.2' }} EUR</span></h3><br/>-->
         <!--<h5 class="label label-primary control-label">Fee: <span style="color:red">{{getFeeForDividend() | number : '1.2'}}</span> EUR</h5>-->
-        <input class="form-control" #dividendToBeAdded (keyup)="setDividendToBeAdded(dividendToBeAdded.value)">
+        <input class="form-control" #dividendToBeAdded (keyup)="setDividendToBeAdded(dividendToBeAdded.value/getCurrentFactor())">
         <!--<label class="label label-info"><b>Dividend (EUR): </b> </label><br>-->
         <!--<p>{{getFinalDividend() | number : '1.2'}}</p>-->
         <!--<br/>-->

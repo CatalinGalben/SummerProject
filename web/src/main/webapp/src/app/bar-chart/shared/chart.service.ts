@@ -26,12 +26,8 @@ export class ChartService {
     return this.httpClient.get<Group[]>(this.groupUrl);
   }
 
-  getCompanies(): Observable<Company>{
-    return this.httpClient.get<Company>(this.companyUrl);
-  }
-
-  getCompanyGroups(): Observable<CompanyGroup>{
-    return this.httpClient.get<CompanyGroup>(this.companiesGroupUrl);
+  getCompanyGroups(): Observable<CompanyGroup[]>{
+    return this.httpClient.get<CompanyGroup[]>(this.companiesGroupUrl);
   }
 
   createGroup(companies: Company[], groupName: string, user: User): Observable<CompanyGroup>{
@@ -40,9 +36,10 @@ export class ChartService {
     console.log("SERVICE: " + groupName);
     console.log(companies);
 
-
     return this.httpClient.post<CompanyGroup>(this.createCompanyGroupUrl, groupWrapper);
   }
+
+
 
 
 

@@ -65,6 +65,7 @@ export class AddGroupComponent implements OnInit {
         this.holdingRecords = records
           .filter(record => record.userid == this.userLoggedInPortfolioComponent.id);
       });
+
     }
 
     //get all brokers

@@ -5,9 +5,9 @@
   <thead>
       <th>Name</th>
       <th>No. Shares</th>
-      <th>Share Price (&euro;)</th>
-      <th>Book Value (&euro;)</th>
-      <th>Current Value (&euro;)</th>
+      <th>Share Price ({{getCurrentCurrencyName()}})</th>
+      <th>Book Value ({{getCurrentCurrencyName()}})</th>
+      <th>Current Value ({{getCurrentCurrencyName()}})</th>
       <th>Gain (%)</th>
       <th>Broker</th>
   </thead>
@@ -18,9 +18,9 @@
     <tr *ngFor="let rec of holdingRecords" (click)="clickRecord(rec.id)" [class.active]="selectedRow === rec.id">
       <td>{{getCompanyForRecord(rec.companyid, rec)}}</td>
       <td>{{rec.noShares}}</td>
-      <td>{{getCurrentShareForCompany(rec.companyid).toString()}}</td>
-      <td>{{rec.pricePaid  | number : '1.2'}}</td>
-      <td>{{getCurrentShareForCompany(rec.companyid)*rec.noShares | number : '1.2'}}</td>
+      <td>{{getCurrentShareForCompany(rec.companyid)*getCurrentFactor() | number : '1.2'}}</td>
+      <td>{{rec.pricePaid*getCurrentFactor()  | number : '1.2'}}</td>
+      <td>{{getCurrentShareForCompany(rec.companyid)*rec.noShares*getCurrentFactor() | number : '1.2'}}</td>
       <td *ngIf="getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares)>=0" style="color: green">+{{getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares) | number : '1.2'}}%</td>
       <td *ngIf="getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares)<0" style="color: red">{{getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares) | number : '1.2'}}%</td>
       <td>{{getBrokerForRecord(rec.brokerid)}}</td>
@@ -53,8 +53,8 @@
 <div *ngIf="liquidatedpressed">
 <hr>
   <input #noSharesLiquidate (keyup)="setNoSharesLiquidated(noSharesLiquidate.value)" min="0" step="1" placeholder="Number of shares"> &nbsp; <br>
-  <label *ngIf="noSharesToLiquidate" class="">Book Value deducted: {{getBookValueLost() | number: '1.2'}} EUR</label><br>
-  <label *ngIf="noSharesToLiquidate" class=""><b>Added to balance: {{getLiquidatedMoney() | number: '1.2'}} EUR</b> </label><br>
+  <label *ngIf="noSharesToLiquidate" class="">Book Value deducted: {{getBookValueLost()*getCurrentFactor() | number: '1.2'}} {{getCurrentCurrencyName()}}</label><br>
+  <label *ngIf="noSharesToLiquidate" class=""><b>Added to balance: {{getLiquidatedMoney()*getCurrentFactor() | number: '1.2'}} {{getCurrentCurrencyName()}}</b> </label><br>
   <button *ngIf="noSharesToLiquidate" (click)="liquidate()" class="btn btn-outline-danger">Liquidate shares from {{getCompanyForRecord(selectedHoldingRecord.companyid, selectedHoldingRecord)}}</button><br>
 
   &nbsp;
@@ -73,6 +73,6 @@
 <br>
 
 <h3 class="text-primary">Balance: </h3> <input type="number" class="form-control" #newBalanceUser><br>
-<button (click)="setNewBalanceUser(newBalanceUser.value)" class="btn btn-dark">Set new balance</button>
+<button (click)="setNewBalanceUser(newBalanceUser.value/getCurrentFactor())" class="btn btn-dark">Set new balance</button>
 
 <br/><br/><br/><br/><br/>

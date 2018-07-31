@@ -21,7 +21,6 @@ public class GroupConverter extends AbstractConverterBaseEntity<Group, GroupDTO>
     public GroupDTO convertModelToDto(Group group){
         GroupDTO groupDTO = GroupDTO.builder()
                 .name(group.getName())
-                .parentGroupID(group.getParentGroup().getId())
                 .build();
         groupDTO.setId(group.getId());
         return groupDTO;

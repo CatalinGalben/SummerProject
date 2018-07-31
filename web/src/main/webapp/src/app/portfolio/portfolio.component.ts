@@ -124,6 +124,14 @@ export class PortfolioComponent implements OnInit {
     return result*100-100;
   }
 
+  getCurrentFactor(): number{
+    return this.loginService.getCurrentFactor();
+  }
+
+  getCurrentCurrencyName(): string {
+    return this.loginService.getCurrencyName();
+  }
+
   getBrokerForRecord(brokerid: number): string {
     return this.brokers.filter(broker => broker.id == brokerid)[0].name;
   }
