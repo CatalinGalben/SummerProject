@@ -71,14 +71,21 @@
 
 <br/>
 
-<label class="col-sm-2 control-label"><b>Group Name</b></label>
-<div class="col-sm-10">
-  <input class="form-control" placeholder="The name of the group you want to create" #name (change)="setGroupName(name.value)">
-</div>
+<form #nameForm="ngForm" (ngSubmit)="saveGroup(groupName)" autocomplete="off" novalidate>
 
+  <div class="form-group">
+      <label for="groupName"><b>Group Name</b></label>
+      <em *ngIf="nameForm.invalid && (nameForm.touched || mouseoverAdd)">Required</em>
+      <input [(ngModel)]="groupName" class="form-control" type="text" name="groupName" id="groupName" placeholder="The name of the group you want to create" required>
+  </div>
 
-
-<br/>
-<button class="btn btn-outline-info" (click)="saveGroup()">Save Group</button>
+  <br/>
+  <span (mouseenter)="mouseoverAdd=true" (mouseleave)="mouseoverAdd=false">
+  <button class="btn btn-outline-info" type="submit" [disabled]="nameForm.invalid">Save Group</button>
+  </span>
+</form>
 
 <br/><br/><br/><br/><br/>
+
+
+

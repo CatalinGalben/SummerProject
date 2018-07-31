@@ -40,7 +40,8 @@
 
       <label class="col-sm-2 control-label">Broker</label>
       <div class="col-sm-10">
-        <input class="form-control" type="text" placeholer="Broker name" #brokername (change)="setBrokerName(brokername.value)">
+        <input class="form-control" type="text" placeholer="Broker name" #brokername (change)="setBrokerName(brokername.value)"><br>
+        <button (click)="getBrokerDetailsDatabase()" class="btn btn-primary btnAdd">Add Broker</button>
         <!--<select (change)="setNewBroker($event)" class="select-picker">-->
           <!--<option [value]=""></option>-->
           <!--<option *ngFor="let broker of brokers" [value]="broker.id">-->
@@ -105,7 +106,7 @@
 </form>
 
 <div *ngIf="checkedCompany">
-  <button *ngIf="typeOfCompany==1" class ="btn btn-primary btnAdd" (click)="saveDetailsNormal()">Add Company</button>
-  <button *ngIf="typeOfCompany==2" class ="btn btn-primary btnAdd" (click)="saveDetailsTrust()">Add Trust</button>
-  <button *ngIf="typeOfCompany==3" class ="btn btn-primary btnAdd" (click)="saveDetailsETF()">Add ETF</button>
+  <button *ngIf="typeOfCompany==1 && brokerEntered" class ="btn btn-primary btnAdd" (click)="saveDetailsNormal()">Add Company</button>
+  <button *ngIf="typeOfCompany==2 && brokerEntered" class ="btn btn-primary btnAdd" (click)="saveDetailsTrust()">Add Trust</button>
+  <button *ngIf="typeOfCompany==3 && brokerEntered" class ="btn btn-primary btnAdd" (click)="saveDetailsETF()">Add ETF</button>
 </div>

@@ -9,8 +9,10 @@ import {LoginService} from "../login-page/shared/login.service";
 import {User} from "../login-page/shared/user.model";
 import {COMPANYTYPES, ETFTYPES} from "../mock-data";
 import {share} from "rxjs/operators";
+import {PortfolioComponent} from "../portfolio/portfolio.component";
 
 @Component({
+  providers: [PortfolioComponent],
   selector: 'app-add-record',
   templateUrl: './add-record.component.html',
   styleUrls: ['./add-record.component.css']
@@ -18,7 +20,8 @@ import {share} from "rxjs/operators";
 export class AddRecordComponent implements OnInit {
 
   constructor(private recordService: AddRecordService,
-              private router: Router, private loginService: LoginService) { }
+              private router: Router, private loginService: LoginService,
+              private portfolioComponent: PortfolioComponent) { }
 
   ngOnInit() {
     // this.loginService.currentUser.subscribe(user =>{
@@ -142,6 +145,12 @@ export class AddRecordComponent implements OnInit {
     this.cleanInfoRecord();
   }
 
+  getBrokerDetailsDatabase(){
+    //get Broker from database;
+    this.recordService.getBrokerDetails(this.brokerName).subscribe(broker =>
+      this.brokerEntered = broker);
+  }
+
 
 
   addHoldingRecord(){
@@ -154,15 +163,13 @@ export class AddRecordComponent implements OnInit {
       return;
     }
 
-    //get Broker from database;
-    this.recordService.getBrokerDetails(this.brokerName).subscribe(broker =>
-      this.brokerEntered = broker);
     if (this.typeOfCompany==1 && this.shareFound){
       this.recordService.addNormalCompany(this.userLoggedInAddComponent.id, this.brokerEntered.id, this.companyFound.id, this.bookValue, this.noShares)
         .subscribe(hr => {
           //todo Add to existing holding records / refresh list of holding records
           this.loginService.getActualDetailsUser(this.userLoggedInAddComponent.id).subscribe(user=>{
             this.loginService.changeUserObservable(user);
+            this.router.navigate([""]).then(()=>this.portfolioComponent.refreshRecords());
           })
         });
     }
@@ -172,6 +179,7 @@ export class AddRecordComponent implements OnInit {
           //todo Add to existing holding records / refresh list of holding records
           this.loginService.getActualDetailsUser(this.userLoggedInAddComponent.id).subscribe(user=>{
             this.loginService.changeUserObservable(user);
+            this.router.navigate([""]).then(()=>this.portfolioComponent.refreshRecords());
           })
         });
     }
@@ -181,12 +189,11 @@ export class AddRecordComponent implements OnInit {
           //todo Add to existing holding records / refresh list of holding records
           this.loginService.getActualDetailsUser(this.userLoggedInAddComponent.id).subscribe(user=>{
             this.loginService.changeUserObservable(user);
+            this.router.navigate([""]).then(()=>this.portfolioComponent.refreshRecords());
           })
         });
     }
 
-
-    this.router.navigate([""]);
   }
 
   cleanInfoRecord(){

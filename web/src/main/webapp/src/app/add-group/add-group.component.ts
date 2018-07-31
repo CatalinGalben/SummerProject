@@ -17,6 +17,7 @@ import {Group} from "../bar-chart/shared/Group.model";
   selector: 'app-add-group',
   templateUrl: './add-group.component.html',
   styleUrls: ['./add-group.component.css']
+ // styles: [` em { float:right; color:#E05C65; padding-left:10px; } `]
 })
 export class AddGroupComponent implements OnInit {
 
@@ -36,6 +37,7 @@ export class AddGroupComponent implements OnInit {
   groupName: string;
   selectedParentGroup: Group;
   groups: Group[] = [];
+  mouseoverAdd;
 
   constructor(private router: Router,
               private transferService:TransferService,
@@ -161,11 +163,7 @@ export class AddGroupComponent implements OnInit {
     }
     return false;
   }
-
-  setGroupName(name: string) {
-    this.groupName = name;
-  }
-
+  
   /*
   saveGroup() {
     if (this.selectedParentGroup == null) {
@@ -182,8 +180,8 @@ export class AddGroupComponent implements OnInit {
   }
   */
 
-  saveGroup() {
-    this.groupService.createGroup(this.selectedCompanies, this.groupName, this.userLoggedInPortfolioComponent);
+  saveGroup(groupName: string) {
+    this.groupService.createGroup(this.selectedCompanies, groupName, this.userLoggedInPortfolioComponent);
   }
 
 
