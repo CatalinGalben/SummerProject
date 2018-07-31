@@ -163,7 +163,7 @@ export class AddGroupComponent implements OnInit {
     }
     return false;
   }
-  
+
   /*
   saveGroup() {
     if (this.selectedParentGroup == null) {
@@ -181,13 +181,11 @@ export class AddGroupComponent implements OnInit {
   */
 
   saveGroup(groupName: string) {
+    if (this.selectedCompanies.length == 0) {
+      alert("No company selected");
+    }
     this.groupService.createGroup(this.selectedCompanies, groupName, this.userLoggedInPortfolioComponent);
   }
-
-
-
-
-
 
 
 }

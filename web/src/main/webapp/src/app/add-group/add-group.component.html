@@ -80,12 +80,14 @@
   </div>
 
   <br/>
-  <span (mouseenter)="mouseoverAdd=true" (mouseleave)="mouseoverAdd=false">
-  <button class="btn btn-outline-info" type="submit" [disabled]="nameForm.invalid">Save Group</button>
+
+  <span *ngIf="nameForm.valid">
+    <button class="btn btn-outline-info" type="submit" [disabled]="nameForm.invalid">Save Group</button>
   </span>
+  <span *ngIf="nameForm.invalid" (mouseenter)="mouseoverAdd=true" (mouseleave)="mouseoverAdd=false">
+    <button class="btn btn-secondary" type="submit" [disabled]="nameForm.invalid">Save Group</button>
+  </span>
+
 </form>
 
 <br/><br/><br/><br/><br/>
-
-
-
