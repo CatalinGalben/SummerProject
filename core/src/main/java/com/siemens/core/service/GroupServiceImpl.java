@@ -2,6 +2,7 @@ package com.siemens.core.service;
 
 import com.siemens.core.model.*;
 import com.siemens.core.repository.CompanyGroupRepository;
+import com.siemens.core.repository.CompanyRepository;
 import com.siemens.core.repository.GroupRepository;
 import com.siemens.core.repository.SharePriceRepository;
 import com.sun.xml.internal.bind.annotation.OverrideAnnotationOf;
@@ -21,6 +22,8 @@ public class GroupServiceImpl implements GroupServiceInterface {
     private CompanyGroupRepository companyGroupRepo;
     @Autowired
     private SharePriceRepository sharePriceRepo;
+    @Autowired
+    private CompanyRepository companyRepository;
     @Override
     public List<Group> getGroups()
     {
@@ -57,14 +60,15 @@ public class GroupServiceImpl implements GroupServiceInterface {
     @Override
     public void createGroup(Set<Company>companies, String nameOfGroup, User user)
     {
-        Group newGroup = Group.builder()
+        Group newGroup = groupRepository.save(Group.builder()
                 .name(nameOfGroup)
-                .build();
+                .build());
+
         companies.forEach(
                 company ->
                     companyGroupRepo.save(
                             CompanyGroup.builder()
-                            .company(company)
+                            .company(companyRepository.findById(company.getId()).get())
                             .group(newGroup)
                             .user(user)
                             .build()

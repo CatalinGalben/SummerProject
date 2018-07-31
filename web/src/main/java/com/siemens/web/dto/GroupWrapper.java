@@ -11,6 +11,6 @@ import java.util.Set;
 @AllArgsConstructor
 public class GroupWrapper {
     private String groupName;
-    private Set<CompanyDTO> companyDTOS;
+    private Set<CompanyDTO> companies;
     private UserDTO user;
 }

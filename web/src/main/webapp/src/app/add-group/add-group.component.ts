@@ -184,7 +184,7 @@ export class AddGroupComponent implements OnInit {
     if (this.selectedCompanies.length == 0) {
       alert("No company selected");
     }
-    this.groupService.createGroup(this.selectedCompanies, groupName, this.userLoggedInPortfolioComponent);
+    this.groupService.createGroup(this.selectedCompanies, groupName, this.userLoggedInPortfolioComponent).subscribe();
   }
 
 

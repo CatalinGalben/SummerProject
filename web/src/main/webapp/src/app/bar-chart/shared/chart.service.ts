@@ -17,7 +17,7 @@ export class ChartService {
   private groupUrl = 'http://localhost:8080/api/groups';
   private companiesGroupUrl = 'http://localhost:8080/api/companygroups';
   private createGroupUrl = 'http://localhost:8080/api/creategroup';
-  private createCompanyGroupUrl = 'http://localhost:8080/api/createCompanyGroup';
+  private createCompanyGroupUrl = 'http://localhost:8080/api/creategroup';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -35,12 +35,11 @@ export class ChartService {
   }
 
   createGroup(companies: Company[], groupName: string, user: User): Observable<CompanyGroup>{
-    let groupWrapper = {companies, groupName};
+    let groupWrapper = {companies, groupName, user};
 
     console.log("SERVICE: " + groupName);
-    for(let i=0; i<companies.length; i++)
-      console.log(companies[i].id + " " + companies[i].name);
-    console.log(user.username + " " +  user.password + " " + user.email);
+    console.log(companies);
+
 
     return this.httpClient.post<CompanyGroup>(this.createCompanyGroupUrl, groupWrapper);
   }

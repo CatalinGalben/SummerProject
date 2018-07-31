@@ -44,9 +44,10 @@ public class GroupController {
     @RequestMapping(value = "/creategroup", method = RequestMethod.POST)
     public void createGroup(@RequestBody final GroupWrapper groupWrapper)
     {
+
         User user = userConverter.convertDtoToModel(groupWrapper.getUser());
         String groupName = groupWrapper.getGroupName();
-        Set<Company> companies = (Set<Company>)companyConverter.convertDtosToModel(groupWrapper.getCompanyDTOS());
+        Set<Company> companies = (Set<Company>)companyConverter.convertDtosToModel(groupWrapper.getCompanies());
         groupService.createGroup(companies, groupName, user);
     }
 }

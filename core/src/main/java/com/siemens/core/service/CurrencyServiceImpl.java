@@ -14,8 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CurrencyServiceImpl implements CurrencyServiceInterface{
@@ -146,6 +148,17 @@ public class CurrencyServiceImpl implements CurrencyServiceInterface{
 
 
         }
+    }
+    @Override
+    public List<Currency> getCurrencies()
+    {
+        return currencyRepository.findAll();
+    }
+    @Override
+    public List<CurrencyExchange> getTodayRates()
+    {
+        return currencyExchangeRepository.findAll().stream()
+                .filter(ce -> ce.getDateOfExchange().equals(DateTime.now().toString())).collect(Collectors.toList());
     }
     private Double convert(String currentSymbol,String desiredSymbol, Double value)
     {
