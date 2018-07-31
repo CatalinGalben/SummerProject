@@ -193,8 +193,19 @@ export class AddRecordComponent implements OnInit {
           })
         });
     }
-
   }
+
+
+  getCurrentFactor(): number {
+    return this.loginService.getCurrentFactor();
+  }
+
+  getCurrentCurrencyName(): string {
+    return this.loginService.getCurrencyName();
+  }
+
+
+
 
   cleanInfoRecord(){
     // this.selectedBroker = null;

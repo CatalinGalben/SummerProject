@@ -23,7 +23,7 @@ public class CurrencyConverter extends AbstractConverterBaseEntity<Currency, Cur
                 .name(currency.getName())
                 .symbol(currency.getSymbol())
                 .build();
-        currency.setId(currency.getId());
+        currencyDTO.setId(currency.getId());
         return currencyDTO;
     }
 }

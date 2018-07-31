@@ -97,9 +97,7 @@ export class LoginService {
     return this.httpClient.get<Currency[]>(url);
   }
 
-  getCurrencyName(): string {
-    return this.currentCurrencyName;
-  }
+
 
   getNewCurrencyExchange(id: number): CurrencyExchange {
     return this.currentCurrencyExchanges.filter(CE => CE.currencyid2==id)[0];
@@ -132,6 +130,10 @@ export class LoginService {
 
   getCurrentUser(): User {
     return this.currentUser;
+  }
+
+  getCurrencyName(): string {
+    return this.currentCurrencyName;
   }
 
   getCurrentFactor(): number {

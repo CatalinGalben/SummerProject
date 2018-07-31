@@ -102,7 +102,7 @@ export class BuyComponent implements OnInit {
   }
 
   setBookValueExisting(args) {
-    this.bookValueExisting = args.target.value;
+    this.bookValueExisting = args.target.value/this.getCurrentFactor();
   }
 
   //broker share fee, versiunea intiala;
@@ -163,6 +163,14 @@ export class BuyComponent implements OnInit {
       this.user = user;
       this.router.navigate(['']);
     })
+  }
+
+  getCurrentFactor(): number{
+    return this.loginService.getCurrentFactor();
+  }
+
+  getCurrentCurrencyName(){
+    return this.loginService.getCurrencyName();
   }
 
 

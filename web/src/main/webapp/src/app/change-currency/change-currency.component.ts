@@ -19,18 +19,21 @@ export class ChangeCurrencyComponent implements OnInit {
   constructor(private router: Router, private loginService: LoginService) { }
 
   ngOnInit() {
-    this.loginService.getAllCurrencies().subscribe(currencies=>this.currencies=currencies);
-  }
+    this.loginService.getAllCurrencies().subscribe(currencies=> {
+        this.currencies = currencies;
+        console.log(this.currencies);
+      })
+  };
 
   setNewCurrency(args){
-    console.log(args.target.value);
-    this.selectedCurrencyId = args.target.vaue;
+    this.selectedCurrencyId = args.target.value;
   }
 
   changeCurrency(){
     this.currencyExchangeChanged =  this.loginService.getNewCurrencyExchange(this.selectedCurrencyId);
     this.loginService.changeSymbolNameObservable(this.currencies.filter(cu => cu.id == this.selectedCurrencyId)[0].symbol);
     this.loginService.changeFactorObservable(this.currencyExchangeChanged.factor);
+    this.router.navigate(['']);
   }
 
 
