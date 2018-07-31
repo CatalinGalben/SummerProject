@@ -67,11 +67,10 @@ public class YahooFinanceAPI {
                         "http://data.fixer.io/api/latest" +
                                 "?access_key=ea946dd8421ed294c58ff5b94c03072e" +
                                 "&base=EUR"+
-                                "&symbols=RON,EUR,USD,GBP",
+                                "&symbols=USD",
 
                         String.class,"42", "21"
                 );
-
         System.out.println(result);
         DateTimeFormatter f = DateTimeFormat.forPattern("yyyy/MM/dd");
         String dateTime = DateTime.now().toString("yyyy/MM/dd");
