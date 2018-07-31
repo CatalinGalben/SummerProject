@@ -180,11 +180,11 @@ export class BuyComponent implements OnInit {
             {
               console.log(user.balance);
               this.loginService.changeUserObservable(user);
+              this.router.navigate([""]).then(()=>this.portfolioComponent.refreshRecords());
             });
         }
 
       );
-    console.log("addToExisting -- buy.component.ts -- id: " + this.userId);
-    this.router.navigate([""]);
+
   }
 }

@@ -140,6 +140,10 @@ export class PortfolioComponent implements OnInit {
 
   liquidate(){
     console.log("liquidate method entered -- portfolio.component.ts");
+    if (!Number.isInteger(parseFloat(this.noSharesToLiquidate.toString()))){
+      alert("The number of shares should be a natural number!");
+      return;
+    }
     if (this.selectedHoldingRecord.noShares < this.noSharesToLiquidate){
       alert("The number of shares you want to liquidate is bigger than the number of shares you have for this company");
       return;
