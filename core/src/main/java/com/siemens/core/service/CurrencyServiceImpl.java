@@ -147,8 +147,7 @@ public class CurrencyServiceImpl implements CurrencyServiceInterface{
 
         }
     }
-    @Override
-    public String chooseCurrency(String currentSymbol, String desiredSymbol, Double value)
+    private Double convert(String currentSymbol,String desiredSymbol, Double value)
     {
         Optional<CurrencyExchange> exchangeCase1  = currencyExchangeRepository
                 .findAll().stream().filter(ce ->
@@ -161,8 +160,8 @@ public class CurrencyServiceImpl implements CurrencyServiceInterface{
         if(exchangeCase1.isPresent())
         {
             currencyExchange = exchangeCase1.get();
-            convertedValue = value * 1/currencyExchange.getFactor();
-            return  convertedValue.toString();
+            convertedValue = value * currencyExchange.getFactor();
+            return  convertedValue;
         }
         else {
             currencyExchange = currencyExchangeRepository
@@ -170,8 +169,20 @@ public class CurrencyServiceImpl implements CurrencyServiceInterface{
                             ce.getCurrency1().getSymbol().equals(desiredSymbol) &&
                                     ce.getCurrency2().getSymbol().equals(currentSymbol)
                     ).findFirst().get();
-            convertedValue = value * currencyExchange.getFactor();
-            return  convertedValue.toString();
+            convertedValue = value * 1/currencyExchange.getFactor();
+            return  convertedValue;
         }
+    }
+    @Override
+    public String chooseCurrency(String currentSymbol, String desiredSymbol, Double value)
+    {
+        if(!currentSymbol.equals("EUR") && !desiredSymbol.equals("EUR"))
+        {
+            Double firstValue = convert(currentSymbol, "EUR", value);
+            return convert("EUR", desiredSymbol, firstValue).toString();
+        }
+        else
+            return convert(currentSymbol, desiredSymbol, value).toString();
+
     }
 }

@@ -1,6 +1,7 @@
 package com.siemens.core.service;
 
 import com.siemens.core.api.Api;
+import com.siemens.core.api.CurrencyApi;
 import com.siemens.core.model.Company;
 import com.siemens.core.model.CompanyShare;
 import com.siemens.core.model.Currency;
@@ -93,12 +94,10 @@ public class SharePriceServiceImpl implements SharePriceServiceInterface{
             parameters = result.split(";");
 
             Currency currency;
-            if(parameters[4].equals("null"))
-                currency = currencyRepository
-                        .findAll().stream().filter(c -> c.getSymbol().equals("EUR")).findFirst().get();
-            else
-                currency = currencyRepository
-                        .findAll().stream().filter(c -> c.getSymbol().equals(parameters[4])).findFirst().get();
+
+            currency = currencyRepository
+                    .findAll().stream().filter(c -> c.getSymbol().equals("EUR")).findFirst().get();
+
 
             Company company = Company.builder()
                     .currency(currency)
@@ -133,7 +132,13 @@ public class SharePriceServiceImpl implements SharePriceServiceInterface{
 
 
             try{
-                sharePriceValue= Double.parseDouble(parameters[1]);
+                //{possible limitation, if the user buys a ton of companies that are not in EUR currency,
+                //the api 1000 query limit will be reached and adding more will not work
+                //If we are talking about a real life situation , an api key will be included in the price of the product
+                if(!parameters[4].equals("EUR") && !parameters[4].equals("null"))
+                    sharePriceValue = CurrencyApi.exchange(parameters[4], Double.parseDouble(parameters[1]));
+                else
+                    sharePriceValue = Double.parseDouble(parameters[1]);
                 sharePrice.setPrice(sharePriceValue);
             }catch (Exception e)
             {
