@@ -54,8 +54,13 @@ export class LoginPageComponent implements OnInit{
     }
     this.sub = this.loginService.loginUserEmail(username, password).subscribe(user => {
       this.loginService.changeUserObservable(user);
-      if (this.userLoggedIn.username != null)
-        this.router.navigate(['']);
+      if (this.userLoggedIn.username != null){
+        this.router.navigate(['']).then(
+          ()=>this.loginService.getActualCurrencyExchanges().subscribe(
+            ce => this.loginService.changeCurrencyExchangesObservable(ce)
+          )
+        );
+      }
       else
         alert("Invalid Username or password");
     })

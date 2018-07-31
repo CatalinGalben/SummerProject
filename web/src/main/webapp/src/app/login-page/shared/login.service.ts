@@ -8,6 +8,8 @@ import {Broker} from "../../add-record/shared/Broker.model";
 import {Company} from "../../add-record/shared/Company.model";
 import {SharePrice} from "../../add-record/shared/SharePrice.model";
 import {Group} from "../../bar-chart/shared/Group.model";
+import {CurrencyExchange} from "../../add-record/shared/CurrencyExchange.model";
+import {Currency} from "../../add-record/shared/Currency.model";
 
 
 @Injectable()
@@ -15,11 +17,20 @@ export class LoginService {
 
   private userLoggedInService = new Subject<User>();
   currentUser: User;
+  currentFactor = 1;
+  currentCurrencyName = "EUR";
+  currentCurrencyExchanges: CurrencyExchange[] = [];
   currentUserForLogin = this.userLoggedInService.asObservable();
 
   currentBrokers;
   private brokersServiceVariable = new Subject<Broker[]>();
   allBrokers = this.brokersServiceVariable.asObservable();
+
+  factorServiceVariable = new Subject<number>();
+  factorOnService = this.factorServiceVariable.asObservable();
+
+  private currencyExchangesServiceVariable = new Subject<CurrencyExchange[]>();
+  allCurrencyExchanges = this.currencyExchangesServiceVariable.asObservable();
 
   private companiesServiceVariable = new Subject<Company[]>();
   allCompanies = this.companiesServiceVariable.asObservable();
@@ -33,6 +44,7 @@ export class LoginService {
   constructor(private httpClient: HttpClient) { }
 
   private addUrl = 'http://localhost:8080/api/users';
+  private currencyUrl = 'http://localhost:8080/api/currency';
 
   createUserEmail(firstName:string, lastName:string, email: string, username: string, password: string, dob: string): Observable<User> {
     const addUser = "register";
@@ -69,8 +81,28 @@ export class LoginService {
     const balance = "balance";
     const url =`${this.addUrl}/${balance}/${key}`;
     console.log(url);
-    console.log(newBalanceValue);
     return this.httpClient.post<User>(url, {newBalanceValue});
+  }
+
+  getActualCurrencyExchanges(): Observable<CurrencyExchange[]>{
+    const allCE = "currencyexchanges";
+    const url =`${this.currencyUrl}/${allCE}`;
+    console.log(url);
+    return this.httpClient.get<CurrencyExchange[]>(url);
+  }
+
+  getAllCurrencies(): Observable<Currency[]>{
+    const allC = "currencies";
+    const url =`${this.currencyUrl}/${allC}`;
+    return this.httpClient.get<Currency[]>(url);
+  }
+
+  getCurrencyName(): string {
+    return this.currentCurrencyName;
+  }
+
+  getNewCurrencyExchange(id: number): CurrencyExchange {
+    return this.currentCurrencyExchanges.filter(CE => CE.currencyid2==id)[0];
   }
 
   changeUser(userLogged: User){
@@ -89,10 +121,28 @@ export class LoginService {
     this.sharePricesServiceVariable.next(shareprices);
   }
 
-  getCurrentUser(): User {
+  changeCurrencyExchangesObservable(currencyExchanges: CurrencyExchange[]){
+    this.currencyExchangesServiceVariable.next(currencyExchanges);
+    this.currentCurrencyExchanges = currencyExchanges;
+  }
 
+  changeSymbolNameObservable(symbol: string){
+    this.currentCurrencyName = symbol;
+  }
+
+  getCurrentUser(): User {
     return this.currentUser;
   }
+
+  getCurrentFactor(): number {
+    return this.currentFactor;
+  }
+
+  changeFactorObservable(newFactor: number){
+    this.factorServiceVariable.next(newFactor);
+    this.currentFactor = newFactor;
+  }
+
 
   changeUserObservable(user: User){
     this.userLoggedInService.next(user);

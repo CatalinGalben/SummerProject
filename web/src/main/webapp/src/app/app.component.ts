@@ -34,6 +34,7 @@ export class AppComponent implements OnInit{
   public user_email: String;
   public user_balance: number;
   public isLoggedIn: Boolean;
+  public currentCurrenyId: number;
 
   menuState:string = 'out';
   public user_id: number;
@@ -74,7 +75,7 @@ export class AppComponent implements OnInit{
     this.loginService.currentUserForLogin.subscribe(user => {
       this.userLoggedInAppComponent = user;
       if (user != null) {
-        this.user_balance = user.balance;
+        this.user_balance = user.balance*this.loginService.getCurrentFactor();
         this.user_displayName = user.firstName + " " + user.lastName;
         this.user_email = user.email;
         this.user_id = user.id;
@@ -93,6 +94,10 @@ export class AppComponent implements OnInit{
     this.isLoggedIn = false;
     this.loginService.changeUser(null);
     this.router.navigate(['loginGoogle']);
+  }
+
+  getCurrentCurrencyName(): string{
+    return this.loginService.getCurrencyName();
   }
 
 

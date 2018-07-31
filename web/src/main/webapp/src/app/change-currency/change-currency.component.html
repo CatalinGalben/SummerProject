@@ -1,3 +1,10 @@
-<p>
-  change-currency works!
-</p>
+<div class="col-sm-10">
+  <select (change)="setNewCurrency($event)" class="select-picker">
+  <option [value]=""></option>
+  <option *ngFor="let currency of currencies" [value]="currency.id">
+  {{currency.symbol}}
+  </option>
+  </select>
+</div>
+
+<button *ngIf="selectedCurrencyId" class ="btn btn-primary btnAdd" (click)="changeCurrency()">Change Currency</button>

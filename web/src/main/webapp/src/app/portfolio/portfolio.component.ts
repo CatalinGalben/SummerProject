@@ -120,8 +120,8 @@ export class PortfolioComponent implements OnInit {
   }
 
   getGain(paid: number, sumNow: number): number{
-    let result = paid/sumNow;
-    return -(result - 1)*100;
+    let result = sumNow/paid;
+    return result*100-100;
   }
 
   getBrokerForRecord(brokerid: number): string {
