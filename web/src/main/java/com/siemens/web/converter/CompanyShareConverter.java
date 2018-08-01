@@ -26,7 +26,7 @@ public class CompanyShareConverter extends AbstractConverterBaseEntity<CompanySh
                         Company.builder()
                                 .name(companyShareDTO.getCompany().getName())
                                 .PE(companyShareDTO.getCompany().getPE())
-                                .sharePrice(null)
+                                .sharePrices(null)
                                 .dividendYield(companyShareDTO.getCompany().getDividendYield())
                                 .currency(null)
                                 .build()

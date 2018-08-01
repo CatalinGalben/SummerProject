@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {HoldingRecord} from "../../add-record/shared/HoldingRecord.model";
 import {Observable} from "rxjs/internal/Observable";
+import {DatePipe} from "@angular/common";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PortfolioService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient,
+              private datePipe: DatePipe) { }
 
   private allRecordsUrl = 'http://localhost:8080/api/records';
 
@@ -26,6 +28,16 @@ export class PortfolioService {
     const deleteString = "liquidate";
     const urlToDelete = `${this.allRecordsUrl}/${deleteString}/${symbol}`+'.';
     return this.httpClient.put<void>(urlToDelete, {noShares});
+  }
+
+  getNewSharePrice(companyid: number, newBalanceValue: number): Observable<void> {
+    const updateUrl = `${this.allRecordsUrl}/${companyid}`;
+    return this.httpClient.put<void>(updateUrl, {newBalanceValue});
+  }
+
+
+  getCurrentDate(): string{
+    return this.datePipe.transform(Date.now(), 'yyyy/MM/dd');
   }
 
 }

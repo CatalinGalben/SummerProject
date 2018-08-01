@@ -14,7 +14,7 @@ public class CompanyConverter extends AbstractConverterBaseEntity<Company, Compa
         Company company = Company.builder()
                 .name(companyDTO.getName())
                 .PE(companyDTO.getPE())
-                .sharePrice(null)
+                .sharePrices(null)
                 .dividendYield(companyDTO.getDividendYield())
                 .currency(null)
                 .build();

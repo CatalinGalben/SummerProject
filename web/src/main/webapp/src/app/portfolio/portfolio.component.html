@@ -49,6 +49,11 @@
     <button (click)="pressLiquidate()" class="btn btn-outline-danger">Hide Liquidate</button>
     &nbsp;
   </div>
+  <div *ngIf="isNotActualSharePrice">
+    <button (click)="showSharePriceInput()" class="btn btn-dark">Update Share Price</button>
+    &nbsp;
+  </div>
+
 
 </div>
 <br>
@@ -63,6 +68,16 @@
 
 <hr>
 </div>
+<div *ngIf="showUpdateSharePriceInput">
+  <hr>
+  <input #newSharePrice (keyup)="setNewSharePriceToUpdate(newSharePrice.value/getCurrentFactor())" min="0" step="0.00000000001" placeholder="New Share Price"> &nbsp; <br>
+  <button (click)="updateSharePrice()" class="btn btn-outline-dark">Update Share Price</button><br>
+
+  &nbsp;
+
+  <hr>
+</div>
+
 <br>
 <div class="row">
   <button id="btnAdd" class ="btn btn-outline-primary" (click)="goToAdd()">Add new holding share</button>

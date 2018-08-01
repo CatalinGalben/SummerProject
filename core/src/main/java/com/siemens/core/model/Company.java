@@ -31,8 +31,8 @@ public class Company extends BaseEntity<Integer>{
     @OneToMany(mappedBy = "company")
     private Set<HoldingRecord> holdingRecords;
 
-    @OneToOne(mappedBy = "company")
-    private SharePrice sharePrice;
+    @OneToMany(mappedBy = "company")
+    private Set<SharePrice> sharePrices;
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CompanyGroup> companyGroups;

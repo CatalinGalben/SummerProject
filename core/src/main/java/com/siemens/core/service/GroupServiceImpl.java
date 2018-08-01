@@ -84,39 +84,12 @@ public class GroupServiceImpl implements GroupServiceInterface {
     @Override
     public JSONObject getBenchmarks(Group group){
 
-        //dateOfShare, price, symbol;
-        //Possible problem, we get all the possible data stored in the database .
-
-//        Map<String, String> benchmark = new HashMap<>();
-//        List<SharePrice> resultedPrices = null;
-//        companyGroupRepo.findAll()
-//                .forEach(
-//                        companyGroup -> {
-//                            groups.forEach(
-//                                  group -> {
-//                                      if(companyGroup.getGroup().getId().equals(group.getId()))
-//                                      {
-//                                          resultedPrices.add(
-//                                               sharePriceRepo.findAll()
-//                                               .stream().filter(sp -> (sp.getCompany().getId().equals(companyGroup.getCompany().getId()))
-//                                               && (LocalDate.parse(sp.getDate()).isAfter(LocalDate.now().minusDays(7)))
-//                                               )
-//                                               .findFirst().get()
-//                                          );
-//                                      }
-//                                  }
-//                            );
-//                        }
-//                );
-//        resultedPrices.forEach(
-//                rp -> benchmark.put(rp.getCompany().getName(), rp.getPrice()+";"+rp.getDate())
-//        );
         JSONObject benchmark = new JSONObject();
         JSONArray mainArray = new JSONArray();
         JSONObject mainObject = new JSONObject();
         JSONArray companyArray = new JSONArray();
 
-        JSONArray pricesArray = new JSONArray();
+
 
         List<CompanyGroup> groupRecords = companyGroupRepo.findAll()
                 .stream().filter(rec -> rec.getGroup().getId().equals(group.getId())).collect(Collectors.toList());
@@ -134,7 +107,9 @@ public class GroupServiceImpl implements GroupServiceInterface {
                             .stream()
                             .filter(sp -> sp.getCompany().getId().equals(company.getId()))
                             .collect(Collectors.toList());
+                    JSONArray pricesArray = new JSONArray();
                     JSONObject companyItem = new JSONObject();
+
                     sharePrices.forEach(
                             sp ->
                             {   JSONObject priceObjects = new JSONObject();
@@ -146,11 +121,6 @@ public class GroupServiceImpl implements GroupServiceInterface {
                     companyItem.put("name:",company.getName());
                     companyItem.put("series:",pricesArray);
                     companyArray.put(companyItem);
-
-
-
-
-
                 }
         );
         mainObject.put("name:", recordName);

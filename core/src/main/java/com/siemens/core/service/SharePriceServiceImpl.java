@@ -15,8 +15,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class SharePriceServiceImpl implements SharePriceServiceInterface{
@@ -65,6 +67,51 @@ public class SharePriceServiceImpl implements SharePriceServiceInterface{
 
 
     }
+    @Override
+    @Transactional
+    public void updateDailyPrices()
+    {
+        List<SharePrice> sharePrices = sharePriceRepository.findAll()
+                .stream()
+                .sorted(Comparator.comparing(SharePrice::getId).reversed()).collect(Collectors.toList());
+        Optional<SharePrice> optionalSharePrice =
+                sharePrices.stream().filter(
+                        sharePrice -> !Api.Interogate(sharePrice.getCompany().getName()).equals("Empty Response") &&
+                                sharePrice.getDate().equals(DateTime.now().toString("yyyy/MM/dd"))
+
+                ).findFirst();
+        if(optionalSharePrice.isPresent())
+        {
+            log.trace("SORRY , UPDATED AVAILABLE SHAREPRICES TODAY");
+            return;
+        }
+
+        sharePrices.forEach(
+                sharePrice -> {
+                    String apiResponse = Api.Interogate(sharePrice.getCompany().getName());
+                    if(!apiResponse.equals("Empty Response"))
+                    {
+                        String[] parameters = apiResponse.split(";");
+                        Double sharePriceValue;
+
+                        if(!parameters[4].equals("EUR") && !parameters[4].equals("null"))
+                            sharePriceValue = CurrencyApi.exchange(parameters[4], Double.parseDouble(parameters[1]));
+                        else
+                            sharePriceValue = Double.parseDouble(parameters[1]);
+
+                        sharePriceRepository.save(
+                                SharePrice.builder()
+                                        .price(sharePriceValue)
+                                        .company(sharePrice.getCompany())
+                                        .date(DateTime.now().toString("yyyy/MM/dd"))
+                                        .build()
+                        );
+
+                    }
+                }
+        );
+    }
+
     @Override
     public CompanyShare getSharePrice(String symbol)
     {
@@ -127,7 +174,7 @@ public class SharePriceServiceImpl implements SharePriceServiceInterface{
 
             SharePrice sharePrice = SharePrice.builder()
                     .company(company1)
-                    .date(DateTime.now().toString())
+                    .date(DateTime.now().toString("yyyy/MM/dd"))
                     .build();
 
 
@@ -166,7 +213,7 @@ public class SharePriceServiceImpl implements SharePriceServiceInterface{
                 .currency(currency)
                 .build());
         SharePrice newShare = sharePriceRepository.save(
-                SharePrice.builder().company(newComp).date(DateTime.now().toString()).price(Double.parseDouble("0"))
+                SharePrice.builder().company(newComp).date(DateTime.now().toString("yyyy/MM/dd")).price(Double.parseDouble("0"))
                         .build()
         );
         return CompanyShare.builder()
