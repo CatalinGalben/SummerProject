@@ -7,20 +7,21 @@
     <br><br>
 
   <div>
-    <label>Username:</label>
+    <label class="col-sm-2 control-label" style="font-size: 20px"><b>Username:</b></label>
     <br>
-    <input #username>
+    <input class="form-control" style="width: 300px" #username>
   </div>
+  <br>
   <div>
-    <label >Password:</label>
+    <label class="col-sm-2 control-label" style="font-size: 20px"><b>Password:</b></label>
     <br>
-    <input type="password" #password>
+    <input class="form-control" style="width: 300px" type="password" #password>
   </div>
 
   <br>
 
-  <div class="row">
-    <button class="btn btn-default button1" (click)="getLoginDetails(username.value, password.value)">Login with email</button> &nbsp;
+  <div class="row" style="margin-left: 3px">
+    <button class="btn btn-outline-success" (click)="getLoginDetails(username.value, password.value)">Login with email</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <button class="btn btn-default button1" (click)="registerClicked()" id="btnRegister"> Register</button>
   </div>
 

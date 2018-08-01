@@ -21,7 +21,7 @@ import {LoginService} from "./login-page/shared/login.service";
       })),
       transition('in => out', animate('400ms ease-in-out')),
       transition('out => in', animate('400ms ease-in-out'))
-    ]),
+  ]),
   ],
 
 })
@@ -34,7 +34,6 @@ export class AppComponent implements OnInit{
   public user_email: String;
   public user_balance: number;
   public isLoggedIn: Boolean;
-  public currentCurrenyId: number;
 
   menuState:string = 'out';
   public user_id: number;
@@ -63,14 +62,6 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(){
-    //   if (this.userLoggedInAppComponent != null)
-    // this.userLoggedInAppComponent = this.loginService.getCurrentUser();
-    //    if (this.userLoggedInAppComponent != null) {
-    //     this.user_displayName = this.userLoggedInAppComponent.firstName + " " + this.userLoggedInAppComponent.lastName;
-    //     this.user_email = this.userLoggedInAppComponent.email;
-    //     this.user_id = this.userLoggedInAppComponent.id;
-    //     this.isLoggedIn = true;
-    //   }
     this.loginService.currentUserForLogin.subscribe(user => {
       this.userLoggedInAppComponent = user;
       if (user != null) {
@@ -82,10 +73,6 @@ export class AppComponent implements OnInit{
       }
 
     })
-  }
-
-  printUser(user) {
-    console.log(user);
   }
 
   logout(){

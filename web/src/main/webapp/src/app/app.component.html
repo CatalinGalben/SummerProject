@@ -7,8 +7,10 @@
     <button (click)="toggleMenu()" class="hamburger">
       <span>toggle menu</span>
     </button>
-    <div class="navbar-header">
-      <a class="navbar-brand" href="http://siemens.com">Siemens</a>
+    <div class="navbar-brand">
+      <a class="navbar-item" href="http://siemens.com">
+        <img src="assets/images/siemens.jpg" width="200px">
+      </a>
     </div>
 
     <div *ngIf="isLoggedIn">

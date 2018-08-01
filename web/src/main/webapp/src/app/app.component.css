@@ -1,3 +1,9 @@
+@font-face {
+  font-family: 'Digital-7';
+  src: url('../assets/fonts/digital-7.ttf');
+  font-weight: bold;
+}
+
 .button{
   background-color: #159E83; /* Green */
   border: none;

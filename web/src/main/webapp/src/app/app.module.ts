@@ -29,6 +29,7 @@ import {NgxChartsModule} from "@swimlane/ngx-charts";
 import {PortfolioService} from "./portfolio/shared/portfolio.service";
 import { AddGroupComponent } from './add-group/add-group.component';
 import { ChangeCurrencyComponent } from './change-currency/change-currency.component';
+import {DatePipe} from "@angular/common";
 
 const routes: Routes=[
   {path: 'homePage', component: HomePageComponent},
@@ -71,7 +72,7 @@ const routes: Routes=[
     BrowserAnimationsModule,
     NgxChartsModule
   ],
-  providers: [AuthService, AngularFireAuth, MainService, TransferService, LoginService, PortfolioService],
+  providers: [AuthService, AngularFireAuth, MainService, TransferService, LoginService, PortfolioService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -6,9 +6,7 @@ import com.siemens.core.model.Group;
 import com.siemens.core.model.User;
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public interface GroupServiceInterface {

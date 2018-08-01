@@ -1,9 +1,45 @@
+<h1>Currency Exchange</h1>
+<table class="table table-bordered table-dark" >
+  <thead>
+  <tr>
+    <th scope="col">Currency</th>
+    <th scope="col"><img src="assets/images/eur.png"></th>
+  </tr>
+  </thead>
+  <tbody style="font-family: 'Digital-7'; font-size: 23px; color: red">
+  <tr>
+    <th scope="row">
+      <img src="assets/images/eur.png">
+    </th>
+    <td>{{getCurrencyFactor("EUR")}} EUR</td>
+  </tr>
+  <tr>
+    <th scope="row">
+      <img src="assets/images/ron.png">
+    </th>
+    <td>{{getCurrencyFactor("RON")}} RON</td>
+  </tr>
+  <tr>
+    <th scope="row">
+      <img src="assets/images/usd.png">
+    </th>
+    <td>{{getCurrencyFactor("USD")}} USD</td>
+  </tr>
+  <tr>
+    <th scope="row">
+      <img src="assets/images/gbp.png">
+    </th>
+    <td>{{getCurrencyFactor("GBP")}} GBP</td>
+  </tr>
+  </tbody>
+</table>
+
 <label class="col-sm-2 control-label">Currency: </label>
 <div class="col-sm-10">
-  <select (change)="setNewCurrency($event)" class="select-picker">
+  <select (change)="setNewCurrency($event)" class="dropdown-header">
   <option [value]=""></option>
-  <option *ngFor="let currency of currencies" [value]="currency.id">
-  {{currency.symbol}}
+  <option class="divider" *ngFor="let currency of currencies" [value]="currency.id">
+    {{currency.symbol}}
   </option>
   </select>
 </div>
