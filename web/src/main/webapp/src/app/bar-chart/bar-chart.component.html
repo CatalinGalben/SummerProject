@@ -8,14 +8,15 @@
   <tbody>
 
   <ng-container *ngIf="(groups.length > 0)">
-    <tr *ngFor="let gr of groups" (click)="clickRecord(gr.name)"  [class.active]="selectedRow === gr.name">
+    <tr *ngFor="let gr of groups" (click)="clickRecord(gr.name)">
       <td>
-        <table class="table body">
+        <table>
           <thead>
           <th>{{gr.name}}</th>
           </thead>
           <tbody>
-              <table class="table">
+              <table>
+                  <div *ngIf="gr.name == selectedRow">
                   <thead>
                   <th>Name</th>
                   <th>No. Shares</th>
@@ -27,7 +28,7 @@
                   </thead>
                   <tbody>
                       <ng-container *ngIf="(companies.length > 0)">
-                        <tr *ngFor="let rec of holdingRecords">
+                        <tr *ngFor="let rec of getHoldingRecordsOfGroup(gr.name)">
                           <td>{{getCompanyForRecord(rec.companyid, rec)}}</td>
                           <td>{{rec.noShares}}</td>
                           <td>{{getCurrentShareForCompany(rec.companyid).toString()}}</td>
@@ -38,6 +39,7 @@
                         </tr>
                       </ng-container>
                   </tbody>
+                  </div>
               </table>
           </tbody>
         </table>
@@ -65,8 +67,4 @@
   </ngx-charts-line-chart>
 </div>
 
-<br/>
-
-
-
-
+<br/><br/><br/><br/><br/>
