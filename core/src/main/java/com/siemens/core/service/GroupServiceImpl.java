@@ -10,6 +10,8 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class GroupServiceImpl implements GroupServiceInterface {
+    private static final Logger log = LoggerFactory.getLogger(GroupServiceImpl.class);
     @Autowired
     private GroupRepository groupRepository;
     @Autowired
@@ -118,35 +121,44 @@ public class GroupServiceImpl implements GroupServiceInterface {
         List<CompanyGroup> groupRecords = companyGroupRepo.findAll()
                 .stream().filter(rec -> rec.getGroup().getId().equals(group.getId())).collect(Collectors.toList());
 
+        String recordName = groupRecords.get(0).getGroup().getName();
         groupRecords.forEach(
                 record ->
                 {
-                    List<Company> companies = companyRepository.findAll()
+                    Company company = companyRepository.findAll()
                             .stream().filter(c -> c.getId().equals(record.getCompany().getId()))
+                            .findFirst().get();
+
+
+                    List<SharePrice> sharePrices = sharePriceRepo.findAll()
+                            .stream()
+                            .filter(sp -> sp.getCompany().getId().equals(company.getId()))
                             .collect(Collectors.toList());
-                    companies.forEach(
-                            c ->
-                            {
-                                List<SharePrice> sharePrices = sharePriceRepo.findAll()
-                                        .stream()
-                                        .filter(sp -> sp.getCompany().getId().equals(c.getId()))
-                                        .collect(Collectors.toList());
-                                JSONObject companyItem = new JSONObject();
-                                sharePrices.forEach(
-                                        sp ->
-                                        {   JSONObject priceObjects = new JSONObject();
-                                            priceObjects.put("value:",sp.getPrice().toString());
-                                            priceObjects.put("name:", sp.getDate());
-                                            pricesArray.put(priceObjects);
-                                        }
-                                );
-                                companyItem.put("name:",c.getName());
-                                companyItem.put("series:",pricesArray);
-                                companyArray.put(companyItem);
+                    JSONObject companyItem = new JSONObject();
+                    sharePrices.forEach(
+                            sp ->
+                            {   JSONObject priceObjects = new JSONObject();
+                                priceObjects.put("value:",sp.getPrice().toString());
+                                priceObjects.put("name:", sp.getDate());
+                                pricesArray.put(priceObjects);
                             }
                     );
+                    companyItem.put("name:",company.getName());
+                    companyItem.put("series:",pricesArray);
+                    companyArray.put(companyItem);
+
+
+
+
+
                 }
         );
+        mainObject.put("name:", recordName);
+        mainObject.put("series:", companyArray);
+        mainArray.put(mainObject);
+
+        benchmark.put("results:", mainArray);
+        log.trace("Benchmark json:" + benchmark);
         return benchmark;
     }
 }

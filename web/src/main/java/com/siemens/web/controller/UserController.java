@@ -1,8 +1,10 @@
 package com.siemens.web.controller;
 
 
+import com.siemens.core.model.Group;
 import com.siemens.core.model.User;
 import com.siemens.core.service.CurrencyServiceInterface;
+import com.siemens.core.service.GroupServiceInterface;
 import com.siemens.core.service.UserServiceInterface;
 import com.siemens.web.converter.UserConverter;
 import com.siemens.web.dto.PlainPriceWrapper;
@@ -23,6 +25,8 @@ public class UserController {
     private UserConverter userConverter;
     @Autowired
     private CurrencyServiceInterface currencyServiceInterface;
+    @Autowired
+    private GroupServiceInterface groupService;
 
     @RequestMapping(value = "/users/register", method = RequestMethod.POST)
     public UserDTO createUser(@RequestBody final UserDTO userAdded)
@@ -55,6 +59,9 @@ public class UserController {
         log.trace("Login method entered! "+ username + password);
         User possibleLoggedUser = userServiceInterface.login(username, password);
 //        currencyServiceInterface.addCurrency();
+//        Group group = Group.builder().build();
+//        group.setId(1084);
+//        Object object = groupService.getBenchmarks(group);
         currencyServiceInterface.setExchangeRates();
         log.trace(possibleLoggedUser+" Returned from backend");
         return userConverter.convertModelToDto(possibleLoggedUser);

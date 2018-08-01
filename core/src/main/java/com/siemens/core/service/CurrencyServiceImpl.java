@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -56,7 +57,9 @@ public class CurrencyServiceImpl implements CurrencyServiceInterface{
                 .stream().filter(currency -> currency.getSymbol().equals("EUR")).findFirst().get();
         Optional<CurrencyExchange> currencyExchange = currencyExchangeRepository.findAll()
                 .stream()
+                .sorted(Comparator.comparing(CurrencyExchange::getId).reversed())
                 .filter(ce -> ce.getCurrency1().getSymbol().equals("EUR") && ce.getCurrency2().getSymbol().equals("EUR")).findFirst();
+
         if(currencyExchange.isPresent())
             if(!f.parseDateTime(currencyExchange.get().getDateOfExchange()).isBefore(f.parseDateTime(DateTime.now().toString("yyyy/MM/dd"))))
             {

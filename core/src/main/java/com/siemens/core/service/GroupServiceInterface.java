@@ -18,7 +18,7 @@ public interface GroupServiceInterface {
     void createGroup(Set<Company> companies, String nameOfGroups, User user);
 
 
-    JSONObject getBenchmarks(Set<Group> groups);
+    JSONObject getBenchmarks(Group groups);
 
     List<Group> getGroups();
 
