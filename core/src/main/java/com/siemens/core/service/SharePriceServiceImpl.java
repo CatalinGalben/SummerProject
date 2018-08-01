@@ -127,7 +127,7 @@ public class SharePriceServiceImpl implements SharePriceServiceInterface{
 
             SharePrice sharePrice = SharePrice.builder()
                     .company(company1)
-                    .date(DateTime.now().toString())
+                    .date(DateTime.now().toString(z))
                     .build();
 
 

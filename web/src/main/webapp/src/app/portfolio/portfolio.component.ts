@@ -27,8 +27,11 @@ export class PortfolioComponent implements OnInit {
   companies: Company[] = [];
   selectedHoldingRecord: HoldingRecord;
 
+  showUpdateSharePriceInput = false;
   liquidatedpressed = false;
+  isNotActualSharePrice = false;
   noSharesToLiquidate = 0;
+  newSharePrice = 0;
 
   currentCompanyNamePortfolio: string;
 
@@ -134,8 +137,21 @@ export class PortfolioComponent implements OnInit {
   }
 
   clickRecord(id: number){
+    this.isNotActualSharePrice = false;
     this.selectedRow = id;
     this.selectedHoldingRecord = this.holdingRecords.filter(hr => hr.id == id)[0];
+    this.checkIfSharePriceNeedsUpdate();
+  }
+
+  checkIfSharePriceNeedsUpdate(){
+    if (this.getLastTimeUpdatedSharePrice(this.selectedHoldingRecord.companyid)!=this.portfolioService.getCurrentDate())
+      this.isNotActualSharePrice = true;
+    else
+      this.isNotActualSharePrice = false;
+  }
+
+  showSharePriceInput(){
+    this.showUpdateSharePriceInput = true;
   }
 
   pressLiquidate() {
@@ -165,8 +181,18 @@ export class PortfolioComponent implements OnInit {
     this.noSharesToLiquidate = 0;
   }
 
+  updateSharePrice(){
+    this.showUpdateSharePriceInput = false;
+    this.isNotActualSharePrice = false;
+    this.portfolioService.getNewSharePrice(this.selectedHoldingRecord.companyid, this.newSharePrice).subscribe(() => this.refreshRecords())
+  }
+
   setNoSharesLiquidated(noShares: number) {
     this.noSharesToLiquidate = noShares;
+  }
+
+  setNewSharePriceToUpdate(newPrice: number){
+    this.newSharePrice = newPrice;
   }
 
   goToAdd() {
