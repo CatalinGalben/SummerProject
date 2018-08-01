@@ -36,5 +36,10 @@ export class ChangeCurrencyComponent implements OnInit {
     this.router.navigate(['']);
   }
 
+  getCurrencyFactor(symbol: string){
+    let id = this.currencies.filter(cu => cu.symbol == symbol)[0].id;
+    return this.loginService.getNewCurrencyExchange(id).factor;
+  }
+
 
 }

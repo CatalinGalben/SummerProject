@@ -86,15 +86,8 @@ export class PortfolioComponent implements OnInit {
 
     //get all sharePrices
     this.recordService.getAllSharePrices().subscribe(shareprices =>{
-      this.sharePrices = shareprices.sort((s1, s2)=> s1.id-s2.id);
+      this.sharePrices = shareprices.sort((s1, s2)=> s2.id-s1.id);
       this.loginService.changeSharePrices(this.sharePrices);});
-  }
-  goToAdd() {
-    this.router.navigate(['addRecord']);
-  }
-
-  rowClicked(name: string, noShares: number, price: number) {
-    this.transferService.setData(name, noShares, price);
   }
 
   refreshRecords(){
@@ -117,6 +110,10 @@ export class PortfolioComponent implements OnInit {
 
   getCurrentShareForCompany(companyid: number): number{
     return this.sharePrices.filter(shareprice => shareprice.companyid == companyid)[0].price;
+  }
+
+  getLastTimeUpdatedSharePrice(companyid: number): string{
+    return this.sharePrices.filter(shareprice => shareprice.companyid == companyid)[0].date;
   }
 
   getGain(paid: number, sumNow: number): number{
@@ -172,6 +169,10 @@ export class PortfolioComponent implements OnInit {
     this.noSharesToLiquidate = noShares;
   }
 
+  goToAdd() {
+    console.log("goToAdd method entered -- portfolio.component.ts");
+    this.router.navigate(['addRecord']);
+  }
 
   gotoDetail(): void {
     console.log("gotoDetail method entered -- portfolio.component.ts");

@@ -10,6 +10,7 @@
       <th>Current Value ({{getCurrentCurrencyName()}})</th>
       <th>Gain (%)</th>
       <th>Broker</th>
+      <th>Last updated</th>
   </thead>
 
   <tbody>
@@ -24,6 +25,7 @@
       <td *ngIf="getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares)>=0" style="color: green">+{{getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares) | number : '1.2'}}%</td>
       <td *ngIf="getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares)<0" style="color: red">{{getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares) | number : '1.2'}}%</td>
       <td>{{getBrokerForRecord(rec.brokerid)}}</td>
+      <td>{{getLastTimeUpdatedSharePrice(rec.companyid)}}</td>
 
     </tr>
   </ng-container>
