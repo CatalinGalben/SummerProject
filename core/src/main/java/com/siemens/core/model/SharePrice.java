@@ -15,7 +15,7 @@ public class SharePrice extends BaseEntity<Integer>{
 
 
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "companyid")
     private Company company;
 

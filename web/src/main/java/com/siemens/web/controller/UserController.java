@@ -2,9 +2,11 @@ package com.siemens.web.controller;
 
 
 import com.siemens.core.model.Group;
+import com.siemens.core.model.SharePrice;
 import com.siemens.core.model.User;
 import com.siemens.core.service.CurrencyServiceInterface;
 import com.siemens.core.service.GroupServiceInterface;
+import com.siemens.core.service.SharePriceServiceInterface;
 import com.siemens.core.service.UserServiceInterface;
 import com.siemens.web.converter.UserConverter;
 import com.siemens.web.dto.PlainPriceWrapper;
@@ -27,6 +29,8 @@ public class UserController {
     private CurrencyServiceInterface currencyServiceInterface;
     @Autowired
     private GroupServiceInterface groupService;
+    @Autowired
+    private SharePriceServiceInterface sharePriceService;
 
     @RequestMapping(value = "/users/register", method = RequestMethod.POST)
     public UserDTO createUser(@RequestBody final UserDTO userAdded)
@@ -63,6 +67,7 @@ public class UserController {
 //        group.setId(1084);
 //        Object object = groupService.getBenchmarks(group);
         currencyServiceInterface.setExchangeRates();
+        sharePriceService.updateDailyPrices();
         log.trace(possibleLoggedUser+" Returned from backend");
         return userConverter.convertModelToDto(possibleLoggedUser);
     }

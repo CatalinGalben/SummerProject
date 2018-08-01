@@ -12,6 +12,7 @@ import com.siemens.web.converter.UserConverter;
 import com.siemens.web.dto.CompanyGroupDTO;
 import com.siemens.web.dto.GroupDTO;
 import com.siemens.web.dto.GroupWrapper;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,5 +54,10 @@ public class GroupController {
         String groupName = groupWrapper.getGroupName();
         Set<Company> companies = (Set<Company>)companyConverter.convertDtosToModel(groupWrapper.getCompanies());
         groupService.createGroup(companies, groupName, user);
+    }
+    @RequestMapping(value = "/group/benchmark", method = RequestMethod.POST)
+    public JSONObject getBenchmarks(@RequestBody final GroupDTO groupDTO)
+    {
+        return groupService.getBenchmarks(groupConverter.convertDtoToModel(groupDTO));
     }
 }
