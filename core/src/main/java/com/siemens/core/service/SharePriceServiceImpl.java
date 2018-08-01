@@ -38,6 +38,16 @@ public class SharePriceServiceImpl implements SharePriceServiceInterface{
         return sharePrices;
     }
     @Override
+    @Transactional
+    public void updateManualPrice(Integer compId, Double price)
+    {
+        Optional<SharePrice> optionalSharePrice = sharePriceRepository.findAll()
+                .stream().filter(sp -> sp.getCompany().getId().equals(compId)).findFirst();
+        optionalSharePrice.get().setPrice(price);
+        optionalSharePrice.get().setDate(DateTime.now().toString("yyyy/MM/dd"));
+        sharePriceRepository.save(optionalSharePrice.get());
+    }
+    @Override
     public void manualSharePrice(Company company, SharePrice sharePrice)
     {
 

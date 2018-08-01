@@ -4,10 +4,7 @@ import com.siemens.core.model.Broker;
 import com.siemens.core.model.Company;
 import com.siemens.core.model.HoldingRecord;
 import com.siemens.core.model.User;
-import com.siemens.core.service.BrokerServiceInterface;
-import com.siemens.core.service.CompanyServiceInterface;
-import com.siemens.core.service.HoldingRecordServiceInterface;
-import com.siemens.core.service.UserServiceInterface;
+import com.siemens.core.service.*;
 import com.siemens.web.converter.HoldingRecordConverter;
 import com.siemens.web.dto.*;
 import org.slf4j.Logger;
@@ -33,6 +30,8 @@ public class HoldingRecordController {
     private UserServiceInterface userServiceInterface;
     @Autowired
     private HoldingRecordConverter holdingRecordConverter;
+    @Autowired
+    private SharePriceServiceInterface sharePriceServiceInterface;
 
     @RequestMapping(value = "/records", method = RequestMethod.GET)
     public Set<HoldingRecordDTO> getRecords()
@@ -41,7 +40,12 @@ public class HoldingRecordController {
 
         return new HashSet<>(holdingRecordConverter.convertModelsToDtos(records));
     }
-
+    @RequestMapping(value = "/records/{companyId}", method = RequestMethod.PUT)
+    public void updateManualSharePrice(
+            @PathVariable final Integer companyId, @RequestBody final PlainPriceWrapper plainPriceWrapper)
+    {
+        sharePriceServiceInterface.updateManualPrice(companyId, plainPriceWrapper.getNewBalanceValue());
+    }
     @RequestMapping(value = "/holdingrecords/add", method = RequestMethod.POST)
     public HoldingRecordDTO createHoldingRecord(@RequestBody final HoldingRecordDTO holdingRecordDTO)
     {

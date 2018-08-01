@@ -16,4 +16,5 @@ public interface SharePriceServiceInterface {
     List<SharePrice> getAllPrices();
 
     void updateDailyPrices();
+    void updateManualPrice(Integer companyId, Double newValue);
 }
