@@ -56,6 +56,11 @@ export class PortfolioComponent implements OnInit {
     this.holdingRecords = [];
     this.sharePrices = [];
     this.companies = [];
+    this.showUpdateSharePriceInput = false;
+    this.liquidatedpressed = false;
+    this.isNotActualSharePrice = false;
+    this.noSharesToLiquidate = 0;
+    this.newSharePrice = 0;
     this.selectedHoldingRecord = null;
     this.populate();
   }
@@ -133,7 +138,8 @@ export class PortfolioComponent implements OnInit {
   }
 
   getBrokerForRecord(brokerid: number): string {
-    return this.brokers.filter(broker => broker.id == brokerid)[0].name;
+    if (this.brokers.filter(broker => broker.id == brokerid)[0].name)
+      return this.brokers.filter(broker => broker.id == brokerid)[0].name;
   }
 
   clickRecord(id: number){
@@ -170,10 +176,10 @@ export class PortfolioComponent implements OnInit {
       return;
     }
     this.portfolioService.liquidateRecord(this.currentCompanyNamePortfolio, this.noSharesToLiquidate).subscribe(_=>{
-      this.refreshRecords();
       this.loginService.getActualDetailsUser(this.userLoggedInPortfolioComponent.id).subscribe(user=>{
         this.loginService.changeUserObservable(user);
       });
+      this.ngOnInit();
     });
     this.selectedHoldingRecord = null;
     this.selectedRow = null;
@@ -184,7 +190,7 @@ export class PortfolioComponent implements OnInit {
   updateSharePrice(){
     this.showUpdateSharePriceInput = false;
     this.isNotActualSharePrice = false;
-    this.portfolioService.getNewSharePrice(this.selectedHoldingRecord.companyid, this.newSharePrice).subscribe(() => this.refreshRecords())
+    this.portfolioService.getNewSharePrice(this.selectedHoldingRecord.companyid, this.newSharePrice).subscribe(() => this.ngOnInit())
   }
 
   setNoSharesLiquidated(noShares: number) {

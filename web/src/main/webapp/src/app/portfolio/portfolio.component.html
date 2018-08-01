@@ -59,7 +59,7 @@
 <br>
 <div *ngIf="liquidatedpressed">
 <hr>
-  <input #noSharesLiquidate (keyup)="setNoSharesLiquidated(noSharesLiquidate.value)" min="0" step="1" placeholder="Number of shares"> &nbsp; <br>
+  <input #noSharesLiquidate (keyup)="setNoSharesLiquidated(noSharesLiquidate.value)" min="0" step="1" placeholder="{{selectedHoldingRecord.noShares}} shares"> &nbsp; <br>
   <label *ngIf="noSharesToLiquidate" class="">Book Value deducted: {{getBookValueLost()*getCurrentFactor() | number: '1.2'}} {{getCurrentCurrencyName()}}</label><br>
   <label *ngIf="noSharesToLiquidate" class=""><b>Added to balance: {{getLiquidatedMoney()*getCurrentFactor() | number: '1.2'}} {{getCurrentCurrencyName()}}</b> </label><br>
   <button *ngIf="noSharesToLiquidate" (click)="liquidate()" class="btn btn-outline-danger">Liquidate shares from {{getCompanyForRecord(selectedHoldingRecord.companyid, selectedHoldingRecord)}}</button><br>
@@ -70,7 +70,7 @@
 </div>
 <div *ngIf="showUpdateSharePriceInput">
   <hr>
-  <input #newSharePrice (keyup)="setNewSharePriceToUpdate(newSharePrice.value/getCurrentFactor())" min="0" step="0.00000000001" placeholder="New Share Price"> &nbsp; <br>
+  <input #newSharePrice (keyup)="setNewSharePriceToUpdate(newSharePrice.value/getCurrentFactor())" type="number" min="0" step="0.00000000001" placeholder="New Share Price"> ({{getCurrentCurrencyName()}}) &nbsp; <br><br>
   <button (click)="updateSharePrice()" class="btn btn-outline-dark">Update Share Price</button><br>
 
   &nbsp;

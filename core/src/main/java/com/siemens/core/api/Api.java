@@ -13,7 +13,7 @@ public class Api {
             Stock stock = YahooFinance.get(symbol);
             BigDecimal price = stock.getQuote().getPrice();
             BigDecimal change = stock.getQuote().getChangeInPercent();
-            BigDecimal dividend = stock.getDividend().getAnnualYield();
+            BigDecimal dividend = stock.getDividend().getAnnualYieldPercent();
             BigDecimal pe = stock.getStats().getPe();
             String currencySmbl = stock.getCurrency();
             String companyName = stock.getName();

@@ -10,14 +10,15 @@ import com.siemens.core.repository.CompanyRepository;
 import com.siemens.core.repository.CurrencyRepository;
 import com.siemens.core.repository.SharePriceRepository;
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,9 +44,13 @@ public class SharePriceServiceImpl implements SharePriceServiceInterface{
     {
         Optional<SharePrice> optionalSharePrice = sharePriceRepository.findAll()
                 .stream().filter(sp -> sp.getCompany().getId().equals(compId)).findFirst();
-        optionalSharePrice.get().setPrice(price);
-        optionalSharePrice.get().setDate(DateTime.now().toString("yyyy/MM/dd"));
-        sharePriceRepository.save(optionalSharePrice.get());
+        sharePriceRepository.save(
+                SharePrice.builder()
+                .company(optionalSharePrice.get().getCompany())
+                .date(DateTime.now().toString("yyyy/MM/dd"))
+                .price(price)
+                .build()
+        );
     }
     @Override
     public void manualSharePrice(Company company, SharePrice sharePrice)
@@ -104,8 +109,12 @@ public class SharePriceServiceImpl implements SharePriceServiceInterface{
                         String[] parameters = apiResponse.split(";");
                         Double sharePriceValue;
 
-                        if(!parameters[4].equals("EUR") && !parameters[4].equals("null"))
+                        if(!parameters[4].equals("EUR") && !parameters[4].equals("GBp") && !parameters[4].equals("null"))
                             sharePriceValue = CurrencyApi.exchange(parameters[4], Double.parseDouble(parameters[1]));
+                        else if (parameters[1].equals("null") && parameters[4].equals("null"))
+                            return;
+                        else if (parameters[4].equals("GBp"))
+                            sharePriceValue = CurrencyApi.exchange(parameters[4], Double.parseDouble(parameters[1])/100);
                         else
                             sharePriceValue = Double.parseDouble(parameters[1]);
 
@@ -192,8 +201,10 @@ public class SharePriceServiceImpl implements SharePriceServiceInterface{
                 //{possible limitation, if the user buys a ton of companies that are not in EUR currency,
                 //the api 1000 query limit will be reached and adding more will not work
                 //If we are talking about a real life situation , an api key will be included in the price of the product
-                if(!parameters[4].equals("EUR") && !parameters[4].equals("null"))
+                if(!parameters[4].equals("EUR") && !parameters[4].equals("GBp") && !parameters[4].equals("null"))
                     sharePriceValue = CurrencyApi.exchange(parameters[4], Double.parseDouble(parameters[1]));
+                else if (parameters[4].equals("GBp"))
+                    sharePriceValue = CurrencyApi.exchange(parameters[4], Double.parseDouble(parameters[1])/100);
                 else
                     sharePriceValue = Double.parseDouble(parameters[1]);
                 sharePrice.setPrice(sharePriceValue);

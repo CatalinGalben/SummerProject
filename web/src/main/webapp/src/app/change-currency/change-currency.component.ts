@@ -30,15 +30,23 @@ export class ChangeCurrencyComponent implements OnInit {
   }
 
   changeCurrency(){
-    this.currencyExchangeChanged =  this.loginService.getNewCurrencyExchange(this.selectedCurrencyId);
+    this.currencyExchangeChanged = this.loginService.getNewCurrencyExchange(this.selectedCurrencyId);
     this.loginService.changeSymbolNameObservable(this.currencies.filter(cu => cu.id == this.selectedCurrencyId)[0].symbol);
     this.loginService.changeFactorObservable(this.currencyExchangeChanged.factor);
     this.router.navigate(['']);
   }
 
-  getCurrencyFactor(symbol: string){
-    let id = this.currencies.filter(cu => cu.symbol == symbol)[0].id;
-    return this.loginService.getNewCurrencyExchange(id).factor;
+  getCurrencyFactor(sym: string): number{
+    if (this.currencies!=null) {
+      let id = this.currencies.filter(currency => currency.symbol == sym)[0].id;
+
+      if(this.loginService.getNewCurrencyExchange(id)){
+        let factor = this.loginService.getNewCurrencyExchange(id).factor;
+        return factor;
+      }
+    }
+    else
+      return;
   }
 
 

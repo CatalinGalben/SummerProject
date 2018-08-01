@@ -79,6 +79,8 @@ export class AppComponent implements OnInit{
     this.authService.logout();
     this.isLoggedIn = false;
     this.loginService.changeUser(null);
+    this.loginService.changeFactorObservable(1);
+    this.loginService.changeSymbolNameObservable("EUR");
     this.router.navigate(['loginGoogle']);
   }
 
