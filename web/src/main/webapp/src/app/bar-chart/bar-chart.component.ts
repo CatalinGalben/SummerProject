@@ -18,7 +18,6 @@ import {Broker} from "../add-record/shared/Broker.model";
   styleUrls: ['./bar-chart.component.css']
 })
 export class BarChartComponent implements OnInit {
-  @Input() commodity: any;
   results: any;
 
   results2 = [];
@@ -249,7 +248,6 @@ export class BarChartComponent implements OnInit {
 
 
     this.results2.push({  // add new node
-      "name": "Trrrrrr",
       "series": [
         {
           "name": "2018/07/11",
@@ -264,8 +262,12 @@ export class BarChartComponent implements OnInit {
           "name": "2018/08/23",
           "value": "6903"
         }
-      ]
+      ],
+      "name": "Trrrrrr"
+
     });
+
+
 
   }
 
@@ -276,36 +278,26 @@ export class BarChartComponent implements OnInit {
         console.log(this.userLoggedIn);
         console.log("POPULATE");
 
-
         // get all records for the user
         this.portfolioService.getRecords().subscribe(records => {
-            console.log("R");
-            console.log(records);
             //this.holdingRecords = records;
             //this.holdingRecords.filter(hr => {hr.userid === this.userLoggedIn.id; console.log(hr.userid + " " + this.userLoggedIn.id)});
             for (let i=0; i<records.length; i++) {
-              console.log(records[i].userid + " " + this.userLoggedIn.id);
               if (records[i].userid == this.userLoggedIn.id) {
                 this.holdingRecords.push(records[i]);
-                console.log("pushed");
               }
             }
-            console.log("HR");
-            console.log(this.holdingRecords);
+
             // get all the companies of the user
             this.recordService.getAllCompanies().subscribe(records => {
                 this.companies = records;
-                console.log("C");
-                console.log(records);
                 this.companies.filter(comp => {
                   for (let i = 0; i < this.holdingRecords.length; i++)
                     if (this.holdingRecords[i].companyid == comp.id) {
-                    console.log("I | " + comp.id);
                       return true;
                     }
                   return false;
                 } );
-                console.log(this.companies);
 
               // get all CompanyGroups of the user
               this.groupService.getCompanyGroups().subscribe(records => {
@@ -324,8 +316,6 @@ export class BarChartComponent implements OnInit {
                         break;
                     }
                 }
-                console.log(records);
-                console.log(this.companyGroups);
 
                 // get all user's groups
                 this.groupService.getGroups().subscribe( records => {
@@ -346,17 +336,10 @@ export class BarChartComponent implements OnInit {
                         }
                       }
                     }
-
                 });
               });
             });
         });
-
-
-
-
-
-
     }
 
     //get all sharePrices
@@ -418,22 +401,27 @@ export class BarChartComponent implements OnInit {
 
     console.log("!!!!!!!!!!!!!! " + this.selectedRow.id + " " + this.selectedRow.name);
 
+
     this.groupService.getBenchmarks(this.selectedRow.id, this.selectedRow.name).subscribe(records =>
       {
-          console.log(records);
+        this.results2 = [];
 
-          this.r = records;
+        console.log("R");
+        console.log(records);
 
-          let d = Object.values(records)[0];
-          console.log(d);
-          console.log(Object.values(d[0])[1]); // Object.values(records)[0][1]
+        this.r = records;
 
-          let arr = Object.values(d[0])[1];
-          //this.results2 = [];
-          for(let i=0; i<arr.length; i++)
-             this.results2.push(arr[i]);
-          console.log("RES2 ");
-          console.log(this.results2);
+        let d = Object.values(records)[0];
+        console.log("Object.values(d[0])[0])");
+        console.log(Object.values(d[0])[0]);
+        // console.log(Object.values(d[0])[1]); // displays G1
+
+        let arr = Object.values(d[0])[0];
+        for(let i=0; i<arr.length; i++)
+          this.results2.push(arr[i]);
+        console.log("RES2 ");
+        console.log(this.results2);
+        this.results2 = [...this.results2] // This will generate a new array and trigger the change detection to ngx chart
     }
     );
 
@@ -459,6 +447,10 @@ export class BarChartComponent implements OnInit {
                                                           if (x.companyid == companiesFromGroup[i].companyid)
                                                               return true;
                                                           return false;});
+  }
+
+  getCurrentCurrencyName(): string {
+    return this.loginService.getCurrencyName();
   }
 
 }

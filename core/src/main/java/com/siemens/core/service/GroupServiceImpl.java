@@ -113,21 +113,21 @@ public class GroupServiceImpl implements GroupServiceInterface {
                     sharePrices.forEach(
                             sp ->
                             {   JSONObject priceObjects = new JSONObject();
-                                priceObjects.put("value:",sp.getPrice().toString());
-                                priceObjects.put("name:", sp.getDate());
+                                priceObjects.put("value",sp.getPrice().toString());
+                                priceObjects.put("name", sp.getDate());
                                 pricesArray.put(priceObjects);
                             }
                     );
-                    companyItem.put("name:",company.getName());
-                    companyItem.put("series:",pricesArray);
+                    companyItem.put("name",company.getName());
+                    companyItem.put("series",pricesArray);
                     companyArray.put(companyItem);
                 }
         );
-        mainObject.put("name:", recordName);
-        mainObject.put("series:", companyArray);
+        mainObject.put("name", recordName);
+        mainObject.put("series", companyArray);
         mainArray.put(mainObject);
 
-        benchmark.put("results:", mainArray);
+        benchmark.put("results", mainArray);
         log.trace("Benchmark json:" + benchmark);
         return benchmark;
     }
