@@ -21,9 +21,9 @@ export class BarChartComponent implements OnInit {
   @Input() commodity: any;
   results: any;
 
-  results2: any;
+  results2 = [];
 
-  selectedRow: any;
+  selectedRow: Group;
 
   userLoggedIn: User;
   companies: Company[] = [];
@@ -42,10 +42,25 @@ export class BarChartComponent implements OnInit {
               private recordService: AddRecordService) {
 
     this.populate();
+   /*
+    this.groupService.getBenchmarks(352, "G1").subscribe(records =>
+      {
+        console.log("RRRRRRR");
+        console.log(records);
+
+        this.r = records;
+        let d = Object.values(records)[0];
+        let arr = Object.values(d[0])[1];
+        //this.results2 = [];
+        for(let i=0; i<arr.length; i++)
+          this.results2.push(arr[i]);
+
+        console.log(this.results2);
+      }
+    ); */
   }
 
   ngOnInit() {
-    this.results2 = [];
     this.results = [
 
       {
@@ -232,28 +247,22 @@ export class BarChartComponent implements OnInit {
       ]
     });
 
+
     this.results2.push({  // add new node
       "name": "Trrrrrr",
       "series": [
         {
-          "value": 6918,
-          "name": "2016-09-16T16:58:17.749Z"
+          "name": "2018/07/11",
+          "value": "6918"
         },
         {
-          "value": 3183,
-          "name": "2016-09-23T03:15:22.044Z"
+          "name": "2018/01/31",
+          "value": "3183"
+
         },
         {
-          "value": 5903,
-          "name": "2016-09-21T18:51:48.246Z"
-        },
-        {
-          "value": 6019,
-          "name": "2016-09-18T20:29:50.869Z"
-        },
-        {
-          "value": 4940,
-          "name": "2016-09-14T04:06:26.043Z"
+          "name": "2018/08/23",
+          "value": "6903"
         }
       ]
     });
@@ -264,50 +273,90 @@ export class BarChartComponent implements OnInit {
     if (this.loginService.getCurrentUser() != null) {
         // get user data
         this.userLoggedIn = this.loginService.getCurrentUser();
+        console.log(this.userLoggedIn);
+        console.log("POPULATE");
 
 
         // get all records for the user
         this.portfolioService.getRecords().subscribe(records => {
-          console.log(records);
-          this.holdingRecords = records;
-          this.holdingRecords.filter(hr => hr.userid == this.userLoggedIn.id)
-        });
-        console.log(this.holdingRecords);
-
-        // get all the companies groups of the user
-        this.recordService.getAllCompanies().subscribe(records => {
-            this.companies = records;
-            this.companies.filter(comp => {
-                 for (let i = 0; i < this.holdingRecords.length; i++)
-                   if (this.holdingRecords[i].companyid == comp.id)
-                      return false;
-                 return true;
-               } );
-         });
-
-        // get all CompanyGroups of the user
-        this.groupService.getCompanyGroups().subscribe(records => {
-            this.companyGroups = records;
-            this.companyGroups.filter(comp => {
-              for (let i = 0; i < this.holdingRecords.length; i++)
-                if (this.holdingRecords[i].companyid == comp.companyid)
-                  return false;
-              return true;
-            } );
-        });
-
-
-      // get all user's groups
-      this.groupService.getGroups().subscribe( records => {
-        this.groups = records;
-        this.groups.filter(gr => {
-            for (let i = 0; i < this.companyGroups.length; i++) {
-              if (this.companyGroups[i].groupid == gr.id)
-                return false;
+            console.log("R");
+            console.log(records);
+            //this.holdingRecords = records;
+            //this.holdingRecords.filter(hr => {hr.userid === this.userLoggedIn.id; console.log(hr.userid + " " + this.userLoggedIn.id)});
+            for (let i=0; i<records.length; i++) {
+              console.log(records[i].userid + " " + this.userLoggedIn.id);
+              if (records[i].userid == this.userLoggedIn.id) {
+                this.holdingRecords.push(records[i]);
+                console.log("pushed");
+              }
             }
-            return true;
+            console.log("HR");
+            console.log(this.holdingRecords);
+            // get all the companies of the user
+            this.recordService.getAllCompanies().subscribe(records => {
+                this.companies = records;
+                console.log("C");
+                console.log(records);
+                this.companies.filter(comp => {
+                  for (let i = 0; i < this.holdingRecords.length; i++)
+                    if (this.holdingRecords[i].companyid == comp.id) {
+                    console.log("I | " + comp.id);
+                      return true;
+                    }
+                  return false;
+                } );
+                console.log(this.companies);
+
+              // get all CompanyGroups of the user
+              this.groupService.getCompanyGroups().subscribe(records => {
+                //this.companyGroups = records;
+                /*this.companyGroups.filter(comp => {
+                  for (let i = 0; i < this.holdingRecords.length; i++)
+                    if (this.holdingRecords[i].companyid == comp.companyid)
+                      return true;
+                  return false;
+                } );*/
+
+                for (let i=0; i<records.length; i++) {
+                  for (let j = 0; j < this.holdingRecords.length; j++)
+                    if (this.holdingRecords[j].companyid == records[i].companyid) {
+                        this.companyGroups.push(records[i]);
+                        break;
+                    }
+                }
+                console.log(records);
+                console.log(this.companyGroups);
+
+                // get all user's groups
+                this.groupService.getGroups().subscribe( records => {
+                   // this.groups = records;
+                    /*this.groups.filter(gr => {
+                      for (let i = 0; i < this.companyGroups.length; i++) {
+                        if (this.companyGroups[i].groupid == gr.id)
+                          return true;
+                      }
+                      return false;
+                    });*/
+
+                    for (let i=0; i<records.length; i++) {
+                      for (let j = 0; j < this.companyGroups.length; j++) {
+                        if (this.companyGroups[j].groupid == records[i].id) {
+                            this.groups.push(records[i]);
+                            break;
+                        }
+                      }
+                    }
+
+                });
+              });
+            });
         });
-      });
+
+
+
+
+
+
     }
 
     //get all sharePrices
@@ -345,11 +394,15 @@ export class BarChartComponent implements OnInit {
     return this.brokers.filter(broker => broker.id == brokerid)[0].name;
   }
 
-  clickRecord(name: string) {
+  result = [];
+
+  r;
+
+  clickRecord(group: Group) {
     console.log("NAME " + name);
 
-    this.selectedRow = name;
-    this.addNode(name);
+    this.selectedRow = group;
+    //this.addNode(name);
 
     //console.log("NN " + this.selectedRow);
 
@@ -358,10 +411,33 @@ export class BarChartComponent implements OnInit {
     // console.log(this.holdingRecords);
     // console.log("Companies: ");
     // console.log(this.companies);
-     console.log("Company Groups: ");
-     console.log(this.companyGroups)
-     console.log("Groups: ");
-     console.log(this.groups)
+    //  console.log("Company Groups: ");
+    //  console.log(this.companyGroups)
+    //  console.log("Groups: ");
+    //  console.log(this.groups)
+
+    console.log("!!!!!!!!!!!!!! " + this.selectedRow.id + " " + this.selectedRow.name);
+
+    this.groupService.getBenchmarks(this.selectedRow.id, this.selectedRow.name).subscribe(records =>
+      {
+          console.log(records);
+
+          this.r = records;
+
+          let d = Object.values(records)[0];
+          console.log(d);
+          console.log(Object.values(d[0])[1]); // Object.values(records)[0][1]
+
+          let arr = Object.values(d[0])[1];
+          //this.results2 = [];
+          for(let i=0; i<arr.length; i++)
+             this.results2.push(arr[i]);
+          console.log("RES2 ");
+          console.log(this.results2);
+    }
+    );
+
+
   }
 
   addNode(name: string) {

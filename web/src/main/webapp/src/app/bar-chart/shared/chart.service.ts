@@ -18,6 +18,7 @@ export class ChartService {
   private companiesGroupUrl = 'http://localhost:8080/api/companygroups';
   private createGroupUrl = 'http://localhost:8080/api/creategroup';
   private createCompanyGroupUrl = 'http://localhost:8080/api/creategroup';
+  private getBenchmarksUrl = 'http://localhost:8080/api/group';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -39,15 +40,13 @@ export class ChartService {
     return this.httpClient.post<CompanyGroup>(this.createCompanyGroupUrl, groupWrapper);
   }
 
+  getBenchmarks(id: number, name: string) : Observable<String> {
+    const getBenchm = "benchmark";
+    const url = `${this.getBenchmarksUrl}/${getBenchm}`;
+    let group = {id, name};
 
-
-
-
-
-
-
-
-
+    return this.httpClient.post<String>(url, group);
+  }
 
 
 

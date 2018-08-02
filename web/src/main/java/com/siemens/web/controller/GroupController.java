@@ -56,8 +56,8 @@ public class GroupController {
         groupService.createGroup(companies, groupName, user);
     }
     @RequestMapping(value = "/group/benchmark", method = RequestMethod.POST)
-    public JSONObject getBenchmarks(@RequestBody final GroupDTO groupDTO)
+    public String getBenchmarks(@RequestBody final GroupDTO groupDTO)
     {
-        return groupService.getBenchmarks(groupConverter.convertDtoToModel(groupDTO));
+        return groupService.getBenchmarks(groupConverter.convertDtoToModel(groupDTO)).toString();
     }
 }

@@ -8,7 +8,7 @@
   <tbody>
 
   <ng-container *ngIf="(groups.length > 0)">
-    <tr *ngFor="let gr of groups" (click)="clickRecord(gr.name)">
+    <tr *ngFor="let gr of groups" (click)="clickRecord(gr)">
       <td>
         <table>
           <thead>
@@ -16,7 +16,7 @@
           </thead>
           <tbody>
               <table>
-                  <div *ngIf="gr.name == selectedRow">
+                 <!-- <div *ngIf="gr.name == selectedRow.name"> -->
                   <thead>
                   <th>Name</th>
                   <th>No. Shares</th>
@@ -31,7 +31,7 @@
                         <tr *ngFor="let rec of getHoldingRecordsOfGroup(gr.name)">
                           <td>{{getCompanyForRecord(rec.companyid, rec)}}</td>
                           <td>{{rec.noShares}}</td>
-                          <td>{{getCurrentShareForCompany(rec.companyid).toString()}}</td>
+                          <td>{{getCurrentShareForCompany(rec.companyid).toString() | number : '1.2'}}</td>
                           <td>{{rec.pricePaid | number : '1.2'}}</td>
                           <td>{{getCurrentShareForCompany(rec.companyid)*rec.noShares | number : '1.2'}}</td>
                           <td>{{getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares) | number : '1.2'}}%</td>
@@ -39,7 +39,7 @@
                         </tr>
                       </ng-container>
                   </tbody>
-                  </div>
+                <!--  </div> -->
               </table>
           </tbody>
         </table>
@@ -52,7 +52,7 @@
 
 <br/>
 
-<div class="row ngx-chart-container" style="height: 350px;">
+<div class="row ngx-chart-container" style="height: 350px;" *ngIf="results2.length > 0">
   <ngx-charts-line-chart
     [results]="results2"
     [autoScale]="true"
