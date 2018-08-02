@@ -30,6 +30,7 @@ import {PortfolioService} from "./portfolio/shared/portfolio.service";
 import { AddGroupComponent } from './add-group/add-group.component';
 import { ChangeCurrencyComponent } from './change-currency/change-currency.component';
 import {DatePipe} from "@angular/common";
+import { ViewMetricsComponent } from './view-metrics/view-metrics.component';
 
 const routes: Routes=[
   {path: 'homePage', component: HomePageComponent},
@@ -39,9 +40,8 @@ const routes: Routes=[
   {path: 'portfolio', component: PortfolioComponent},
   {path: 'addRecord', component: AddRecordComponent},
   {path: 'currency', component: ChangeCurrencyComponent},
-
+  {path: 'metrics/:id', component: ViewMetricsComponent},
   {path: 'addGroup', component: AddGroupComponent},
-
   {path: 'buy/:id/:buy', component: BuyComponent},
   {path: 'barChart', component: BarChartComponent}
 ];
@@ -59,7 +59,8 @@ const routes: Routes=[
     BuyComponent,
     BarChartComponent,
     AddGroupComponent,
-    ChangeCurrencyComponent
+    ChangeCurrencyComponent,
+    ViewMetricsComponent
   ],
   imports: [
     BrowserModule,

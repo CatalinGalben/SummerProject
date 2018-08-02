@@ -174,7 +174,7 @@ export class AddRecordComponent implements OnInit {
         });
     }
     if (this.typeOfCompany==2 && this.shareFound){
-      this.recordService.addTrust(this.userLoggedInAddComponent.id, this.brokerEntered.id, this.companyFound.id, this.bookValue, this.noShares, this.gearing, this.PD, this.NAV, this.TER)
+      this.recordService.addTrust(this.userLoggedInAddComponent.id, this.brokerEntered.id, this.companyFound.id, this.bookValue, this.noShares, this.gearing, this.PD, 0, this.TER)
         .subscribe(hr => {
           //todo Add to existing holding records / refresh list of holding records
           this.loginService.getActualDetailsUser(this.userLoggedInAddComponent.id).subscribe(user=>{
@@ -184,7 +184,7 @@ export class AddRecordComponent implements OnInit {
         });
     }
     if (this.typeOfCompany==3 && this.shareFound){
-      this.recordService.addETF(this.userLoggedInAddComponent.id, this.brokerEntered.id, this.companyFound.id, this.bookValue, this.noShares,  this.NAV, this.TER, this.typeOfETF)
+      this.recordService.addETF(this.userLoggedInAddComponent.id, this.brokerEntered.id, this.companyFound.id, this.bookValue, this.noShares, 0, this.TER, this.typeOfETF)
         .subscribe(hr => {
           //todo Add to existing holding records / refresh list of holding records
           this.loginService.getActualDetailsUser(this.userLoggedInAddComponent.id).subscribe(user=>{

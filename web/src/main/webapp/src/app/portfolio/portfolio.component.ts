@@ -117,6 +117,7 @@ export class PortfolioComponent implements OnInit {
   }
 
   getCurrentShareForCompany(companyid: number): number{
+    if (this.sharePrices)
     return this.sharePrices.filter(shareprice => shareprice.companyid == companyid)[0].price;
   }
 
@@ -214,6 +215,11 @@ export class PortfolioComponent implements OnInit {
   gotoAddDividend(): void {
     console.log("gotoDetail method entered -- portfolio.component.ts");
     this.router.navigate(['/buy', this.selectedHoldingRecord.id, 2]);
+  }
+
+  gotoMetrics(): void {
+    console.log("gotoMetrics method entered -- portfolio.component.ts");
+    this.router.navigate(['/metrics',this.selectedHoldingRecord.id]);
   }
 
   setNewBalanceUser(newBalance: number) {

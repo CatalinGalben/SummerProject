@@ -25,7 +25,7 @@
       <td *ngIf="getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares)>=0" style="color: green">+{{getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares) | number : '1.2'}}%</td>
       <td *ngIf="getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares)<0" style="color: red">{{getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares) | number : '1.2'}}%</td>
       <td>{{getBrokerForRecord(rec.brokerid)}}</td>
-      <td>{{getLastTimeUpdatedSharePrice(rec.companyid)}}</td>
+      <td>{{getLastTimeUpdatedSharePrice(rec.companyid) | date : "dd/MM/yyyy" }}</td>
 
     </tr>
   </ng-container>
@@ -37,7 +37,12 @@
 <br>
 <div class="row" *ngIf="selectedRow!=null">
 
-    <button (click)="gotoDetail()" class ="btn btn-outline-success">Add to {{getCompanyForRecord(selectedHoldingRecord.companyid, selectedHoldingRecord)}}</button>
+
+
+    <button (click)="gotoMetrics()" class="btn btn-primary">See Metrics</button>
+    &nbsp;
+
+  <button (click)="gotoDetail()" class ="btn btn-outline-success">Add to {{getCompanyForRecord(selectedHoldingRecord.companyid, selectedHoldingRecord)}}</button>
     &nbsp;
     <button (click)="gotoAddDividend()" class="btn btn-outline-warning">Add dividend to {{getCompanyForRecord(selectedHoldingRecord.companyid, selectedHoldingRecord)}}</button>
     &nbsp;
@@ -53,7 +58,6 @@
     <button (click)="showSharePriceInput()" class="btn btn-dark">Update Share Price</button>
     &nbsp;
   </div>
-
 
 </div>
 <br>

@@ -13,3 +13,7 @@ export class ETFTypes {
   number: number;
   type: string;
 }
+
+export class MetricYear {
+  year: number;
+}

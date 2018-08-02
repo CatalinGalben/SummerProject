@@ -1,4 +1,4 @@
-import {CompanyTypes, ETFTypes, Mockmodels} from './mockmodels';
+import {CompanyTypes, ETFTypes, MetricYear, Mockmodels} from './mockmodels';
 
 export const RECORDS: Mockmodels[] = [
   { name: 'Mr. Nice', pricePaid: 1000, noShares:100 },
@@ -33,4 +33,13 @@ export const ETFTYPES: ETFTypes[] = [
   { number: 1, type: 'Index Fund'},
   { number: 2, type: 'Real ETF'},
   { number: 3, type: 'Synthetic ETF'}
+];
+
+export const YEARSMETRICS: MetricYear[] = [
+  {year: 2018},
+  {year: 2017},
+  {year: 2016},
+  {year: 2015},
+  {year: 2014},
+  {year: 2013}
 ];
