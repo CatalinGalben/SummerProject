@@ -1,10 +1,7 @@
 package com.siemens.core.service;
 
 import com.siemens.core.model.*;
-import com.siemens.core.repository.CompanyGroupRepository;
-import com.siemens.core.repository.CompanyRepository;
-import com.siemens.core.repository.GroupRepository;
-import com.siemens.core.repository.SharePriceRepository;
+import com.siemens.core.repository.*;
 import com.sun.xml.internal.bind.annotation.OverrideAnnotationOf;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -29,6 +26,9 @@ public class GroupServiceImpl implements GroupServiceInterface {
     private SharePriceRepository sharePriceRepo;
     @Autowired
     private CompanyRepository companyRepository;
+    @Autowired
+    private HoldingRecordRepository recordRepository;
+
     @Override
     public List<Group> getGroups()
     {
@@ -90,7 +90,6 @@ public class GroupServiceImpl implements GroupServiceInterface {
         JSONArray companyArray = new JSONArray();
 
 
-
         List<CompanyGroup> groupRecords = companyGroupRepo.findAll()
                 .stream().filter(rec -> rec.getGroup().getId().equals(group.getId())).collect(Collectors.toList());
 
@@ -102,7 +101,6 @@ public class GroupServiceImpl implements GroupServiceInterface {
                             .stream().filter(c -> c.getId().equals(record.getCompany().getId()))
                             .findFirst().get();
 
-
                     List<SharePrice> sharePrices = sharePriceRepo.findAll()
                             .stream()
                             .filter(sp -> sp.getCompany().getId().equals(company.getId()))
@@ -110,10 +108,17 @@ public class GroupServiceImpl implements GroupServiceInterface {
                     JSONArray pricesArray = new JSONArray();
                     JSONObject companyItem = new JSONObject();
 
+                    // get the no. of buyed shares
+                    /*
+                    int no = recordRepository.findAll()
+                            .stream().filter(r -> r.getCompany().getId().equals(company.getId()))
+                            .findFirst().get().getNoShares();
+                    log.trace("NO SHARES " + company.getName() + " " + no); */
+
                     sharePrices.forEach(
                             sp ->
                             {   JSONObject priceObjects = new JSONObject();
-                                priceObjects.put("value",sp.getPrice().toString());
+                                priceObjects.put("value",sp.getPrice());//Double.toString(sp.getPrice()*no));
                                 priceObjects.put("name", sp.getDate());
                                 pricesArray.put(priceObjects);
                             }

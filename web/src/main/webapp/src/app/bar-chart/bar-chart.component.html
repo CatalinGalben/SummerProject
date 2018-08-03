@@ -16,7 +16,7 @@
           </thead>
           <tbody>
               <table>
-                 <!-- <div *ngIf="gr.name == selectedRow.name"> -->
+                  <div *ngIf="gr.name == selectedRow.name">
                   <thead>
                   <th>Name</th>
                   <th>No. Shares</th>
@@ -39,7 +39,7 @@
                         </tr>
                       </ng-container>
                   </tbody>
-                <!--  </div> -->
+                 </div>
               </table>
           </tbody>
         </table>
@@ -51,6 +51,11 @@
 </table>
 
 <br/>
+
+<div class="btn-group">
+  <button type="button.active" class="btn btn-outline-info"(click)="display()" >SHARE PRICE</button>
+  <button type="button" class="btn btn-outline-info" (click)="displayTotal()">VALUATION BRACKETS GROUPS</button>
+</div>
 
 <div class="row ngx-chart-container" style="height: 350px;" *ngIf="results2.length > 0">
   <ngx-charts-line-chart

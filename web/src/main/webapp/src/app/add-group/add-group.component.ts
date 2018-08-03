@@ -185,9 +185,18 @@ export class AddGroupComponent implements OnInit {
     if (this.selectedCompanies.length == 0) {
       alert("No company selected");
     }
-    this.groupService.createGroup(this.selectedCompanies, groupName, this.userLoggedInPortfolioComponent).subscribe();
 
-    this.router.navigate(['portfolio']);
+    this.groupService.getGroups().subscribe(groups =>
+    {
+      console.log("-----------------");
+      console.log(groups.filter(g => g.name == groupName)[0]);
+      if (groups.filter(g => g.name == groupName)[0] != null) {
+        alert("This group already exists. Please try another name");
+      } else {
+        this.groupService.createGroup(this.selectedCompanies, groupName, this.userLoggedInPortfolioComponent).subscribe();
+        this.router.navigate(['portfolio']);
+      }
+    });
   }
 
 

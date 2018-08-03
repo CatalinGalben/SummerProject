@@ -41,25 +41,10 @@ export class BarChartComponent implements OnInit {
               private recordService: AddRecordService) {
 
     this.populate();
-   /*
-    this.groupService.getBenchmarks(352, "G1").subscribe(records =>
-      {
-        console.log("RRRRRRR");
-        console.log(records);
-
-        this.r = records;
-        let d = Object.values(records)[0];
-        let arr = Object.values(d[0])[1];
-        //this.results2 = [];
-        for(let i=0; i<arr.length; i++)
-          this.results2.push(arr[i]);
-
-        console.log(this.results2);
-      }
-    ); */
   }
 
   ngOnInit() {
+    this.selectedRow = {name:"", id:0, parentGroupID:0};
     this.results = [
 
       {
@@ -220,33 +205,6 @@ export class BarChartComponent implements OnInit {
      */
     this.results.splice(3,1); // delete Suriname
 
-    this.results.push( {  // add new node
-      "name": "Trrrrrr",
-      "series": [
-        {
-          "value": 6918,
-          "name": "2016-09-16T16:58:17.749Z"
-        },
-        {
-          "value": 3183,
-          "name": "2016-09-23T03:15:22.044Z"
-        },
-        {
-          "value": 5903,
-          "name": "2016-09-21T18:51:48.246Z"
-        },
-        {
-          "value": 6019,
-          "name": "2016-09-18T20:29:50.869Z"
-        },
-        {
-          "value": 4940,
-          "name": "2016-09-14T04:06:26.043Z"
-        }
-      ]
-    });
-
-
     this.results2.push({  // add new node
       "series": [
         {
@@ -266,8 +224,6 @@ export class BarChartComponent implements OnInit {
       "name": "Trrrrrr"
 
     });
-
-
 
   }
 
@@ -377,39 +333,20 @@ export class BarChartComponent implements OnInit {
     return this.brokers.filter(broker => broker.id == brokerid)[0].name;
   }
 
-  result = [];
-
-  r;
-
   clickRecord(group: Group) {
     console.log("NAME " + name);
 
     this.selectedRow = group;
-    //this.addNode(name);
+    this.display();
+  }
 
-    //console.log("NN " + this.selectedRow);
-
-    // console.log(this.userLoggedIn);
-    // console.log("HR: ");
-    // console.log(this.holdingRecords);
-    // console.log("Companies: ");
-    // console.log(this.companies);
-    //  console.log("Company Groups: ");
-    //  console.log(this.companyGroups)
-    //  console.log("Groups: ");
-    //  console.log(this.groups)
-
-    console.log("!!!!!!!!!!!!!! " + this.selectedRow.id + " " + this.selectedRow.name);
-
-
+  display() {
     this.groupService.getBenchmarks(this.selectedRow.id, this.selectedRow.name).subscribe(records =>
       {
         this.results2 = [];
 
         console.log("R");
         console.log(records);
-
-        this.r = records;
 
         let d = Object.values(records)[0];
         console.log("Object.values(d[0])[0])");
@@ -422,22 +359,74 @@ export class BarChartComponent implements OnInit {
         console.log("RES2 ");
         console.log(this.results2);
         this.results2 = [...this.results2] // This will generate a new array and trigger the change detection to ngx chart
-    }
+      }
     );
-
-
   }
 
-  addNode(name: string) {
-    let node = this.results.find(x => x.name == name).series;
+  displayPrice() {
+    this.groupService.getBenchmarks(this.selectedRow.id, this.selectedRow.name).subscribe(records =>
+      {
+        this.results2 = [];
 
-    console.log(node);
-    for(let i=0; i<node.length; i++)
-      this.results2.push(node[i]);
-    console.log("RES2");
-    console.log(this.results2);
+        let d = Object.values(records)[0];
+        let arr = [];
+        arr.push(Object.values(d[0])[0]);
+        for(let i=0; i<=arr.length; i++) {
+          let sharename = arr[0][i].name;
+          let companyid = this.companies.filter(c => c.name == sharename)[0].id;
+
+          for (let k=0; k<arr[0][i].series.length; k++) {
+            arr[0][i].series[k].value = arr[0][i].series[k].value * this.holdingRecords.filter(r => r.companyid == companyid)[0].noShares;
+          }
+          this.results2.push(arr[0][i]);
+        }
+        this.results2 = [...this.results2] // This will generate a new array and trigger the change detection to ngx chart
+      }
+    );
   }
 
+  displayTotal() {
+    this.groupService.getBenchmarks(this.selectedRow.id, this.selectedRow.name).subscribe(records =>
+      {
+        this.results2 = [];
+
+        let d = Object.values(records)[0];
+        let arr = [];
+        arr.push(Object.values(d[0])[0]); console.log(arr);
+        let arr2 = []; let series = [];
+        for(let i=0; i<=arr.length; i++) {
+          let sharename = arr[0][i].name;
+          let companyid = this.companies.filter(c => c.name == sharename)[0].id;
+
+          series.push({value:0, name:""});
+          series.push({value:0, name:""});
+
+          for (let k=0; k<arr[0][i].series.length; k++) {
+            arr[0][i].series[k].value = arr[0][i].series[k].value * this.holdingRecords.filter(r => r.companyid == companyid)[0].noShares;
+
+            series[k].value += arr[0][i].series[k].value * this.holdingRecords.filter(r => r.companyid == companyid)[0].noShares;
+            series[k].name = arr[0][i].series[k].name;
+            //series.push({value:arr[0][i].series[k].value, name:arr[0][i].series[k].name});
+            console.log(k + " " + arr[0][i].series[k].name + ": " + arr[0][i].series[k].value * this.holdingRecords.filter(r => r.companyid == companyid)[0].noShares);
+          }
+        }
+
+        let series2 = [];
+        for (let k=0; k<arr[0][0].series.length; k++) {
+          series2.push(series[k]);
+        }
+
+        console.log("series");
+        console.log(series);
+        console.log(series2);
+        arr2.push({name:"TOT", series:series2});
+        this.results2.push(arr2[0]);
+        console.log(arr2[0]);
+        console.log(this.results2);
+        this.results2 = [...this.results2] // This will generate a new array and trigger the change detection to ngx chart
+      }
+    );
+  }
 
   getHoldingRecordsOfGroup(groupName: string) {
     let id = this.groups.filter(x => x.name == groupName)[0].id;
