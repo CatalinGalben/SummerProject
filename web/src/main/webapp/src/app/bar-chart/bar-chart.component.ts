@@ -394,7 +394,7 @@ export class BarChartComponent implements OnInit {
         let arr = [];
         arr.push(Object.values(d[0])[0]); console.log(arr);
         let arr2 = []; let series = [];
-        for(let i=0; i<=arr.length; i++) {
+        for(let i=0; i<arr[0].length; i++) { console.log("L " + arr[0].length);
           let sharename = arr[0][i].name;
           let companyid = this.companies.filter(c => c.name == sharename)[0].id;
 
@@ -405,6 +405,8 @@ export class BarChartComponent implements OnInit {
             arr[0][i].series[k].value = arr[0][i].series[k].value * this.holdingRecords.filter(r => r.companyid == companyid)[0].noShares;
 
             series[k].value += arr[0][i].series[k].value * this.holdingRecords.filter(r => r.companyid == companyid)[0].noShares;
+            // !!!!!! same date
+            let a = arr[0][i].series[k].name;
             series[k].name = arr[0][i].series[k].name;
             //series.push({value:arr[0][i].series[k].value, name:arr[0][i].series[k].name});
             console.log(k + " " + arr[0][i].series[k].name + ": " + arr[0][i].series[k].value * this.holdingRecords.filter(r => r.companyid == companyid)[0].noShares);
