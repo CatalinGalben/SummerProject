@@ -12,6 +12,8 @@ import {CompanyGroup} from "./shared/CompanyGroup.model";
 import {SharePrice} from "../add-record/shared/SharePrice.model";
 import {Broker} from "../add-record/shared/Broker.model";
 
+import { DatePipe } from '@angular/common';
+
 @Component({
   selector: 'app-ngx-charts',
   templateUrl: './bar-chart.component.html',
@@ -38,172 +40,14 @@ export class BarChartComponent implements OnInit {
   constructor(private groupService: ChartService,
               private loginService: LoginService,
               private portfolioService: PortfolioService,
-              private recordService: AddRecordService) {
+              private recordService: AddRecordService,
+              private datePipe: DatePipe) {
 
     this.populate();
   }
 
   ngOnInit() {
     this.selectedRow = {name:"", id:0, parentGroupID:0};
-    this.results = [
-
-      {
-        "name": "G1",
-        "series": [
-
-          {
-            "name": "Isle of Man",
-            "series": [
-              {
-                "value": 5990,
-                "name": "2016-09-16T16:58:17.749Z"
-              },
-              {
-                "value": 5308,
-                "name": "2016-09-23T03:15:22.044Z"
-              },
-              {
-                "value": 5888,
-                "name": "2016-09-21T18:51:48.246Z"
-              },
-              {
-                "value": 2709,
-                "name": "2016-09-18T20:29:50.869Z"
-              },
-              {
-                "value": 4882,
-                "name": "2016-09-14T04:06:26.043Z"
-              }
-            ]
-          },
-          {
-            "name": "Kenya",
-            "series": [
-              {
-                "value": 4924,
-                "name": "2016-09-16T16:58:17.749Z"
-              },
-              {
-                "value": 2403,
-                "name": "2016-09-23T03:15:22.044Z"
-              },
-              {
-                "value": 5914,
-                "name": "2016-09-21T18:51:48.246Z"
-              },
-              {
-                "value": 6151,
-                "name": "2016-09-18T20:29:50.869Z"
-              },
-              {
-                "value": 5569,
-                "name": "2016-09-14T04:06:26.043Z"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "name": "G2",
-        "series": [
-          {
-            "name": "Sint Maarten (Dutch Part)",
-            "series": [
-              {
-                "value": 3144,
-                "name": "2016-09-16T16:58:17.749Z"
-              },
-              {
-                "value": 5066,
-                "name": "2016-09-23T03:15:22.044Z"
-              },
-              {
-                "value": 5510,
-                "name": "2016-09-21T18:51:48.246Z"
-              },
-              {
-                "value": 2621,
-                "name": "2016-09-18T20:29:50.869Z"
-              },
-              {
-                "value": 5945,
-                "name": "2016-09-14T04:06:26.043Z"
-              }
-            ]
-          },
-          {
-            "name": "Suriname",
-            "series": [
-              {
-                "value": 6556,
-                "name": "2016-09-16T16:58:17.749Z"
-              },
-              {
-                "value": 5149,
-                "name": "2016-09-23T03:15:22.044Z"
-              },
-              {
-                "value": 2439,
-                "name": "2016-09-21T18:51:48.246Z"
-              },
-              {
-                "value": 5988,
-                "name": "2016-09-18T20:29:50.869Z"
-              },
-              {
-                "value": 5525,
-                "name": "2016-09-14T04:06:26.043Z"
-              }
-            ]
-          },
-          {
-            "name": "Tunisia",
-            "series": [
-              {
-                "value": 6918,
-                "name": "2016-09-16T16:58:17.749Z"
-              },
-              {
-                "value": 3183,
-                "name": "2016-09-23T03:15:22.044Z"
-              },
-              {
-                "value": 5903,
-                "name": "2016-09-21T18:51:48.246Z"
-              },
-              {
-                "value": 6019,
-                "name": "2016-09-18T20:29:50.869Z"
-              },
-              {
-                "value": 4940,
-                "name": "2016-09-14T04:06:26.043Z"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-
-    /*
-    console.log("BC: " + this.results[0].name);
-    console.log("BC: " + this.results[0].series[0].value);
-    console.log("BC: " + this.results[0].series[0].name);
-
-    for(let i=0; i<this.results.length; i++) {
-      console.log(this.results[i].name);
-      for(let j=0; j<this.results.length; j++) {
-        console.log(this.results[i].series[j].value);
-        console.log(this.results[i].series[j].name);
-      }
-    }
-*/
-
-    /*
-    const index = this.checkinTemp.indexOf(item);
-    this.checkinTemp.splice(index, 1);
-     */
-    this.results.splice(3,1); // delete Suriname
 
     this.results2.push({  // add new node
       "series": [
@@ -236,8 +80,8 @@ export class BarChartComponent implements OnInit {
 
         // get all records for the user
         this.portfolioService.getRecords().subscribe(records => {
-            //this.holdingRecords = records;
-            //this.holdingRecords.filter(hr => {hr.userid === this.userLoggedIn.id; console.log(hr.userid + " " + this.userLoggedIn.id)});
+            //let auxholdingRecords = records;
+            //this.holdingRecords = auxholdingRecords.filter(hr => {hr.userid === this.userLoggedIn.id; console.log(hr.userid + " " + this.userLoggedIn.id)});
             for (let i=0; i<records.length; i++) {
               if (records[i].userid == this.userLoggedIn.id) {
                 this.holdingRecords.push(records[i]);
@@ -345,25 +189,18 @@ export class BarChartComponent implements OnInit {
       {
         this.results2 = [];
 
-        console.log("R");
-        console.log(records);
-
         let d = Object.values(records)[0];
-        console.log("Object.values(d[0])[0])");
-        console.log(Object.values(d[0])[0]);
-        // console.log(Object.values(d[0])[1]); // displays G1
 
         let arr = Object.values(d[0])[0];
         for(let i=0; i<arr.length; i++)
           this.results2.push(arr[i]);
-        console.log("RES2 ");
-        console.log(this.results2);
+
         this.results2 = [...this.results2] // This will generate a new array and trigger the change detection to ngx chart
       }
     );
   }
 
-  displayPrice() {
+  displayPercentage() {
     this.groupService.getBenchmarks(this.selectedRow.id, this.selectedRow.name).subscribe(records =>
       {
         this.results2 = [];
@@ -374,9 +211,10 @@ export class BarChartComponent implements OnInit {
         for(let i=0; i<=arr.length; i++) {
           let sharename = arr[0][i].name;
           let companyid = this.companies.filter(c => c.name == sharename)[0].id;
+          let init_price = arr[0][i].series[0].value;
 
           for (let k=0; k<arr[0][i].series.length; k++) {
-            arr[0][i].series[k].value = arr[0][i].series[k].value * this.holdingRecords.filter(r => r.companyid == companyid)[0].noShares;
+            arr[0][i].series[k].value = ((arr[0][i].series[k].value - init_price)/init_price)*100;
           }
           this.results2.push(arr[0][i]);
         }
@@ -393,41 +231,86 @@ export class BarChartComponent implements OnInit {
         let d = Object.values(records)[0];
         let arr = [];
         arr.push(Object.values(d[0])[0]); console.log(arr);
-        let arr2 = []; let series = [];
-        for(let i=0; i<arr[0].length; i++) { console.log("L " + arr[0].length);
+        let series = [];
+
+        // for each share
+        for(let i=0; i<arr[0].length; i++) {
           let sharename = arr[0][i].name;
           let companyid = this.companies.filter(c => c.name == sharename)[0].id;
 
-          series.push({value:0, name:""});
-          series.push({value:0, name:""});
+          let date = arr[0][0].series[0].name; // the date from where to start the graph  arr[0][0].series[0].name;
+          let w = new DatePipe('en-US').transform(new Date(), 'yyyy/MM/dd');
 
-          for (let k=0; k<arr[0][i].series.length; k++) {
-            arr[0][i].series[k].value = arr[0][i].series[k].value * this.holdingRecords.filter(r => r.companyid == companyid)[0].noShares;
+          // go until the present day
+          while (date <= w) {
+          // find the values of the date
+            let flag = false;
+            for (let k=0; k<arr[0][i].series.length && flag == false; k++) {
+              let share_date = arr[0][i].series[k].name;
 
-            series[k].value += arr[0][i].series[k].value * this.holdingRecords.filter(r => r.companyid == companyid)[0].noShares;
-            // !!!!!! same date
-            let a = arr[0][i].series[k].name;
-            series[k].name = arr[0][i].series[k].name;
-            //series.push({value:arr[0][i].series[k].value, name:arr[0][i].series[k].name});
-            console.log(k + " " + arr[0][i].series[k].name + ": " + arr[0][i].series[k].value * this.holdingRecords.filter(r => r.companyid == companyid)[0].noShares);
+              if (date == share_date) {
+                flag = true;
+
+                // get the price
+                arr[0][i].series[k].value = arr[0][i].series[k].value * this.holdingRecords.filter(r => r.companyid == companyid)[0].noShares;
+
+                // find the index of the position where the date is in series
+                let index = series.length;
+                let found = false;
+                for (var j=0; j<series.length; j++) {
+                  if (series[j].name == date) {
+                    index = j;
+                    found = true;
+                    break;
+                  }
+                }
+                // if new entry, create a new entry
+                if (found == false) {series.push({value:0, name:""});}
+
+                // add it to the total value
+                series[index].value += arr[0][i].series[k].value * this.holdingRecords.filter(r => r.companyid == companyid)[0].noShares;
+                series[index].name = date;
+              }
+              // if the share doesn't have this date, add the value of the previous date, or 0 if it doesn't have one
+              else if (date < share_date) {
+                // find the index of the position where the date is in series
+                let index = series.length;
+                let found = false;
+                for (var j=0; j<series.length; j++) {
+                  if (series[j].name == date) {
+                    index = j;
+                    found = true;
+                    break;
+                  }
+                }
+                if (found == false) {series.push({value:0, name:""});}
+
+                if (k>0) {
+                  series[index].value += arr[0][i].series[k-1].value * this.holdingRecords.filter(r => r.companyid == companyid)[0].noShares;
+                } else {
+                  series[index].value += 0;
+                }
+                series[index].name = date;
+                flag = true;
+              }
+            }
+
+            var date_aux = new Date(date);
+            date_aux.setDate(date_aux.getDate() + 1).toLocaleString();
+            date = new DatePipe('en-US').transform(date_aux, 'yyyy/MM/dd').toString();
           }
         }
 
         let series2 = [];
-        for (let k=0; k<arr[0][0].series.length; k++) {
+        for (let k=0; k<series.length; k++) {
           series2.push(series[k]);
         }
 
-        console.log("series");
-        console.log(series);
-        console.log(series2);
+        let arr2 = [];
         arr2.push({name:"TOT", series:series2});
         this.results2.push(arr2[0]);
-        console.log(arr2[0]);
-        console.log(this.results2);
         this.results2 = [...this.results2] // This will generate a new array and trigger the change detection to ngx chart
-      }
-    );
+      });
   }
 
   getHoldingRecordsOfGroup(groupName: string) {
