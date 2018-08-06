@@ -4,6 +4,7 @@ package com.siemens.core.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "metrics")
@@ -12,14 +13,18 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Builder
-public class Metrics extends BaseEntity<Integer> {
+public class Metric extends BaseEntity<Integer> {
 
     @ManyToOne
-    @JoinColumn(name = "holdingrecordid")
+    @JoinColumn(name = "holdingrecordId")
     private HoldingRecord holdingRecord;
 
     @Column(name = "name")
     private String name;
 
-    //TODO
+    @OneToMany(mappedBy = "metric")
+    private Set<YearData> yearData;
+
+
+
 }

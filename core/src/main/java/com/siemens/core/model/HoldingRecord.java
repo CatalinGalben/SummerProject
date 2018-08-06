@@ -30,6 +30,9 @@ public class HoldingRecord extends BaseEntity<Integer>{
     @JoinColumn(name = "companyid")
     private Company company;
 
+    @OneToMany(mappedBy = "holdingRecord")
+    private Set<Metric> metrics;
+
 
     @Column(name = "pricePaid")
     private double pricePaid;

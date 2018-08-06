@@ -8,6 +8,8 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class MetricsDTO extends BaseDTO{
-    private int holdingrecordid;
+    private Integer holdingrecordId;
     private String name;
+    private String year;
+    private Double value;
 }
