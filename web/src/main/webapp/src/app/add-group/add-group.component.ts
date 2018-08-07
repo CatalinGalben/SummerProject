@@ -55,8 +55,6 @@ export class AddGroupComponent implements OnInit {
 
   populate(){
     //get loggedIn user
-    // this.loginService.currentUser.subscribe(user =>
-    // this.userLoggedInPortfolioComponent = user);
     if (this.loginService.getCurrentUser() != null) {
       this.userLoggedInPortfolioComponent = this.loginService.getCurrentUser();
 
@@ -65,7 +63,6 @@ export class AddGroupComponent implements OnInit {
         this.holdingRecords = records
           .filter(record => record.userid == this.userLoggedInPortfolioComponent.id);
       });
-
     }
 
     //get all brokers
@@ -85,18 +82,8 @@ export class AddGroupComponent implements OnInit {
     this.recordService.getAllSharePrices().subscribe(shareprices =>{
       this.sharePrices = shareprices.sort((s1, s2)=> s1.id-s2.id);
       this.loginService.changeSharePrices(this.sharePrices);});
-
-    // get all groups
-   // this.groupService.getGroups().subscribe(groups => {
-   //   this.groups = groups;
-   //   this.loginService.changeGroups(this.groups);
-   // });
   }
 
-  refreshRecords(){
-    console.log("refreshRecords -- portfolio.component.ts");
-    this.portfolioService.getRecords().subscribe(records => this.holdingRecords = records);
-  }
 
   getCompanyForRecord(id: number, rec: HoldingRecord): string{
     this.currentCompanyNamePortfolio = this.companies.filter(company => company.id == id)[0].name;
@@ -165,22 +152,6 @@ export class AddGroupComponent implements OnInit {
     return false;
   }
 
-  /*
-  saveGroup() {
-    if (this.selectedParentGroup == null) {
-      this.groupService.createGroup(this.groupName, 0);
-    }
-    else {
-      this.groupService.createGroup(this.groupName, this.selectedParentGroup.id);
-    }
-   //  this.groupService.createCompanyGroup(this.selectedCompanies, this.groupName);
-  }
-
-  setNewGroup(event) {
-    this.selectedParentGroup = this.groups.filter(group=>group.id == event.target.value)[0];
-  }
-  */
-
   saveGroup(groupName: string) {
     if (this.selectedCompanies.length == 0) {
       alert("No company selected");
@@ -188,8 +159,6 @@ export class AddGroupComponent implements OnInit {
 
     this.groupService.getGroups().subscribe(groups =>
     {
-      console.log("-----------------");
-      console.log(groups.filter(g => g.name == groupName)[0]);
       if (groups.filter(g => g.name == groupName)[0] != null) {
         alert("This group already exists. Please try another name");
       } else {
@@ -197,6 +166,10 @@ export class AddGroupComponent implements OnInit {
         this.router.navigate(['portfolio']);
       }
     });
+  }
+
+  getCurrentCurrencyName(): string {
+    return this.loginService.getCurrencyName();
   }
 
 

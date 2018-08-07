@@ -13,6 +13,8 @@ import {SharePrice} from "../add-record/shared/SharePrice.model";
 import {Broker} from "../add-record/shared/Broker.model";
 
 import { DatePipe } from '@angular/common';
+import {Currency} from "../add-record/shared/Currency.model";
+import {CurrencyExchange} from "../add-record/shared/CurrencyExchange.model";
 
 @Component({
   selector: 'app-ngx-charts',
@@ -153,6 +155,12 @@ export class BarChartComponent implements OnInit {
       this.loginService.changeBrokers(this.brokers);
     });
 
+    // get the currencies
+    this.loginService.getAllCurrencies().subscribe(currencies=> {
+      this.currencies = currencies;
+      console.log(this.currencies);
+    })
+
   }
 
   getCompanyForRecord(id: number, rec: HoldingRecord): string{
@@ -181,10 +189,10 @@ export class BarChartComponent implements OnInit {
     console.log("NAME " + name);
 
     this.selectedRow = group;
-    this.display();
+    this.displayPrice();
   }
 
-  display() {
+  displayPrice() {
     this.groupService.getBenchmarks(this.selectedRow.id, this.selectedRow.name).subscribe(records =>
       {
         this.results2 = [];
@@ -192,8 +200,16 @@ export class BarChartComponent implements OnInit {
         let d = Object.values(records)[0];
 
         let arr = Object.values(d[0])[0];
-        for(let i=0; i<arr.length; i++)
+        for (let i=0; i<arr.length; i++) {
           this.results2.push(arr[i]);
+        }
+
+        // change the price value based on the selected currency
+        for (let i=0; i<this.results2.length; i++) {
+          for (let k=0; k<this.results2[i].series.length; k++) {
+            this.results2[i].series[k].value = this.results2[i].series[k].value * this.factor;
+          }
+        }
 
         this.results2 = [...this.results2] // This will generate a new array and trigger the change detection to ngx chart
       }
@@ -208,7 +224,7 @@ export class BarChartComponent implements OnInit {
         let d = Object.values(records)[0];
         let arr = [];
         arr.push(Object.values(d[0])[0]);
-        for(let i=0; i<=arr.length; i++) {
+        for(let i=0; i<=arr[0].length; i++) {
           let sharename = arr[0][i].name;
           let companyid = this.companies.filter(c => c.name == sharename)[0].id;
           let init_price = arr[0][i].series[0].value;
@@ -249,27 +265,27 @@ export class BarChartComponent implements OnInit {
               let share_date = arr[0][i].series[k].name;
 
               if (date == share_date) {
-                flag = true;
+                  flag = true;
 
-                // get the price
-                arr[0][i].series[k].value = arr[0][i].series[k].value * this.holdingRecords.filter(r => r.companyid == companyid)[0].noShares;
+                  // get the price
+                  arr[0][i].series[k].value = arr[0][i].series[k].value * this.holdingRecords.filter(r => r.companyid == companyid)[0].noShares * this.factor;
 
-                // find the index of the position where the date is in series
-                let index = series.length;
-                let found = false;
-                for (var j=0; j<series.length; j++) {
-                  if (series[j].name == date) {
-                    index = j;
-                    found = true;
-                    break;
+                  // find the index of the position where the date is in series
+                  let index = series.length;
+                  let found = false;
+                  for (var j=0; j<series.length; j++) {
+                    if (series[j].name == date) {
+                      index = j;
+                      found = true;
+                      break;
+                    }
                   }
-                }
-                // if new entry, create a new entry
-                if (found == false) {series.push({value:0, name:""});}
+                  // if new entry, create a new entry
+                  if (found == false) {series.push({value:0, name:""});}
 
-                // add it to the total value
-                series[index].value += arr[0][i].series[k].value * this.holdingRecords.filter(r => r.companyid == companyid)[0].noShares;
-                series[index].name = date;
+                  // add it to the total value
+                  series[index].value += arr[0][i].series[k].value * this.holdingRecords.filter(r => r.companyid == companyid)[0].noShares;
+                  series[index].name = date;
               }
               // if the share doesn't have this date, add the value of the previous date, or 0 if it doesn't have one
               else if (date < share_date) {
@@ -301,6 +317,14 @@ export class BarChartComponent implements OnInit {
           }
         }
 
+        // display just the year and month if there are too many data
+        if (series.length > 10) {
+          for (let k=0; k<series.length; k++) {
+              let dateArray = series[k].name.split('/') ;
+              series[k].name = dateArray[0] + '/' + dateArray[1];
+          }
+        }
+
         let series2 = [];
         for (let k=0; k<series.length; k++) {
           series2.push(series[k]);
@@ -323,8 +347,27 @@ export class BarChartComponent implements OnInit {
                                                           return false;});
   }
 
-  getCurrentCurrencyName(): string {
-    return this.loginService.getCurrencyName();
+  currencies: Currency[];
+  selectedCurrencyId: number;
+  currencyExchangeChanged: CurrencyExchange;
+  factor = 1;
+  symbol = 'EUR';
+
+  setNewCurrency(args){
+    this.selectedCurrencyId = args.target.value;
   }
+
+  changeCurrency(){
+    this.currencyExchangeChanged = this.loginService.getNewCurrencyExchange(this.selectedCurrencyId);
+    if (this.currencyExchangeChanged == null) {
+      alert("The data for this currency couldn't be found");
+    } else {
+      this.factor = this.currencyExchangeChanged.factor;
+      this.symbol = this.currencies.filter(currency => currency.id == this.currencyExchangeChanged.currencyid2)[0].symbol;
+    }
+
+    this.displayPrice();
+  }
+
 
 }
