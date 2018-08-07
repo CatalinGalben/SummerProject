@@ -10,5 +10,6 @@ public interface MetricsServiceInterface {
 
     List<YearData> getMetricForName(Integer hId, String name);
     void addMetric(Integer hId, String name, Integer year, Double value);
+    List<YearData> getAllMetrics();
 
 }

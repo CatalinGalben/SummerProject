@@ -1,5 +1,6 @@
 package com.siemens.web.controller;
 
+import com.siemens.core.model.Metric;
 import com.siemens.core.model.YearData;
 import com.siemens.core.service.MetricsServiceInterface;
 import com.siemens.web.dto.MetricsDTO;
@@ -19,19 +20,9 @@ public class MetricsController {
     @Autowired
     private MetricsServiceInterface metricService;
 
-    @RequestMapping(value = "/metrics/update/{hKey}/{name}/{year}", method = RequestMethod.POST)
-    public void alterMetrics(@PathVariable final Integer hKey,
-                             @PathVariable final String name,
-                             @PathVariable final Integer year,
-                             @RequestBody final PlainPriceWrapper value)
-    {
-        metricService.addMetric(hKey, name,year, value.getNewBalanceValue());
-    }
 
-    @RequestMapping(value = "/metrics/{hKey}/{name}", method = RequestMethod.GET)
-    public Set<MetricsDTO> getMetrics(@PathVariable final Integer hKey,
-                                      @PathVariable final String name){
-        List<YearData> yearDataList = metricService.getMetricForName(hKey, name);
+    private Set<MetricsDTO> convertToDTOS(List<YearData> yearDataList)
+    {
         Set<MetricsDTO> metricsDTOS = new HashSet<>();
         yearDataList.forEach(yearData -> metricsDTOS.add(
                 MetricsDTO.builder()
@@ -41,8 +32,29 @@ public class MetricsController {
                         .value(yearData.getValue())
                         .build()
         ));
-
         return metricsDTOS;
+    }
+    @RequestMapping(value = "/metrics/update/{hKey}/{name}/{year}", method = RequestMethod.POST)
+    public void alterMetrics(@PathVariable final Integer hKey,
+                             @PathVariable final String name,
+                             @PathVariable final Integer year,
+                             @RequestBody final PlainPriceWrapper value)
+    {
+        metricService.addMetric(hKey, name,year, value.getNewBalanceValue());
+    }
+    @RequestMapping(value = "/metrics", method = RequestMethod.GET)
+    public Set<MetricsDTO> getAllMetrics()
+    {
+        List<YearData> yearDataList = metricService.getAllMetrics();
+        return convertToDTOS(yearDataList);
+    }
+    @RequestMapping(value = "/metrics/{hKey}/{name}", method = RequestMethod.GET)
+    public Set<MetricsDTO> getMetrics(@PathVariable final Integer hKey,
+                                      @PathVariable final String name){
+        List<YearData> yearDataList = metricService.getMetricForName(hKey, name);
+
+
+        return convertToDTOS(yearDataList);
 
     }
 }

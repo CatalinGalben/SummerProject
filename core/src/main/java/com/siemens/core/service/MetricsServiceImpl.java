@@ -7,12 +7,14 @@ import com.siemens.core.repository.HoldingRecordRepository;
 import com.siemens.core.repository.MetricsRepository;
 import com.siemens.core.repository.YearDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Year;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
+@Service
 public class MetricsServiceImpl implements MetricsServiceInterface {
     @Autowired
     private YearDataRepository yearDataRepository;
@@ -27,6 +29,11 @@ public class MetricsServiceImpl implements MetricsServiceInterface {
                 .stream()
                 .filter(yd -> yd.getMetric().getName().equals(name) && yd.getMetric().getId().equals(hId))
                 .collect(Collectors.toList());
+    }
+    @Override
+    public List<YearData> getAllMetrics()
+    {
+        return yearDataRepository.findAll();
     }
     @Override
     @Transactional
