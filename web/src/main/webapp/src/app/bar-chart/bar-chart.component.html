@@ -20,9 +20,9 @@
                   <thead>
                   <th>Name</th>
                   <th>No. Shares</th>
-                  <th>Share Price ({{getCurrentCurrencyName()}})</th>
-                  <th>Book Value ({{getCurrentCurrencyName()}})</th>
-                  <th>Current Value ({{getCurrentCurrencyName()}})</th>
+                  <th>Share Price ({{symbol}})</th>
+                  <th>Book Value ({{symbol}})</th>
+                  <th>Current Value ({{symbol}})</th>
                   <th>Gain (%)</th>
                   <th>Broker</th>
                   </thead>
@@ -31,9 +31,9 @@
                         <tr *ngFor="let rec of getHoldingRecordsOfGroup(gr.name)">
                           <td>{{getCompanyForRecord(rec.companyid, rec)}}</td>
                           <td>{{rec.noShares}}</td>
-                          <td>{{getCurrentShareForCompany(rec.companyid).toString() | number : '1.2'}}</td>
-                          <td>{{rec.pricePaid | number : '1.2'}}</td>
-                          <td>{{getCurrentShareForCompany(rec.companyid)*rec.noShares | number : '1.2'}}</td>
+                          <td>{{getCurrentShareForCompany(rec.companyid) * factor | number : '1.2'}}</td>
+                          <td>{{rec.pricePaid * factor | number : '1.2'}}</td>
+                          <td>{{getCurrentShareForCompany(rec.companyid)*rec.noShares * factor | number : '1.2'}}</td>
                           <td>{{getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares) | number : '1.2'}}%</td>
                           <td>{{getBrokerForRecord(rec.brokerid)}}</td>
                         </tr>
@@ -53,7 +53,7 @@
 <br/>
 
 <div class="btn-group">
-  <button type="button" class="btn btn-outline-info" (click)="display()">SHARE PRICE</button>
+  <button type="button" class="btn btn-outline-info" (click)="displayPrice()">SHARE PRICE</button>
   <button type="button" class="btn btn-outline-info" (click)="displayPercentage()">SHARE PERCENTAGE</button>
   <button type="button" class="btn btn-outline-info" (click)="displayTotal()">VALUATION BRACKETS GROUPS</button>
 </div>
@@ -72,5 +72,21 @@
     [animations]="false">
   </ngx-charts-line-chart>
 </div>
+
+<br/>
+
+  <label class="col-sm-2 control-label">Currency: </label>
+  <div class="col-sm-10">
+    <select (change)="setNewCurrency($event)" class="dropdown-header">
+      <option [value]=""></option>
+      <option class="divider" *ngFor="let currency of currencies" [value]="currency.id">
+        {{currency.symbol}}
+      </option>
+    </select>
+  </div>
+
+<br/>
+
+  <button *ngIf="selectedCurrencyId" class ="btn btn-outline-info" (click)="changeCurrency()">Change Currency</button>
 
 <br/><br/><br/><br/><br/>
