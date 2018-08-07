@@ -10,6 +10,6 @@ import lombok.*;
 public class MetricsDTO extends BaseDTO{
     private Integer holdingrecordId;
     private String name;
-    private String year;
+    private Integer year;
     private Double value;
 }

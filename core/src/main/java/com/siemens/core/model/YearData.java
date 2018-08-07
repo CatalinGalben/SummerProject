@@ -19,7 +19,7 @@ public class YearData extends BaseEntity<Integer>{
     private Metric metric;
 
     @Column(name = "year")
-    private String year;
+    private Integer year;
 
     @Column(name = "value")
     private Double value;
