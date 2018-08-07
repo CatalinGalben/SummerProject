@@ -8,7 +8,7 @@ import java.util.Set;
 
 public interface MetricsServiceInterface {
 
-    List<YearData> getMetricForName(Integer hId, String name);
+    List<YearData> getMetricForName(Integer hId);
     void addMetric(Integer hId, String name, Integer year, Double value);
     List<YearData> getAllMetrics();
 

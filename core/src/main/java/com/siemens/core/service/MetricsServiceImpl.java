@@ -23,11 +23,11 @@ public class MetricsServiceImpl implements MetricsServiceInterface {
     @Autowired
     private HoldingRecordRepository hrRepo;
     @Override
-    public List<YearData> getMetricForName(Integer hId, String name) {
+    public List<YearData> getMetricForName(Integer hId) {
         return yearDataRepository
                 .findAll()
                 .stream()
-                .filter(yd -> yd.getMetric().getName().equals(name) && yd.getMetric().getId().equals(hId))
+                .filter(yd -> yd.getMetric().getId().equals(hId))
                 .collect(Collectors.toList());
     }
     @Override

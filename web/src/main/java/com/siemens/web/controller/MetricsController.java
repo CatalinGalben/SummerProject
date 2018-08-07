@@ -48,10 +48,9 @@ public class MetricsController {
         List<YearData> yearDataList = metricService.getAllMetrics();
         return convertToDTOS(yearDataList);
     }
-    @RequestMapping(value = "/metrics/{hKey}/{name}", method = RequestMethod.GET)
-    public Set<MetricsDTO> getMetrics(@PathVariable final Integer hKey,
-                                      @PathVariable final String name){
-        List<YearData> yearDataList = metricService.getMetricForName(hKey, name);
+    @RequestMapping(value = "/metrics/{hKey}", method = RequestMethod.GET)
+    public Set<MetricsDTO> getMetrics(@PathVariable final Integer hKey){
+        List<YearData> yearDataList = metricService.getMetricForName(hKey);
 
 
         return convertToDTOS(yearDataList);
