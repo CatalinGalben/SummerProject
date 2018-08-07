@@ -224,7 +224,7 @@ export class BarChartComponent implements OnInit {
         let d = Object.values(records)[0];
         let arr = [];
         arr.push(Object.values(d[0])[0]);
-        for(let i=0; i<=arr.length; i++) {
+        for(let i=0; i<=arr[0].length; i++) {
           let sharename = arr[0][i].name;
           let companyid = this.companies.filter(c => c.name == sharename)[0].id;
           let init_price = arr[0][i].series[0].value;
