@@ -2,12 +2,15 @@ package com.siemens.core.service;
 
 import com.siemens.core.model.*;
 import com.siemens.core.repository.*;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
@@ -30,6 +33,10 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
     private TrustRepository trustRepository;
     @Autowired
     private EtfRepository etfRepository;
+    @Autowired
+    private MetricsRepository metricRepo;
+    @Autowired
+    private YearDataRepository yearDataRepository;
 
     private Double calculateLostMoney(Broker broker, SharePrice sharePrice, Integer noShares)
     {
@@ -44,15 +51,42 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
         user.setBalance(user.getBalance() - paidPrice);
         userRepository.save(user);
 
-        return holdingRecordRepository.save(
+        HoldingRecord record = holdingRecordRepository.save(
                 HoldingRecord.builder()
-                .user(user)
-                .broker(broker)
-                .company(company)
-                .pricePaid(paidPrice)
-                .noShares(noShares)
-                .build()
+                        .user(user)
+                        .broker(broker)
+                        .company(company)
+                        .pricePaid(paidPrice)
+                        .noShares(noShares)
+                        .build()
         );
+        double yield = company.getDividendYield();
+
+        Metric metric = Metric.builder()
+                .holdingRecord(record)
+                .name("Dividend Yieald")
+                .build();
+
+        metric = metricRepo.save(metric);
+        YearData data = YearData.builder()
+                .metric(metric)
+                .year(DateTime.now().getYear())
+                .value(yield)
+                .build();
+        yearDataRepository.save(data);
+        Metric metric1 = Metric.builder()
+                .holdingRecord(record)
+                .name("Price to Earning")
+                .build();
+
+        metric1 = metricRepo.save(metric1);
+        YearData data1 = YearData.builder()
+                .metric(metric1)
+                .value(company.getPE())
+                .year(DateTime.now().getYear())
+                .build();
+        yearDataRepository.save(data1);
+        return record;
     }
     @Transactional
     @Override
@@ -74,8 +108,7 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
         trust.setCompany(company);
         trustRepository.save(trust);
         fundRepository.save(trust);
-
-        return holdingRecordRepository.save(
+        HoldingRecord record = holdingRecordRepository.save(
                 HoldingRecord.builder()
                         .user(user)
                         .broker(broker)
@@ -84,6 +117,33 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
                         .noShares(noShares)
                         .build()
         );
+        double yield = company.getDividendYield();
+
+        Metric metric = Metric.builder()
+                .holdingRecord(record)
+                .name("Dividend Yieald")
+                .build();
+
+        metric = metricRepo.save(metric);
+        YearData data = YearData.builder()
+                .metric(metric)
+                .year(DateTime.now().getYear())
+                .value(yield)
+                .build();
+        yearDataRepository.save(data);
+        Metric metric1 = Metric.builder()
+                .holdingRecord(record)
+                .name("Price to Earning")
+                .build();
+
+        metric1 = metricRepo.save(metric1);
+        YearData data1 = YearData.builder()
+                .metric(metric1)
+                .value(company.getPE())
+                .year(DateTime.now().getYear())
+                .build();
+        yearDataRepository.save(data1);
+        return record;
      }
 
      @Transactional
@@ -103,7 +163,7 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
         etf.setCompany(company);
         etfRepository.save(etf);
         fundRepository.save(etf);
-         return holdingRecordRepository.save(
+         HoldingRecord record = holdingRecordRepository.save(
                  HoldingRecord.builder()
                          .user(user)
                          .broker(broker)
@@ -112,6 +172,33 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
                          .noShares(noShares)
                          .build()
          );
+         double yield = company.getDividendYield();
+
+         Metric metric = Metric.builder()
+                 .holdingRecord(record)
+                 .name("Dividend Yieald")
+                 .build();
+
+         metric = metricRepo.save(metric);
+         YearData data = YearData.builder()
+                 .metric(metric)
+                 .year(DateTime.now().getYear())
+                 .value(yield)
+                 .build();
+         yearDataRepository.save(data);
+         Metric metric1 = Metric.builder()
+                 .holdingRecord(record)
+                 .name("Price to Earning")
+                 .build();
+
+         metric1 = metricRepo.save(metric1);
+         YearData data1 = YearData.builder()
+                 .metric(metric1)
+                 .value(company.getPE())
+                 .year(DateTime.now().getYear())
+                 .build();
+         yearDataRepository.save(data1);
+         return record;
     }
     @Override
     public List<HoldingRecord> getAllRecords()
@@ -172,6 +259,20 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
             holdingRecordRepository.save(optionalRecord.get());
         }
         else
+        {
+            //IF A HR IS TO BE DELETED ENTIRELY , ALL THE METRICS WILL BE REMOVED AS WELL
+            List<YearData> yearDataList = yearDataRepository.findAll()
+                    .stream()
+                    .filter(yd -> yd.getMetric().getHoldingRecord().getId().equals(optionalRecord.get().getId()))
+                    .collect(Collectors.toList());
+            List<Metric> metrics = metricRepo.findAll()
+                    .stream()
+                    .filter(m -> m.getHoldingRecord().getId().equals(optionalRecord.get().getId()))
+                    .collect(Collectors.toList());
+            yearDataList.forEach(yearData -> yearDataRepository.delete(yearData));
+            metrics.forEach(metric -> metricRepo.delete(metric));
             holdingRecordRepository.delete(optionalRecord.get());
+        }
+
     }
 }
