@@ -27,6 +27,18 @@ export class ViewMetricsComponent implements OnInit {
 
 
   navigated = false;
+  private fieldArray: Array<any> = [];
+  private newAttribute: any = {};
+
+  addFieldValue() {
+    this.fieldArray.push(this.newAttribute);
+    this.newAttribute = {};
+  }
+
+  deleteFieldValue(index) {
+    this.fieldArray.splice(index, 1);
+  }
+
 
   constructor(private recordService: AddRecordService,
               private loginService: LoginService,
@@ -109,5 +121,9 @@ export class ViewMetricsComponent implements OnInit {
 
   setNewValueMetrics(label: string, year: number, value: number){
     this.portfolioService.getNewMetricsValues(label, year, value, this.holdingRecord.id).subscribe();
+  }
+
+  addNewRow(newLabel: string){
+    this.metricsLabels.push(newLabel);
   }
 }
