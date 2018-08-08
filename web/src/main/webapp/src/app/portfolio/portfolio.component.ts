@@ -13,6 +13,9 @@ import {Broker} from "../add-record/shared/Broker.model";
 import {SharePrice} from "../add-record/shared/SharePrice.model";
 import {Company} from "../add-record/shared/Company.model";
 
+import * as jspdf from 'jspdf';
+import html2canvas from 'html2canvas';
+
 @Component({
   selector: 'app-portfolio',
   templateUrl: './portfolio.component.html',
@@ -407,5 +410,26 @@ export class PortfolioComponent implements OnInit {
       default: break;
     }
   }
+
+  public captureScreen()
+  {
+    var data = document.getElementById('contentToConvert');
+    html2canvas(data).then(canvas => {
+      // Few necessary setting options
+      var imgWidth = 208;
+      var imgHeight = canvas.height * imgWidth / canvas.width;
+
+      const contentDataURL = canvas.toDataURL('image/png')
+      let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF
+
+      pdf.text("PORTFOLIO", 80, 30);
+
+      var position = 60;
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
+      pdf.save('Portfolio.pdf'); // Generated PDF
+    });
+  }
+
+
 
 }
