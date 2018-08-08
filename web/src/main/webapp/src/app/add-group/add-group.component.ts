@@ -172,5 +172,9 @@ export class AddGroupComponent implements OnInit {
     return this.loginService.getCurrencyName();
   }
 
+  getCurrentFactor(): number{
+    return this.loginService.getCurrentFactor();
+  }
+
 
 }

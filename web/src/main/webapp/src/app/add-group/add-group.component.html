@@ -19,9 +19,9 @@
       <tr *ngFor="let rec of holdingRecords" (click)="clickRecord(rec.id)" [class.active]="selectedRow === rec.id">
         <td>{{getCompanyForRecord(rec.companyid, rec)}}</td>
         <td>{{rec.noShares}}</td>
-        <td>{{getCurrentShareForCompany(rec.companyid).toString()}}</td>
-        <td>{{rec.pricePaid | number : '1.2'}}</td>
-        <td>{{getCurrentShareForCompany(rec.companyid)*rec.noShares | number : '1.2'}}</td>
+        <td>{{getCurrentShareForCompany(rec.companyid)*getCurrentFactor() | number : '1.2'}}</td>
+        <td>{{rec.pricePaid*getCurrentFactor() | number : '1.2'}}</td>
+        <td>{{getCurrentShareForCompany(rec.companyid)*rec.noShares*getCurrentFactor() | number : '1.2'}}</td>
         <td>{{getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares) | number : '1.2'}}%</td>
         <td>{{getBrokerForRecord(rec.brokerid)}}</td>
 
@@ -55,9 +55,9 @@
       <tr *ngFor="let rec of selectedHoldingRecords">
         <td>{{getCompanyForRecord(rec.companyid, rec)}}</td>
         <td>{{rec.noShares}}</td>
-        <td>{{getCurrentShareForCompany(rec.companyid).toString()}}</td>
-        <td>{{rec.pricePaid | number : '1.2'}}</td>
-        <td>{{getCurrentShareForCompany(rec.companyid)*rec.noShares | number : '1.2'}}</td>
+        <td>{{getCurrentShareForCompany(rec.companyid)*getCurrentFactor() | number : '1.2'}}</td>
+        <td>{{rec.pricePaid*getCurrentFactor() | number : '1.2'}}</td>
+        <td>{{getCurrentShareForCompany(rec.companyid)*rec.noShares*getCurrentFactor() | number : '1.2'}}</td>
         <td>{{getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares) | number : '1.2'}}%</td>
         <td>{{getBrokerForRecord(rec.brokerid)}}</td>
       </tr>
