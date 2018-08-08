@@ -3,14 +3,14 @@
 
 <table class="table table-hover body">
   <thead>
-      <th>Name</th>
-      <th>No. Shares</th>
-      <th>Share Price ({{getCurrentCurrencyName()}})</th>
-      <th>Book Value ({{getCurrentCurrencyName()}})</th>
-      <th>Current Value ({{getCurrentCurrencyName()}})</th>
-      <th>Gain (%)</th>
-      <th>Broker</th>
-      <th>Last updated</th>
+      <th (click)="columnClicked('NAME')">Name</th>
+      <th (click)="columnClicked('NO SHARES')">No. Shares</th>
+      <th (click)="columnClicked('SHARE PRICE')">Share Price ({{getCurrentCurrencyName()}})</th>
+      <th (click)="columnClicked('BOOK VALUE')">Book Value ({{getCurrentCurrencyName()}})</th>
+      <th (click)="columnClicked('CURRENT VALUE')">Current Value ({{getCurrentCurrencyName()}})</th>
+      <th (click)="columnClicked('GAIN')">Gain (%)</th>
+      <th (click)="columnClicked('BROKER')">Broker</th>
+      <th (click)="columnClicked('LAST UPDATE')">Last updated</th>
   </thead>
 
   <tbody>
@@ -83,15 +83,19 @@
 </div>
 
 <br>
+
 <div class="row">
   <button id="btnAdd" class ="btn btn-outline-primary" (click)="goToAdd()">Add new holding share</button>
-  &nbsp;
 
-  <button (click)="insertionSort(holdingRecords, holdingRecords.length)" class ="btn btn-outline-info">Sort</button>
-  &nbsp;
+  &nbsp;&nbsp;
 
+  <button (click)="sort(holdingRecords, holdingRecords.length)" class ="btn btn-outline-info">Sort</button>
+  &nbsp;&nbsp;
+  <p id="selectedColumn" style="color:#159E83;">{{selectedColumn}}</p>
+  &nbsp;
 </div>
-<br>
+
+<br/>
 
 <h3 class="text-primary">Balance: </h3> <input type="number" class="form-control" #newBalanceUser><br>
 <button (click)="setNewBalanceUser(newBalanceUser.value/getCurrentFactor())" class="btn btn-dark">Set new balance</button>
