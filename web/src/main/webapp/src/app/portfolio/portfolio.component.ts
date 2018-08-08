@@ -232,7 +232,8 @@ export class PortfolioComponent implements OnInit {
   }
 
 
-  insertionSort(rec: HoldingRecord[], n:number)
+  // insertion sort
+  sortByName(rec: HoldingRecord[], n:number)
   {
     let i, key, j;
     for (i = 1; i < n; i++)
@@ -243,7 +244,7 @@ export class PortfolioComponent implements OnInit {
       /* Move elements of rec, that are
          greater than key, to one position ahead
          of their current position */
-      while (j >= 0 && this.getCompanyForRecord(rec[j].companyid, rec[j])> this.getCompanyForRecord(key.companyid, key))
+      while (j >= 0 && this.getCompanyForRecord(rec[j].companyid, rec[j]) > this.getCompanyForRecord(key.companyid, key))
       {
         rec[j+1] = rec[j];
         j = j-1;
@@ -251,5 +252,160 @@ export class PortfolioComponent implements OnInit {
       rec[j+1] = key;
       }
     }
+
+    sortByNoShares(rec: HoldingRecord[], n:number) {
+      let i, key, j;
+      for (i = 1; i < n; i++)
+      {
+        key = rec[i];
+        j = i-1;
+
+        /* Move elements of rec, that are
+           greater than key, to one position ahead
+           of their current position */
+        while (j >= 0 && rec[j].noShares > key.noShares)
+        {
+          rec[j+1] = rec[j];
+          j = j-1;
+        }
+        rec[j+1] = key;
+      }
+    }
+
+    sortBySharePrice(rec: HoldingRecord[], n:number) {
+      let i, key, j;
+      for (i = 1; i < n; i++)
+      {
+        key = rec[i];
+        j = i-1;
+
+        /* Move elements of rec, that are
+           greater than key, to one position ahead
+           of their current position */
+        while (j >= 0 && this.getCurrentShareForCompany(rec[j].companyid) > this.getCurrentShareForCompany(key.companyid))
+        {
+          rec[j+1] = rec[j];
+          j = j-1;
+        }
+        rec[j+1] = key;
+      }
+    }
+
+    sortByBookValue(rec: HoldingRecord[], n:number) {
+      let i, key, j;
+      for (i = 1; i < n; i++)
+      {
+        key = rec[i];
+        j = i-1;
+
+        /* Move elements of rec, that are
+           greater than key, to one position ahead
+           of their current position */
+        while (j >= 0 && rec[j].pricePaid*this.getCurrentFactor() > key.pricePaid*this.getCurrentFactor())
+        {
+          rec[j+1] = rec[j];
+          j = j-1;
+        }
+        rec[j+1] = key;
+      }
+    }
+
+    sortByCurrentValue(rec: HoldingRecord[], n:number) {
+      let i, key, j;
+      for (i = 1; i < n; i++)
+      {
+        key = rec[i];
+        j = i-1;
+
+        /* Move elements of rec, that are
+           greater than key, to one position ahead
+           of their current position */
+        while (j >= 0 && this.getCurrentShareForCompany(rec[j].companyid)*rec[j].noShares*this.getCurrentFactor() > this.getCurrentShareForCompany(key.companyid)*key.noShares*this.getCurrentFactor())
+        {
+          rec[j+1] = rec[j];
+          j = j-1;
+        }
+        rec[j+1] = key;
+      }
+    }
+
+  sortByGain(rec: HoldingRecord[], n:number) {
+    let i, key, j;
+    for (i = 1; i < n; i++)
+    {
+      key = rec[i];
+      j = i-1;
+
+      /* Move elements of rec, that are
+         greater than key, to one position ahead
+         of their current position */
+      while (j >= 0 && this.getGain(rec[j].pricePaid, this.getCurrentShareForCompany(rec[j].companyid)*rec[j].noShares) > this.getGain(key.pricePaid, this.getCurrentShareForCompany(key.companyid)*key.noShares))
+      {
+        rec[j+1] = rec[j];
+        j = j-1;
+      }
+      rec[j+1] = key;
+    }
+  }
+
+  sortByBroker(rec: HoldingRecord[], n:number) {
+    let i, key, j;
+    for (i = 1; i < n; i++)
+    {
+      key = rec[i];
+      j = i-1;
+
+      /* Move elements of rec, that are
+         greater than key, to one position ahead
+         of their current position */
+      while (j >= 0 && this.getBrokerForRecord(rec[j].brokerid) > this.getBrokerForRecord(key.brokerid))
+      {
+        rec[j+1] = rec[j];
+        j = j-1;
+      }
+      rec[j+1] = key;
+    }
+  }
+
+  sortByLastUpdate(rec: HoldingRecord[], n:number) {
+    let i, key, j;
+    for (i = 1; i < n; i++)
+    {
+      key = rec[i];
+      j = i-1;
+
+      /* Move elements of rec, that are
+         greater than key, to one position ahead
+         of their current position */
+      while (j >= 0 && this.getLastTimeUpdatedSharePrice(rec[j].companyid) > this.getLastTimeUpdatedSharePrice(key.companyid))
+      {
+        rec[j+1] = rec[j];
+        j = j-1;
+      }
+      rec[j+1] = key;
+    }
+  }
+
+
+    selectedColumn = 'NAME';
+
+
+  columnClicked(column: string) {
+    this.selectedColumn = column;
+  }
+
+  sort(rec: HoldingRecord[], n:number) {
+    switch(this.selectedColumn) {
+      case 'NAME': this.sortByName(rec, n); break;
+      case 'NO SHARES': this.sortByNoShares(rec, n); break;
+      case 'SHARE PRICE': this.sortBySharePrice(rec, n); break;
+      case 'BOOK VALUE': this.sortByBookValue(rec, n); break;
+      case 'CURRENT VALUE': this.sortByCurrentValue(rec, n); break;
+      case 'GAIN': this.sortByGain(rec, n); break;
+      case 'BROKER': this.sortByBroker(rec, n); break;
+      case 'LAST UPDATE': this.sortByLastUpdate(rec, n); break;
+      default: break;
+    }
+  }
 
 }
