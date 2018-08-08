@@ -1,16 +1,16 @@
 
 <div class="scrollit">
 
-<table class="table table-hover body">
+<table class="table table-hover body" id="contentToConvert">
   <thead>
-      <th (click)="columnClicked('NAME')">Name</th>
-      <th (click)="columnClicked('NO SHARES')">No. Shares</th>
-      <th (click)="columnClicked('SHARE PRICE')">Share Price ({{getCurrentCurrencyName()}})</th>
-      <th (click)="columnClicked('BOOK VALUE')">Book Value ({{getCurrentCurrencyName()}})</th>
-      <th (click)="columnClicked('CURRENT VALUE')">Current Value ({{getCurrentCurrencyName()}})</th>
-      <th (click)="columnClicked('GAIN')">Gain (%)</th>
-      <th (click)="columnClicked('BROKER')">Broker</th>
-      <th (click)="columnClicked('LAST UPDATE')">Last updated</th>
+      <th [class.active]="'NAME'==selectedColumn" (click)="columnClicked('NAME')">Name</th>
+      <th [class.active]="'NO SHARES'==selectedColumn" (click)="columnClicked('NO SHARES')">No. Shares</th>
+      <th [class.active]="'SHARE PRICE'==selectedColumn" (click)="columnClicked('SHARE PRICE')">Share Price ({{getCurrentCurrencyName()}})</th>
+      <th [class.active]="'BOOK VALUE'==selectedColumn" (click)="columnClicked('BOOK VALUE')">Book Value ({{getCurrentCurrencyName()}})</th>
+      <th [class.active]="'CURRENT VALUE'==selectedColumn" (click)="columnClicked('CURRENT VALUE')">Current Value ({{getCurrentCurrencyName()}})</th>
+      <th [class.active]="'GAIN'==selectedColumn" (click)="columnClicked('GAIN')">Gain (%)</th>
+      <th [class.active]="'BROKER'==selectedColumn" (click)="columnClicked('BROKER')">Broker</th>
+      <th [class.active]="'LAST UPDATE'==selectedColumn" (click)="columnClicked('LAST UPDATE')">Last updated</th>
   </thead>
 
   <tbody>
@@ -100,4 +100,8 @@
 <h3 class="text-primary">Balance: </h3> <input type="number" class="form-control" #newBalanceUser><br>
 <button (click)="setNewBalanceUser(newBalanceUser.value/getCurrentFactor())" class="btn btn-dark">Set new balance</button>
 
+<br/><br/>
+<button (click)="captureScreen()" class="btn btn-dark">Export PDF</button>
+
 <br/><br/><br/><br/><br/>
+
