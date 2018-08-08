@@ -1,4 +1,6 @@
-<table class="table-bordered">
+<label style="color: darkblue; font-size: 50px"><b>{{getCompanyName()}}</b></label><br>
+
+<table class="table-bordered" style="font-size: 20px">
   <thead>
     <tr>
       <th scope="col">Metrics/Years</th>
@@ -9,11 +11,11 @@
   </thead>
   <tbody>
     <tr *ngFor="let mLabel of metricsLabels">
-      <td>
+      <td style="width: 100px">
         <label>{{mLabel}}</label>
       </td>
       <td *ngFor="let year of years">
-        <input value="{{getMetricForLabelAndYear(mLabel, year.year)}}" #valueName (change)="setNewValue(mLabel, year.year, valueName.value)">
+        <input style="width: 160px" type="number" value="{{getMetricForLabelAndYear(mLabel, year.year)}}" #valueName (change)="setNewValueMetrics(mLabel, year.year, valueName.value)">
       </td>
     </tr>
   </tbody>
