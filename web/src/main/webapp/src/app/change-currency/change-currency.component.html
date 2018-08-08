@@ -39,7 +39,7 @@
   <select (change)="setNewCurrency($event)" class="dropdown-header">
   <option [value]=""></option>
   <option class="divider" *ngFor="let currency of currencies" [value]="currency.id">
-    {{currency.symbol}}
+    <img src="assets/images/{{currency.symbol}}.png" width="35px"> {{currency.symbol}}
   </option>
   </select>
 </div>

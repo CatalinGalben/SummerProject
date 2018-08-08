@@ -3,6 +3,8 @@ import {HttpClient} from "@angular/common/http";
 import {HoldingRecord} from "../../add-record/shared/HoldingRecord.model";
 import {Observable} from "rxjs/internal/Observable";
 import {DatePipe} from "@angular/common";
+import {MetricYear} from "../../mockmodels";
+import {Metrics} from "../../add-record/shared/Metrics.model";
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +15,7 @@ export class PortfolioService {
               private datePipe: DatePipe) { }
 
   private allRecordsUrl = 'http://localhost:8080/api/records';
+  private allMetricsUrl = 'http://localhost:8080/api/metrics';
 
   getRecords(): Observable<HoldingRecord[]> {
     return this.httpClient.get<HoldingRecord[]>(this.allRecordsUrl);
@@ -38,6 +41,11 @@ export class PortfolioService {
 
   getCurrentDate(): string{
     return this.datePipe.transform(Date.now(), 'yyyy/MM/dd');
+  }
+
+  getAllMetricsService(holdingrecordId: number): Observable<Metrics[]> {
+    const updateUrl = `${this.allMetricsUrl}/${holdingrecordId}`;
+    return this.httpClient.get<Metrics[]>(updateUrl);
   }
 
 }

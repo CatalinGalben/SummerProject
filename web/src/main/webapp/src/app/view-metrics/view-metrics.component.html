@@ -1,11 +1,26 @@
 <table class="table-bordered">
   <thead>
-  <tr>
-    <th scope="col">Currency</th>
-    <th *ngFor="let year of years">{{year.year}}</th>*
-  </tr>
-</thead>
-  {{getCompanyDivYield()}}
-  {{getCompanyName()}}
-  {{getCompanyPE()}}
+    <tr>
+      <th scope="col">Metrics/Years</th>
+      <th *ngFor="let year of years">
+        {{year.year}}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let mLabel of metricsLabels">
+      <td>
+        <label>{{mLabel}}</label>
+      </td>
+      <td *ngFor="let year of years">
+        <input value="{{getMetricForLabelAndYear(mLabel, year.year)}}" #valueName (change)="setNewValue(mLabel, year.year, valueName.value)">
+      </td>
+    </tr>
+  </tbody>
 </table>
+
+
+
+<!--{{getCompanyDivYield()}}-->
+<!--{{getCompanyName()}}-->
+<!--{{getCompanyPE()}}-->

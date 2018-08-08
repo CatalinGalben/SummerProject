@@ -1,6 +1,5 @@
 package com.siemens.web.controller;
 
-import com.siemens.core.model.Metric;
 import com.siemens.core.model.YearData;
 import com.siemens.core.service.MetricsServiceInterface;
 import com.siemens.web.dto.MetricsDTO;
@@ -50,6 +49,7 @@ public class MetricsController {
     }
     @RequestMapping(value = "/metrics/{hKey}", method = RequestMethod.GET)
     public Set<MetricsDTO> getMetrics(@PathVariable final Integer hKey){
+        metricService.getMetricForName(hKey);
         List<YearData> yearDataList = metricService.getMetricForName(hKey);
 
 

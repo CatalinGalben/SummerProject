@@ -43,3 +43,7 @@ export const YEARSMETRICS: MetricYear[] = [
   {year: 2014},
   {year: 2013}
 ];
+
+export const LABELS: string[] = [
+  "value1", "value2", "value3"
+];
