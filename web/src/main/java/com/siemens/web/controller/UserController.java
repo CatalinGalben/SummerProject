@@ -1,8 +1,6 @@
 package com.siemens.web.controller;
 
 
-import com.siemens.core.model.Group;
-import com.siemens.core.model.SharePrice;
 import com.siemens.core.model.User;
 import com.siemens.core.service.CurrencyServiceInterface;
 import com.siemens.core.service.GroupServiceInterface;

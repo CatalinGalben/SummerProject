@@ -368,7 +368,7 @@ export class PortfolioComponent implements OnInit {
       }
       rec[j+1] = key;
     }
-  }
+  };
 
   sortByLastUpdate(rec: HoldingRecord[], n:number) {
     let i, key, j;
@@ -395,6 +395,7 @@ export class PortfolioComponent implements OnInit {
 
   columnClicked(column: string) {
     this.selectedColumn = column;
+    this.sort(this.holdingRecords, this.holdingRecords.length);
   }
 
   sort(rec: HoldingRecord[], n:number) {
