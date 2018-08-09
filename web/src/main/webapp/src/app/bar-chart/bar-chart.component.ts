@@ -67,7 +67,7 @@ export class BarChartComponent implements OnInit {
           "value": "6903"
         }
       ],
-      "name": "Trrrrrr"
+      "name": "Zero"
 
     });
 
@@ -193,64 +193,76 @@ export class BarChartComponent implements OnInit {
   }
 
   displayPrice() {
-    this.groupService.getBenchmarks(this.selectedRow.id, this.selectedRow.name).subscribe(records =>
-      {
-        this.results2 = [];
+    if (this.selectedRow.name == "") {
+      alert("Please select a group");
+    } else {
 
-        let d = Object.values(records)[0];
+      this.groupService.getBenchmarks(this.selectedRow.id, this.selectedRow.name).subscribe(records => {
+          this.results2 = [];
 
-        let arr = Object.values(d[0])[0];
-        for (let i=0; i<arr.length; i++) {
-          this.results2.push(arr[i]);
-        }
+          let d = Object.values(records)[0];
 
-        // change the price value based on the selected currency
-        for (let i=0; i<this.results2.length; i++) {
-          for (let k=0; k<this.results2[i].series.length; k++) {
-            this.results2[i].series[k].value = this.results2[i].series[k].value * this.factor;
+          let arr = Object.values(d[0])[0];
+          for (let i = 0; i < arr.length; i++) {
+            this.results2.push(arr[i]);
           }
-        }
 
-        this.results2 = [...this.results2] // This will generate a new array and trigger the change detection to ngx chart
-      }
-    );
+          // change the price value based on the selected currency
+          for (let i = 0; i < this.results2.length; i++) {
+            for (let k = 0; k < this.results2[i].series.length; k++) {
+              this.results2[i].series[k].value = this.results2[i].series[k].value * this.factor;
+            }
+          }
+
+          this.results2 = [...this.results2] // This will generate a new array and trigger the change detection to ngx chart
+        }
+      );
+    }
   }
 
   displayPercentage() {
-    this.groupService.getBenchmarks(this.selectedRow.id, this.selectedRow.name).subscribe(records =>
-      {
+    if (this.selectedRow.name == "") {
+      alert("Please select a group");
+    } else {
+
+      this.groupService.getBenchmarks(this.selectedRow.id, this.selectedRow.name).subscribe(records => {
+          this.results2 = [];
+
+          let d = Object.values(records)[0];
+          let arr = [];
+          arr.push(Object.values(d[0])[0]);
+          for (let i = 0; i < arr[0].length; i++) {
+            let sharename = arr[0][i].name;
+            let companyid = this.companies.filter(c => c.name == sharename)[0].id;
+            let init_price = arr[0][i].series[0].value;
+
+            for (let k = 0; k < arr[0][i].series.length; k++) {
+              arr[0][i].series[k].value = ((arr[0][i].series[k].value - init_price) / init_price) * 100;
+            }
+            this.results2.push(arr[0][i]);
+          }
+          this.results2 = [...this.results2] // This will generate a new array and trigger the change detection to ngx chart
+        }
+      );
+    }
+  }
+
+  displayTotal() {
+    if (this.selectedRow.name == "") {
+      alert("Please select a group");
+    } else {
+
+      this.groupService.getBenchmarks(this.selectedRow.id, this.selectedRow.name).subscribe(records => {
         this.results2 = [];
 
         let d = Object.values(records)[0];
         let arr = [];
         arr.push(Object.values(d[0])[0]);
-        for(let i=0; i<=arr[0].length; i++) {
-          let sharename = arr[0][i].name;
-          let companyid = this.companies.filter(c => c.name == sharename)[0].id;
-          let init_price = arr[0][i].series[0].value;
-
-          for (let k=0; k<arr[0][i].series.length; k++) {
-            arr[0][i].series[k].value = ((arr[0][i].series[k].value - init_price)/init_price)*100;
-          }
-          this.results2.push(arr[0][i]);
-        }
-        this.results2 = [...this.results2] // This will generate a new array and trigger the change detection to ngx chart
-      }
-    );
-  }
-
-  displayTotal() {
-    this.groupService.getBenchmarks(this.selectedRow.id, this.selectedRow.name).subscribe(records =>
-      {
-        this.results2 = [];
-
-        let d = Object.values(records)[0];
-        let arr = [];
-        arr.push(Object.values(d[0])[0]); console.log(arr);
+        console.log(arr);
         let series = [];
 
         // for each share
-        for(let i=0; i<arr[0].length; i++) {
+        for (let i = 0; i < arr[0].length; i++) {
           let sharename = arr[0][i].name;
           let companyid = this.companies.filter(c => c.name == sharename)[0].id;
 
@@ -259,50 +271,54 @@ export class BarChartComponent implements OnInit {
 
           // go until the present day
           while (date <= w) {
-          // find the values of the date
+            // find the values of the date
             let flag = false;
-            for (let k=0; k<arr[0][i].series.length && flag == false; k++) {
+            for (let k = 0; k < arr[0][i].series.length && flag == false; k++) {
               let share_date = arr[0][i].series[k].name;
 
               if (date == share_date) {
-                  flag = true;
+                flag = true;
 
-                  // get the price
-                  arr[0][i].series[k].value = arr[0][i].series[k].value * this.holdingRecords.filter(r => r.companyid == companyid)[0].noShares * this.factor;
+                // get the price
+                arr[0][i].series[k].value = arr[0][i].series[k].value * this.holdingRecords.filter(r => r.companyid == companyid)[0].noShares * this.factor;
 
-                  // find the index of the position where the date is in series
-                  let index = series.length;
-                  let found = false;
-                  for (var j=0; j<series.length; j++) {
-                    if (series[j].name == date) {
-                      index = j;
-                      found = true;
-                      break;
-                    }
-                  }
-                  // if new entry, create a new entry
-                  if (found == false) {series.push({value:0, name:""});}
-
-                  // add it to the total value
-                  series[index].value += arr[0][i].series[k].value * this.holdingRecords.filter(r => r.companyid == companyid)[0].noShares;
-                  series[index].name = date;
-              }
-              // if the share doesn't have this date, add the value of the previous date, or 0 if it doesn't have one
-              else if (date < share_date) {
                 // find the index of the position where the date is in series
                 let index = series.length;
                 let found = false;
-                for (var j=0; j<series.length; j++) {
+                for (var j = 0; j < series.length; j++) {
                   if (series[j].name == date) {
                     index = j;
                     found = true;
                     break;
                   }
                 }
-                if (found == false) {series.push({value:0, name:""});}
+                // if new entry, create a new entry
+                if (found == false) {
+                  series.push({value: 0, name: ""});
+                }
 
-                if (k>0) {
-                  series[index].value += arr[0][i].series[k-1].value * this.holdingRecords.filter(r => r.companyid == companyid)[0].noShares;
+                // add it to the total value
+                series[index].value += arr[0][i].series[k].value * this.holdingRecords.filter(r => r.companyid == companyid)[0].noShares;
+                series[index].name = date;
+              }
+              // if the share doesn't have this date, add the value of the previous date, or 0 if it doesn't have one
+              else if (date < share_date) {
+                // find the index of the position where the date is in series
+                let index = series.length;
+                let found = false;
+                for (var j = 0; j < series.length; j++) {
+                  if (series[j].name == date) {
+                    index = j;
+                    found = true;
+                    break;
+                  }
+                }
+                if (found == false) {
+                  series.push({value: 0, name: ""});
+                }
+
+                if (k > 0) {
+                  series[index].value += arr[0][i].series[k - 1].value * this.holdingRecords.filter(r => r.companyid == companyid)[0].noShares;
                 } else {
                   series[index].value += 0;
                 }
@@ -319,22 +335,23 @@ export class BarChartComponent implements OnInit {
 
         // display just the year and month if there are too many data
         if (series.length > 10) {
-          for (let k=0; k<series.length; k++) {
-              let dateArray = series[k].name.split('/') ;
-              series[k].name = dateArray[0] + '/' + dateArray[1];
+          for (let k = 0; k < series.length; k++) {
+            let dateArray = series[k].name.split('/');
+            series[k].name = dateArray[0] + '/' + dateArray[1];
           }
         }
 
         let series2 = [];
-        for (let k=0; k<series.length; k++) {
+        for (let k = 0; k < series.length; k++) {
           series2.push(series[k]);
         }
 
         let arr2 = [];
-        arr2.push({name:"TOT", series:series2});
+        arr2.push({name: "TOTAL", series: series2});
         this.results2.push(arr2[0]);
         this.results2 = [...this.results2] // This will generate a new array and trigger the change detection to ngx chart
       });
+    }
   }
 
   getHoldingRecordsOfGroup(groupName: string) {

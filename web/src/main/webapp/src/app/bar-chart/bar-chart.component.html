@@ -34,7 +34,8 @@
                           <td>{{getCurrentShareForCompany(rec.companyid) * factor | number : '1.2'}}</td>
                           <td>{{rec.pricePaid * factor | number : '1.2'}}</td>
                           <td>{{getCurrentShareForCompany(rec.companyid)*rec.noShares * factor | number : '1.2'}}</td>
-                          <td>{{getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares) | number : '1.2'}}%</td>
+                          <td *ngIf="getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares)>=0" style="color: green">+{{getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares) | number : '1.2'}}%</td>
+                          <td *ngIf="getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares)<0" style="color: red">{{getGain(rec.pricePaid, getCurrentShareForCompany(rec.companyid)*rec.noShares) | number : '1.2'}}%</td>
                           <td>{{getBrokerForRecord(rec.brokerid)}}</td>
                         </tr>
                       </ng-container>
@@ -65,6 +66,7 @@
 
     [legend]="true"
 
+    [autoScale]="true"
 
     [scheme]="'fire'"
     [xAxis]="true"

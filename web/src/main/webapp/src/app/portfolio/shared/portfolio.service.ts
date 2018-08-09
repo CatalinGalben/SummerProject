@@ -44,8 +44,13 @@ export class PortfolioService {
   }
 
   getAllMetricsService(holdingrecordId: number): Observable<Metrics[]> {
-    const updateUrl = `${this.allMetricsUrl}/${holdingrecordId}`;
-    return this.httpClient.get<Metrics[]>(updateUrl);
+    const allMetricsUrl = `${this.allMetricsUrl}/${holdingrecordId}`;
+    return this.httpClient.get<Metrics[]>(allMetricsUrl);
   }
 
+  getNewMetricsValues(name: string, year: number, newBalanceValue: number, hKey: number): Observable<void>{
+    const update = "update";
+    const updateUrl = `${this.allMetricsUrl}/${update}/${hKey}/${name}/${year}`;
+    return this.httpClient.post<void>(updateUrl, {newBalanceValue});
+  }
 }

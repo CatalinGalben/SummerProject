@@ -18,14 +18,27 @@ export class ViewMetricsComponent implements OnInit {
 
   company: Company;
   holdingRecord: HoldingRecord;
-  metrics: Metrics[];
+  metrics = [];
   metricsLabels: string[];
+  metricsCame = false;
   // tests = LABELS;
 
   years = YEARSMETRICS;
 
 
   navigated = false;
+  private fieldArray: Array<any> = [];
+  private newAttribute: any = {};
+
+  addFieldValue() {
+    this.fieldArray.push(this.newAttribute);
+    this.newAttribute = {};
+  }
+
+  deleteFieldValue(index) {
+    this.fieldArray.splice(index, 1);
+  }
+
 
   constructor(private recordService: AddRecordService,
               private loginService: LoginService,
@@ -61,6 +74,7 @@ export class ViewMetricsComponent implements OnInit {
                 return index === self.indexOf(elem);
               });
             console.log(this.metricsLabels);
+            this.metricsCame = true;
         })
 
 
@@ -97,12 +111,19 @@ export class ViewMetricsComponent implements OnInit {
       })
   }
 
-  getMetricForLabelAndYear(label: string, year: number){
-    return this.metrics.filter(m=>m.name==label && m.year==year)[0];
+  getMetricForLabelAndYear(label: string, year: number): number{
+    if (this.metrics.filter(m=>m.name==label && m.year==year)[0]==null)
+      return 0;
+    else
+      return this.metrics.filter(m=>m.name==label && m.year==year)[0].value;
   }
 
 
-  setNewValue(label: string, year: number, value: number){
-    console.log(label, year, value);
+  setNewValueMetrics(label: string, year: number, value: number){
+    this.portfolioService.getNewMetricsValues(label, year, value, this.holdingRecord.id).subscribe();
+  }
+
+  addNewRow(newLabel: string){
+    this.metricsLabels.push(newLabel);
   }
 }

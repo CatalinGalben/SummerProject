@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Year;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,7 +26,7 @@ public class MetricsServiceImpl implements MetricsServiceInterface {
         return yearDataRepository
                 .findAll()
                 .stream()
-                .filter(yd -> yd.getMetric().getId().equals(hId))
+                .filter(yd -> yd.getMetric().getHoldingRecord().getId().equals(hId))
                 .collect(Collectors.toList());
     }
     @Override
