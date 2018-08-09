@@ -30,6 +30,8 @@ public class SharePriceServiceImpl implements SharePriceServiceInterface{
     private SharePriceRepository sharePriceRepository;
     @Autowired
     private CurrencyRepository currencyRepository;
+    @Autowired
+    private CurrencyServiceInterface currencyService;
 
     @Override
     public List<SharePrice> getAllPrices()
@@ -110,11 +112,11 @@ public class SharePriceServiceImpl implements SharePriceServiceInterface{
                         Double sharePriceValue;
 
                         if(!parameters[4].equals("EUR") && !parameters[4].equals("GBp") && !parameters[4].equals("null"))
-                            sharePriceValue = CurrencyApi.exchange(parameters[4], Double.parseDouble(parameters[1]));
+                            sharePriceValue = Double.parseDouble(currencyService.chooseCurrency(parameters[4], "EUR",Double.parseDouble(parameters[1])));
                         else if (parameters[1].equals("null") && parameters[4].equals("null"))
                             return;
                         else if (parameters[4].equals("GBp"))
-                            sharePriceValue = CurrencyApi.exchange(parameters[4], Double.parseDouble(parameters[1])/100);
+                            sharePriceValue = Double.parseDouble(currencyService.chooseCurrency(parameters[4], "EUR",Double.parseDouble(parameters[1])/100));
                         else
                             sharePriceValue = Double.parseDouble(parameters[1]);
 
@@ -202,9 +204,11 @@ public class SharePriceServiceImpl implements SharePriceServiceInterface{
                 //the api 1000 query limit will be reached and adding more will not work
                 //If we are talking about a real life situation , an api key will be included in the price of the product
                 if(!parameters[4].equals("EUR") && !parameters[4].equals("GBp") && !parameters[4].equals("null"))
-                    sharePriceValue = CurrencyApi.exchange(parameters[4], Double.parseDouble(parameters[1]));
+                    sharePriceValue = Double.parseDouble(currencyService.chooseCurrency(parameters[4], "EUR",Double.parseDouble(parameters[1])));
+
                 else if (parameters[4].equals("GBp"))
-                    sharePriceValue = CurrencyApi.exchange(parameters[4], Double.parseDouble(parameters[1])/100);
+                    sharePriceValue = Double.parseDouble(currencyService.chooseCurrency(parameters[4], "EUR",Double.parseDouble(parameters[1])/100));
+
                 else
                     sharePriceValue = Double.parseDouble(parameters[1]);
                 sharePrice.setPrice(sharePriceValue);
