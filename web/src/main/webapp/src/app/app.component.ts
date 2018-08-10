@@ -48,6 +48,7 @@ export class AppComponent implements OnInit{
           router.navigate(['loginGoogle']);
           this.user_displayName = '';
           this.user_email = '';
+          this.logout();
         }
         else {
           this.isLoggedIn = true;

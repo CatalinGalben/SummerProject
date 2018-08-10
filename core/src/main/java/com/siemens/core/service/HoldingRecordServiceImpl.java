@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -64,7 +63,7 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
 
         Metric metric = Metric.builder()
                 .holdingRecord(record)
-                .name("Dividend Yieald")
+                .name("Dividend Yield")
                 .build();
 
         metric = metricRepo.save(metric);
@@ -93,6 +92,7 @@ public class HoldingRecordServiceImpl implements HoldingRecordServiceInterface {
     public  HoldingRecord createRecord
             (User user, Broker broker, Company company, Double paidPrice, Integer noShares, Float nav, Float ter,
              Float gearing, Float premium){
+
 
 
         user.setBalance(user.getBalance() - paidPrice);

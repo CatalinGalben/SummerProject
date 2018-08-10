@@ -334,12 +334,6 @@ export class BarChartComponent implements OnInit {
         }
 
         // display just the year and month if there are too many data
-        if (series.length > 10) {
-          for (let k = 0; k < series.length; k++) {
-            let dateArray = series[k].name.split('/');
-            series[k].name = dateArray[0] + '/' + dateArray[1];
-          }
-        }
 
         let series2 = [];
         for (let k = 0; k < series.length; k++) {
